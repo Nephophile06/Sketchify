@@ -16,7 +16,7 @@
         align-items: center;
         justify-content: center;
         color: white;
-        font-family: "Segoe UI", sans-serif;
+        font-family: "";
       }
 
       .login-card {
@@ -27,6 +27,7 @@
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         width: 100%;
         max-width: 400px;
+        height: 400px;
       }
 
       .login-card h2 {
@@ -34,7 +35,7 @@
         margin-bottom: 1.5rem;
         text-align: center;
       }
-
+      
       .form-control:focus {
         box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
       }
@@ -47,13 +48,15 @@
   </head>
   <body>
     <div class="login-card">
-      <h2>Welcome Admin 👑</h2>
+        <img src="../../static/Sketchify.png" alt="" class="img-fluid h-25 d-block mx-auto mb-3">
+      <h2>Admin Login</h2>
       <form method="POST" action="/admin/login">
         <div class="mb-3">
           <label for="username" class="form-label">Username</label>
           <input
             type="text"
             class="form-control" 
+            
             id="username"
             name="username"
             required
