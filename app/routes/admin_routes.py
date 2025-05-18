@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request, session, redirect, url_for, flash
 import os
 from app.controller.admin_controller import authenticate_admin
+from app.controller.database_collection_controller import getUsersCollection, getCategoriesCollection
 admin_route = Blueprint('admin_route', __name__)
 
 # Admin credentials accessing 
@@ -25,18 +26,34 @@ def admin_authentication():
 def admin_dashboard():
     if not session.get('admin_logged_in'):
         return redirect(url_for('admin_route.admin_login'))
+    else:
+        # real user count from the database
+        users_collection = getUsersCollection()
+        total_users = users_collection.find()
+        total_users = list(total_users)
+        
+        count = 0
+        for user in total_users:
+            count += 1
+            user['_id'] = str(user['_id'])
+            
+            
+        # Real categories count from the database
+        categories_collection = getCategoriesCollection()
+        total_category = categories_collection.find()
+        total_category = list(total_category)
+        
+        countC = 0
+        for category in total_category:
+            countC += 1
+            category['_id'] = str(category['_id'])
+        return render_template(
+            "Components/Admin/dashboard.html",
+            total_users = count,
+            total_products = countC,
+            total_orders = 0
+        )
     
-    # Example dummy data
-    total_users = 50
-    total_products = 20
-    total_orders = 12
-    
-    return render_template(
-        "Components/Admin/dashboard.html",
-        total_users=total_users,
-        total_products=total_products,
-        total_orders=total_orders,
-    )
 
 @admin_route.route("/admin/login")
 def admin_login():
