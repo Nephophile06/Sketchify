@@ -25,7 +25,18 @@ def admin_authentication():
 def admin_dashboard():
     if not session.get('admin_logged_in'):
         return redirect(url_for('admin_route.admin_login'))
-    return render_template('Components/Admin/dashboard.html')
+    
+    # Example dummy data
+    total_users = 50
+    total_products = 20
+    total_orders = 12
+    
+    return render_template(
+        "Components/Admin/admin_dashboard.html",
+        total_users=total_users,
+        total_products=total_products,
+        total_orders=total_orders,
+    )
 
 @admin_route.route("/admin/login")
 def admin_login():
