@@ -32,7 +32,7 @@ def admin_dashboard():
     total_orders = 12
     
     return render_template(
-        "Components/Admin/admin_dashboard.html",
+        "Components/Admin/dashboard.html",
         total_users=total_users,
         total_products=total_products,
         total_orders=total_orders,
