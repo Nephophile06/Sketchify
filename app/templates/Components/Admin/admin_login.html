@@ -44,6 +44,25 @@
         border-radius: 2rem;
         font-weight: 500;
       }
+
+      .flash-message {
+        padding: 10px;
+        margin-bottom: 15px;
+        border-radius: 5px;
+        font-size: 0.95em;
+      }
+
+      .flash-success {
+        background-color: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+      }
+
+      .flash-danger {
+        background-color: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+      }
     </style>
   </head>
   <body>
@@ -53,8 +72,18 @@
         alt=""
         class="img-fluid h-25 d-block mx-auto mb-3"
       />
+
       <h2>Admin Login</h2>
-      <form method="POST" action="/admin/login">
+
+      <div class="mt-5">
+        <!-- 🔥 Flash message block -->
+        {% with messages = get_flashed_messages(with_categories=true) %} {% if
+        messages %} {% for category, message in messages %}
+        <div class="flash-message flash-{{ category }}">{{ message }}</div>
+        {% endfor %} {% endif %} {% endwith %}
+        <!-- 🔥 End Flash message block -->
+      </div>
+      <form method="POST" action="/admin-authenticate">
         <div class="mb-3">
           <label for="username" class="form-label">Username</label>
           <input
