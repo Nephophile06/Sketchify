@@ -32,4 +32,8 @@ def create_app():
     from .routes.category_routes import category_route
     app.register_blueprint(category_route)
     
+    # Admin Routes
+    from .routes.admin_routes import admin_route
+    app.register_blueprint(admin_route)
+    
     return app
