@@ -9,6 +9,8 @@
     <style>
         body {
             padding-top: 150px;
+            background-color: #fdeded;
+            font-family: 'Comic Sans MS', cursive;
         }
     </style>
 </head>
@@ -23,8 +25,8 @@
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4">
                 {% for product in products %}
                 <div class="col">
-                    <div class="card h-100 border-0 rounded-3" style="height: 400px;">
-                        <div style="height: 200px; overflow: hidden;">
+                    <div class="card border-0 rounded-3" style="height: 420px;">
+                        <div style="height: 280px; overflow: hidden;">
                             <img src="{{product.image}}" class="card-img-top" alt="Product Image"
                                 style="height: 100%; width: 100%; object-fit: cover;">
                         </div>
