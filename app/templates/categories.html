@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Sketchify</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/categories.css">
+</head>
+
+<body style="padding-top: 130px;">
+    <!-- Navigation Bar -->
+
+
+    {% include 'Components/navbar.html' %}
+
+    <nav style="background-color: #60d0df;" class="text-center py-3">
+        <a href="#" class="text-decoration-none text-dark fs-5 px-3 py-2 rounded hover-effect">new in</a>
+        <a href="#" class="text-decoration-none text-dark fs-5 px-3 py-2 rounded hover-effect">gift items</a>
+        <a href="#" class="text-decoration-none text-dark fs-5 px-3 py-2 rounded hover-effect">stationaries</a>
+        <a href="#" class="text-decoration-none text-dark fs-5 px-3 py-2 rounded hover-effect">art supplies</a>
+        <a href="#" class="text-decoration-none text-dark fs-5 px-3 py-2 rounded hover-effect">desk organizer</a>
+    </nav>
+
+    <section class="container py-5">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4">
+            <!-- Card 1 -->
+            <div class="col">
+                <div class="card h-100 border-0 rounded-3">
+                    <img src="/images/NewIn/NewIn01.jpg" class="card-img-top" alt="Product 1"
+                        style="height: 250px; object-fit: cover;">
+                    <div class="card-body text-center">
+                        <h6 class="fw-semibold">Sketchbook Deluxe</h6>
+                        <p class="text-muted small mb-3">Premium paper for drawing & design.</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="fw-bold">$200</span>
+                            <a href="#" class="btn btn-sm btn-outline-dark rounded-pill px-3">Add to cart</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Card 2 -->
+            <div class="col">
+                <div class="card h-100 border-0 rounded-3">
+                    <img src="/images/NewIn/NewIn02.jpg" class="card-img-top" alt="Product 2"
+                        style="height: 250px; object-fit: cover;">
+                    <div class="card-body text-center">
+                        <h6 class="fw-semibold">Brush Pen Set</h6>
+                        <p class="text-muted small mb-3">Ideal for lettering and fine detail work.</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="fw-bold">$150</span>
+                            <a href="#" class="btn btn-sm btn-outline-dark rounded-pill px-3">Add to cart</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Card 3 -->
+            <div class="col">
+                <div class="card h-100 border-0 rounded-3">
+                    <img src="/images/NewIn/NewIn03.jpg" class="card-img-top" alt="Product 3"
+                        style="height: 250px; object-fit: cover;">
+                    <div class="card-body text-center">
+                        <h6 class="fw-semibold">Desk Organizer</h6>
+                        <p class="text-muted small mb-3">Stylish space-saver for your desk tools.</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="fw-bold">$180</span>
+                            <a href="#" class="btn btn-sm btn-outline-dark rounded-pill px-3">Add to cart</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Card 4 -->
+            <div class="col">
+                <div class="card h-100 border-0 rounded-3">
+                    <img src="/images/NewIn/NewIn04.jpg" class="card-img-top" alt="Product 4"
+                        style="height: 250px; object-fit: cover;">
+                    <div class="card-body text-center">
+                        <h6 class="fw-semibold">Gift Combo Pack</h6>
+                        <p class="text-muted small mb-3">Thoughtful combo for creative gifting.</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="fw-bold">$220</span>
+                            <a href="#" class="btn btn-sm btn-outline-dark rounded-pill px-3">Add to cart</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {% include 'Components/footer.html' %}
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>

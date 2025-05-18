@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>{{ category_name }} Products</title>
+    <link rel="stylesheet" href="../static/css/homepage.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            padding-top: 150px;
+            background: linear-gradient(135deg, #fefefe, #f2f9fb);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 60px;
+            opacity: 0.2;
+            font-weight: 800;
+            letter-spacing: 3px;
+        }
+
+        .product-card {
+            border: none;
+            border-radius: 22px;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(4px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .product-image {
+            border-top-left-radius: 22px;
+            border-top-right-radius: 22px;
+            object-fit: cover;
+            height: 200px;
+        }
+
+        .card-title {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: #333;
+        }
+
+        .card-text {
+            font-size: 0.95rem;
+            color: #666;
+        }
+
+        .buy-btn {
+            background: linear-gradient(to right, #60d0df, #c287e8);
+            color: white;
+            border: none;
+            padding: 10px 22px;
+            border-radius: 14px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            box-shadow: 0 4px 8px rgba(96, 208, 223, 0.3);
+        }
+
+        .buy-btn:hover {
+            background: #3c7a89;
+            box-shadow: 0 6px 14px rgba(60, 122, 137, 0.4);
+        }
+    </style>
+</head>
+
+<body>
+    {% include 'Components/navbar.html' %}
+
+    <div class="container mb-5">
+        <h1>{{ category_name }}</h1>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+            {% for product in products %}
+            <div class="col">
+                <div class="card product-card h-100">
+                    <img src="{{ product.image }}" class="card-img-top product-image" alt="{{ product.name }}">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">{{ product.name }}</h5>
+                        <p class="card-text">{{ product.description }}</p>
+                        <p class="card-text"><strong>৳{{ product.price }}</strong></p>
+                        <div class="mt-auto text-center">
+                            <a href="#" class="buy-btn">Buy Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+
+</html>

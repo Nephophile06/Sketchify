@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Sketchify</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/homepage.css">
+    <style>
+        .flash-message {
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            font-size: 0.95em;
+        }
+
+        .flash-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .flash-danger {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+</head>
+
+<body style="padding-top: 90px;">
+    <!-- Navigation Bar -->
+
+
+
+    {% include 'Components/navbar.html' %}
+    <div class='mt-5'>
+        <!-- 🔥 Flash message block -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="flash-message flash-{{ category }}">
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+        <!-- 🔥 End Flash message block -->
+    </div>
+
+    <h1 class="categories-title">CATEGORIES</h1>
+
+    <!-- Category Grid -->
+    <div id="cssportal-grid">
+        <div class="category-tile" id="div1">
+            <a href="{{url_for('categories.category', category_name='new-in')}}"class="category-label" style="text-decoration: none;">New In</a>
+        </div>
+        <div class="category-tile" id="div2">
+            <a href="{{url_for('categories.category', category_name='gift-items')}}"class="category-label" style="text-decoration: none;">Gift Items</a>
+        </div>
+        <div class="category-tile" id="div3">
+            <a href="{{url_for('categories.category', category_name='art-supplies')}}"class="category-label" style="text-decoration: none;">Art Supplies</a>
+        </div>
+        <div class="category-tile" id="div4">
+            <a href="{{url_for('categories.category', category_name='desk-organizers')}}"class="category-label" style="text-decoration: none;">Desk Organizers</a>
+        </div>
+        <div class="category-tile" id="div5">
+            <a href="{{url_for('categories.category', category_name='stationaries')}}"class="category-label" style="text-decoration: none;">Stationaries</a>
+        </div>
+    </div>
+
+    <!-- Featured Products -->
+    <h1 class="featured-products-title">FEATURED PRODUCTS</h1>
+
+    <section class="container py-5">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4">
+
+            <!-- Card 1 -->
+            <div class="col">
+                <div class="card h-100 border-0 rounded-3">
+                    <img src="../static/images/MainPage/01.jpg" class="card-img-top" alt="Product 1"
+                        style="height: 250px; object-fit: cover;">
+                    <div class="card-body text-center">
+                        <h6 class="fw-semibold">A4 Multi-subject Clipboard</h6>
+                        <p class="text-muted small mb-3">waterproof with large capacity</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="fw-bold">$200</span>
+                            <a href="#" class="btn btn-sm btn-outline-dark rounded-pill px-3">Add to cart</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- #3c7a89 -->
+            <!-- Card 2 -->
+            <div class="col">
+                <div class="card h-100 border-0 rounded-3">
+                    <img src="../static/images/MainPage/02.jpg" class="card-img-top" alt="Product 2"
+                        style="height: 250px; object-fit: cover;">
+                    <div class="card-body text-center">
+                        <h6 class="fw-semibold">Colourful DIY Envelop</h6>
+                        <p class="text-muted small mb-3">message card (minimum 5 pages)</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="fw-bold">$150</span>
+                            <a href="#" class="btn btn-sm btn-outline-dark rounded-pill px-3">Add to cart</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="col">
+                <div class="card h-100 border-0 rounded-3">
+                    <img src="../static/images/MainPage/03.jpg" class="card-img-top" alt="Product 3"
+                        style="height: 250px; object-fit: cover;">
+                    <div class="card-body text-center">
+                        <h6 class="fw-semibold">Sticky Notes with Mixed Shapes</h6>
+                        <p class="text-muted small mb-3">all in one storage box</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="fw-bold">$180</span>
+                            <a href="#" class="btn btn-sm btn-outline-dark rounded-pill px-3">Add to cart</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="col">
+                <div class="card h-100 border-0 rounded-3">
+                    <img src="../static/images/MainPage/04.jpg" class="card-img-top" alt="Product 4"
+                        style="height: 250px; object-fit: cover;">
+                    <div class="card-body text-center">
+                        <h6 class="fw-semibold">Pencil Case with Side Pocekts</h6>
+                        <p class="text-muted small mb-3">wide opening, supportive frame</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="fw-bold">$220</span>
+                            <a href="#" class="btn btn-sm btn-outline-dark rounded-pill px-3">Add to cart</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 5 -->
+            <div class="col">
+                <div class="card h-100 border-0 rounded-3">
+                    <img src="../static/images/MainPage/05.jpg" class="card-img-top" alt="Product 4"
+                        style="height: 250px; object-fit: cover;">
+                    <div class="card-body text-center">
+                        <h6 class="fw-semibold">Wooden Bookcase</h6>
+                        <p class="text-muted small mb-3">shelf organizer, handmade design</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="fw-bold">$220</span>
+                            <a href="#" class="btn btn-sm btn-outline-dark rounded-pill px-3">Add to cart</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 6 -->
+            <div class="col">
+                <div class="card h-100 border-0 rounded-3">
+                    <img src="../static/images/MainPage/06.jpg" class="card-img-top" alt="Product 4"
+                        style="height: 250px; object-fit: cover;">
+                    <div class="card-body text-center">
+                        <h6 class="fw-semibold">3 in 1 (Combo Pack)</h6>
+                        <p class="text-muted small mb-3">pastel colours, decoring handnotes</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="fw-bold">$220</span>
+                            <a href="#" class="btn btn-sm btn-outline-dark rounded-pill px-3">Add to cart</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 7 -->
+            <div class="col">
+                <div class="card h-100 border-0 rounded-3">
+                    <img src="../static/images/MainPage/07.jpg" class="card-img-top" alt="Product 4"
+                        style="height: 250px; object-fit: cover;">
+                    <div class="card-body text-center">
+                        <h6 class="fw-semibold">Side tote bag</h6>
+                        <p class="text-muted small mb-3">block buckle-up, multiple mini pockets</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="fw-bold">$220</span>
+                            <a href="#" class="btn btn-sm btn-outline-dark rounded-pill px-3">Add to cart</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 8 -->
+            <div class="col">
+                <div class="card h-100 border-0 rounded-3">
+                    <img src="../static/images/MainPage/08.jpg" class="card-img-top" alt="Product 4"
+                        style="height: 250px; object-fit: cover;">
+                    <div class="card-body text-center">
+                        <h6 class="fw-semibold">Artistic Paint Brushes</h6>
+                        <p class="text-muted small mb-3">soft, synthetic bristles, easy to clean</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="fw-bold">$220</span>
+                            <a href="#" class="btn btn-sm btn-outline-dark rounded-pill px-3">Add to cart</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <div class="text-center my-4">
+        <button class="btn" style="background-color: #60d0df; font-style: italic;">More Different Items</button>
+    </div>
+
+    {% include 'Components/footer.html' %}
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,70 @@
+body {
+    background-color: #fdeded;
+    font-family: 'MS Comic Sans', cursive;
+}
+
+.navbar {
+    background-color: #fdeded;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1px 30px;
+}
+
+.search-container {
+    background-color: #ffffff;
+    border-radius: 50px;
+    padding: 5px 10px;
+    display: flex;
+    align-items: center;
+}
+
+.search-box {
+    border: none;
+    outline: none;
+    padding: 10px 15px;
+    background: transparent;
+    width: 200px;
+    font-size: 14px;
+    color: #3C7A89;
+}
+
+.search-btn {
+    background-color: #3C7A89;
+    color: white;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 30px;
+    font-weight: normal;
+}
+
+.cart-icon {
+    width: 100px;
+}
+
+
+footer {
+    background-color: #c287e8;
+    color: #fdeded;
+    padding-bottom: 50px;
+    padding-top: 50px;
+    text-align: left;
+    font-family: cursive;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    margin-left: 100px;
+    margin-right: 50px;
+    background-color: #c287e8;
+    color: #fdeded;
+}
+
+.left-section, .right-section {
+    width: 45%; 
+}
+
+.left-section h3, .right-section h3 {
+    font-size: 24px;
+}

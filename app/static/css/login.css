@@ -1,0 +1,118 @@
+ body,
+ html {
+     height: 100%;
+     margin: 0;
+     font-family: 'MS Comic Sans', cursive;
+     background-color: #60d0df;
+     overflow-x: hidden;
+ }
+
+ .split-screen {
+     height: 100vh;
+     display: flex;
+ }
+
+ .left-side {
+     background: url('../login.png') no-repeat;
+     background-size: contain;
+     background-position: right center;
+     flex: 0 0 40%;
+ }
+
+ .right-side {
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     flex: 0 0 60%;
+     padding: 30px;
+     background-color: #60d0df;
+ }
+
+ .form-container {
+     width: 100%;
+     max-width: 450px;
+     padding: 40px;
+     background-color: #fdeded;
+     border-radius: 12px;
+ }
+
+ .logo {
+     width: 200px;
+     margin-bottom: 30px;
+     display: block;
+     margin-left: auto;
+     margin-right: auto;
+ }
+
+ .form-label {
+     font-weight: bold;
+     margin-bottom: 0.5rem;
+     color: #000000;
+ }
+
+ .form-control {
+     padding: 16px 20px;
+     font-size: 1rem;
+     border-radius: 8px;
+     border: 1px solid #ffffff;
+ }
+
+.form-control:focus {
+    border: 2px solid #000000;       
+    outline: none;                    
+    box-shadow: 0 0 4px #c287e8;       
+}
+
+ .btn-primary {
+     padding: 14px 24px;
+     font-size: 1.1rem;
+     border-radius: 8px;
+     background-color: #60d0df;
+     border-color: #60d0df;
+ }
+
+ .btn-primary:hover {
+     background-color: #3C7A89;
+     border-color: #3C7A89;
+ }
+
+ .text-center {
+     color: #000000;
+     margin-top: 1.5rem;
+ }
+
+ .text-center a {
+     color: #3C7A89;
+     text-decoration: none;
+     font-weight: 500;
+ }
+
+ .text-center a:hover {
+     text-decoration: underline;
+ }
+
+ @media (max-width: 992px) {
+
+     .split-screen {
+         flex-direction: column;
+     }
+
+     .left-side {
+         flex-basis: auto;
+         height: 300px;
+         display: flex;
+         justify-content: center;
+         align-items: center;
+     }
+
+     .right-side {
+         flex-basis: auto;
+         padding: 20px;
+     }
+ }
+
+ @media (max-width: 768px) {
+     .left-side {
+         display: none;
+     }
+ }

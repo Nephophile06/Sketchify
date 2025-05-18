@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sketchify Signup</title>
+  <link rel="stylesheet" href="../static/css/register.css">
+  <style>
+    .flash-message {
+      padding: 10px;
+      margin-bottom: 15px;
+      border-radius: 5px;
+      font-size: 0.95em;
+    }
+
+    .flash-success {
+      background-color: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+
+    .flash-danger {
+      background-color: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+
+    .login-link {
+      color: #3c7a89;
+      text-decoration: none;
+    }
+
+    .login-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="form-card">
+    <img src="../static/Sketchify.png" alt="Sketchify Logo" class="logo">
+
+    <h1 style="font-size: 25px; text-align:center; font-weight:500">Sign Up</h1>
+
+    <!-- 🔥 Flash message block -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <div class="flash-message flash-{{ category }}">
+      {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+    <!-- 🔥 End Flash message block -->
+
+    <form action="/user_register" method="post">
+      <div class="input-group">
+        <input type="text" name="name" required autocomplete="off">
+        <label>Full Name</label>
+      </div>
+      <div class="input-group">
+        <input type="text" name="username" required autocomplete="off">
+        <label>Username</label>
+      </div>
+      <div class="input-group">
+        <select name="gender" required>
+          <option value="" disabled selected></option>
+          <option value="female">Female</option>
+          <option value="male">Male</option>
+          <option value="other">Other</option>
+        </select>
+        <label>Gender</label>
+      </div>
+      <div class="input-group">
+        <input type="email" name="email" required autocomplete="off">
+        <label>Email</label>
+      </div>
+      <div class="input-group">
+        <input type="password" name="password" required autocomplete="off">
+        <label>Password</label>
+      </div>
+      <span>Already have an account? <a href="/login" class="login-link">Login</a></span>
+      <br>
+      <button type="submit" style="margin-top:30px">Create Account</button>
+    </form>
+  </div>
+</body>
+
+</html>

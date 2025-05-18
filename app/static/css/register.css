@@ -1,0 +1,92 @@
+ body {
+     background: #c287e8;
+     font-family: 'MS Comic Sans', cursive;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     height: 100vh;
+     margin: 0;
+ }
+ .logo {
+     width: 200px;
+     margin-bottom: 1px;
+     display: block;
+     margin-left: auto;
+     margin-right: auto;
+ }
+
+ .form-card {
+     background: #fdeded;
+     padding: 40px 30px;
+     border-radius: 16px;
+     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+     width: 100%;
+     max-width: 400px;
+ }
+
+ .form-card h2 {
+     text-align: center;
+     margin-bottom: 30px;
+     color: #000000;
+ }
+
+ .input-group {
+     position: relative;
+     margin-bottom: 25px;
+ }
+
+ .input-group input,
+ .input-group select {
+     width: 100%;
+     border: none;
+     border-bottom: 2px solid #bdbdbd;
+     outline: none;
+     background: transparent;
+     padding: 10px 5px;
+     font-size: 16px;
+     font-family: 'MS Comic Sans', cursive;
+     transition: all 0.3s ease;
+ }
+
+ .input-group label {
+     position: absolute;
+     top: 10px;
+     left: 5px;
+     color: #000000;
+     font-size: 16px;
+     pointer-events: none;
+     transition: 0.3s ease;
+ }
+
+ .input-group input:focus~label,
+ .input-group input:valid~label,
+ .input-group select:focus~label,
+ .input-group select:valid~label {
+     top: -10px;
+     left: 5px;
+     font-size: 13px;
+     outline:none;
+     color: #3c7a89;
+ }
+
+ .input-group input:focus,
+ .input-group select:focus {
+     border-bottom-color: #3c7a89;
+     outline: none !important;
+ }
+
+ button {
+     width: 100%;
+     padding: 12px;
+     background-color: #60d0df;
+     border: none;
+     border-radius: 8px;
+     color: white;
+     font-size: 16px;
+     cursor: pointer;
+     transition: 0.3s ease;
+ }
+
+ button:hover {
+     background-color: #3c7a89;
+ }
