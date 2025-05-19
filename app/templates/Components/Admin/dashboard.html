@@ -8,16 +8,56 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
     <style>
       body {
-        background-color: #f4f6f9;
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-        padding: 2rem;
+        background-color: #f8f9fa;
+        font-family: "Segoe UI", sans-serif;
+      }
+
+      .sidebar {
+        height: 100vh;
+        background: linear-gradient(to bottom, #212529, #343a40);
+        color: white;
+        padding-top: 2rem;
+      }
+
+      .sidebar a {
+        color: #adb5bd;
+        text-decoration: none;
+        display: block;
+        padding: 12px 20px;
+        transition: 0.2s ease;
+      }
+
+      .sidebar a:hover,
+      .sidebar a.active {
+        background-color: #495057;
+        color: #fff;
+        border-radius: 8px;
+      }
+
+      .card-stat {
+        border: none;
+        border-radius: 12px;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+        transition: transform 0.2s ease;
+      }
+
+      .card-stat:hover {
+        transform: translateY(-5px);
+      }
+
+      .card-stat h6 {
+        color: #6c757d;
       }
 
       .flash-message {
         padding: 1rem 1.25rem;
-        margin-bottom: 1rem;
+        margin-bottom: 1.5rem;
         border-radius: 0.5rem;
         font-size: 1rem;
         display: flex;
@@ -40,84 +80,82 @@
 
       .flash-icon {
         font-size: 1.2rem;
-        flex-shrink: 0;
-      }
-      body {
-        background-color: #f8f9fa;
-        font-family: "Segoe UI", sans-serif;
-      }
-      .sidebar {
-        height: 100vh;
-        background-color: #343a40;
-        color: white;
-      }
-      .sidebar a {
-        color: white;
-        text-decoration: none;
-        display: block;
-        padding: 10px 15px;
-      }
-      .sidebar a:hover {
-        background-color: #495057;
-      }
-      .card-stat {
-        border-left: 5px solid #0d6efd;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        border-radius: 10px;
       }
     </style>
   </head>
-  <body>
-    <!-- 🔥 Flash message block -->
-    {% with messages = get_flashed_messages(with_categories=true) %} {% if
-    messages %} {% for category, message in messages %}
-    <div class="flash-message flash-{{ category }}">
-      <span class="flash-icon">
-        {% if category == 'success' %} ✅ {% elif category == 'danger' %} ❌ {%
-        else %} ℹ️ {% endif %}
-      </span>
-      {{ message }}
-    </div>
-    {% endfor %} {% endif %} {% endwith %}
-    <!-- 🔥 End Flash message block -->
 
-    <!-- You can add dashboard content below -->
-    <h1>Welcome to Admin Dashboard</h1>
+  <body>
+    <!-- Flash Message -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+      <div class="container">
+        <div class="flash-message flash-{{ category }}">
+          <span class="flash-icon">
+            {% if category == 'success' %} ✅
+            {% elif category == 'danger' %} ❌
+            {% else %} ℹ️
+            {% endif %}
+          </span>
+          {{ message }}
+        </div>
+      </div>
+      {% endfor %}
+    {% endif %}
+    {% endwith %}
 
     <div class="container-fluid">
       <div class="row">
         <!-- Sidebar -->
         <nav class="col-md-2 d-none d-md-block sidebar">
-          <div class="pt-3">
-            <h4 class="text-center">Admin Panel</h4>
-            <a href="#">Dashboard</a>
-            <a href="#">Users</a>
-            <a href="#">Products</a>
-            <a href="#">Orders</a>
-            <a href="/logout">Logout</a>
+          <div class="text-center mb-4">
+            <h4 class="text-white fw-bold">👑 Admin Panel</h4>
           </div>
+          <a href="#" class="active"><i class="bi bi-speedometer2 me-2"></i>Dashboard</a>
+          <a href="#"><i class="bi bi-people me-2"></i>Users</a>
+          <a href="#"><i class="bi bi-box-seam me-2"></i>Products</a>
+          <a href="#"><i class="bi bi-receipt me-2"></i>Orders</a>
+          <a href="/logout"><i class="bi bi-box-arrow-right me-2"></i>Logout</a>
         </nav>
 
         <!-- Main Content -->
-        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 mt-4">
-          <h2 class="mb-4">Dashboard Overview</h2>
+        <main class="col-md-10 ms-sm-auto col-lg-10 px-md-4 pt-4">
+          <h2 class="fw-semibold mb-4">📊 Dashboard Overview</h2>
+
           <div class="row g-4">
             <div class="col-md-4">
-              <div class="card card-stat p-3">
-                <h6>Total Users</h6>
-                <h3>{{ total_users }}</h3>
+              <div class="card card-stat p-4 border-start border-primary border-4">
+                <div class="d-flex align-items-center">
+                  <i class="bi bi-people-fill fs-1 text-primary me-3"></i>
+                  <div>
+                    <h6>Total Users</h6>
+                    <h3 class="mb-0">{{ total_users }}</h3>
+                  </div>
+                </div>
               </div>
             </div>
+
             <div class="col-md-4">
-              <div class="card card-stat p-3">
-                <h6>Total Products</h6>
-                <h3>{{ total_products }}</h3>
+              <div class="card card-stat p-4 border-start border-success border-4">
+                <div class="d-flex align-items-center">
+                  <i class="bi bi-box-fill fs-1 text-success me-3"></i>
+                  <div>
+                    <h6>Total Products</h6>
+                    <h3 class="mb-0">{{ total_products }}</h3>
+                  </div>
+                </div>
               </div>
             </div>
+
             <div class="col-md-4">
-              <div class="card card-stat p-3">
-                <h6>Total Orders</h6>
-                <h3>{{ total_orders }}</h3>
+              <div class="card card-stat p-4 border-start border-warning border-4">
+                <div class="d-flex align-items-center">
+                  <i class="bi bi-cart-check-fill fs-1 text-warning me-3"></i>
+                  <div>
+                    <h6>Total Orders</h6>
+                    <h3 class="mb-0">{{ total_orders }}</h3>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
