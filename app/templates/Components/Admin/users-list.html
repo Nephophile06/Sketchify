@@ -110,6 +110,7 @@
               <thead class="table-dark">
                 <tr>
                   <th>#</th>
+                  <th>FullName</th>
                   <th>Username</th>
                   <th>Email</th>
                   <th>Gender</th>
@@ -120,6 +121,7 @@
                 {% for user in users %}
                 <tr>
                   <td>{{ loop.index }}</td>
+                  <td>{{ user.full_name}}</td>
                   <td>{{ user.username }}</td>
                   <td>{{ user.email }}</td>
                   <td>{{ user.gender}}</td>
