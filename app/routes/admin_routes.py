@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, session, redirect, url_for, flash
 import os
-from app.controller.admin_controller import authenticate_admin
+from app.controller.admin_controller import authenticate_admin, user_list_controller
 from app.controller.database_collection_controller import getUsersCollection, getCategoriesCollection
 admin_route = Blueprint('admin_route', __name__)
 
@@ -59,3 +59,7 @@ def admin_dashboard():
 def admin_login():
     return render_template('Components/Admin/admin_login.html')
 
+@admin_route.route("/admin/users-list")
+def admin_users_list():
+    users = user_list_controller()
+    return render_template('Components/Admin/users-list.html', users = users)
