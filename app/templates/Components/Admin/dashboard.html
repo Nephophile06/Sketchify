@@ -103,18 +103,7 @@
     <div class="container-fluid">
       <div class="row">
         <!-- Sidebar -->
-        <nav class="col-md-2 d-none d-md-block sidebar">
-          <div class="text-center mb-4">
-            <h4 class="text-white fw-bold">👑 Admin Panel</h4>
-          </div>
-          <a href="#" class="active"
-            ><i class="bi bi-speedometer2 me-2"></i>Dashboard</a
-          >
-          <a href="/admin/users-list"><i class="bi bi-people me-2"></i>Users</a>
-          <a href="#"><i class="bi bi-box-seam me-2"></i>Products</a>
-          <a href="#"><i class="bi bi-receipt me-2"></i>Orders</a>
-          <a href="/logout"><i class="bi bi-box-arrow-right me-2"></i>Logout</a>
-        </nav>
+        {%include 'Components/Admin/sidebar.html'%}
 
         <!-- Main Content -->
         <main class="col-md-10 ms-sm-auto col-lg-10 px-md-4 pt-4">

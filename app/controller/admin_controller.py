@@ -19,3 +19,12 @@ def user_list_controller():
         user['_id'] = str(user['_id'])
          
     return users_data
+
+def product_list_controller():
+    products_collection = getCategoriesCollection()
+    products_data = products_collection.find()
+    products_data = list(products_data)
+    
+    for product in products_data:
+        product['_id'] = str(product['_id'])
+    return products_data
