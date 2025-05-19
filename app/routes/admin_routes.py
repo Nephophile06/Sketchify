@@ -69,3 +69,9 @@ def admin_products_list():
     products = product_list_controller()
     return render_template('Components/Admin/products-list.html', products = products)
 
+@admin_route.route("/admin-logout")
+def admin_logout():
+    session.pop('admin_logged_in')
+    success = True
+    flash("You have been logged out", "success" if success else "danger")
+    return redirect(url_for('default_route.home_page'))  
