@@ -1,22 +1,39 @@
 <nav class="navbar fixed-top">
-    <a href="/" class="brand-logo">
-        <img src="../static/Sketchify.png" alt="SKETCHIFY" height="120">
-    </a>
-    <div class="d-flex align-items-center">
-        <div class="search-container me-3">
-            <input type="text" class="search-box" placeholder="Type a product name">
-            <button class="search-btn">Search</button>
-        </div>
-
-        {%if session.get('user')%}
-        <span class="me-3">{{ session['user']['username'] }}</span>
-        <a href="/user-dashboard" class="me-3" style="color:#3c7a89; text-decoration: none;">Profile</a>
-        <a href="{{url_for('user_route.logout')}}" class="button-55" role="button">Logout</a>
-        {%else%}
-
-        <a href="{{ url_for('user_route.login') }}" class="button-55" role="button">Login</a>
-        {%endif%}
-
-        <a href="#"><img src="../static/cart.svg" alt="Cart" class="cart-icon" height="100"></a>
+  <a href="/" class="brand-logo">
+    <img src="../static/Sketchify.png" alt="SKETCHIFY" height="120" />
+  </a>
+  <div class="d-flex align-items-center">
+    <div class="search-container me-3">
+      <input type="text" class="search-box" placeholder="Type a product name" />
+      <button class="search-btn">Search</button>
     </div>
+
+    {%if session.get('user')%}
+    <span class="me-3">{{ session['user']['username'] }}</span>
+    <a
+      href="/user-dashboard"
+      class="me-3"
+      style="color: #3c7a89; text-decoration: none"
+      >Profile</a
+    >
+    <a href="{{url_for('user_route.logout')}}" class="button-55" role="button"
+      >Logout</a
+    >
+    {%else%}
+
+    <a href="{{ url_for('user_route.login') }}" class="button-55" role="button"
+      >Login</a
+    >
+    {%endif%}
+
+    <a href="" class="position-relative me-3 d-inline-block">
+        <img src="{{ url_for('static', filename='cart.svg') }}" alt="Cart" class="cart-icon" height="100" />
+        
+        <span style="top: 20%; right: -50%;"  class="position-absolute start-100 translate-middle badge rounded-pill bg-danger shadow-sm">
+          {{ session.get('cart')|length if session.get('cart') else 0 }}
+          <span class="visually-hidden">cart items</span>
+        </span>
+      </a>
+      
+  </div>
 </nav>
