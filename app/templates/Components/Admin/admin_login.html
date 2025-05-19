@@ -21,7 +21,7 @@
 
       .login-card {
         background-color: #fdeded;
-        color: #333;
+        color: #000000;
         padding: 2rem;
         border-radius: 1rem;
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
@@ -37,12 +37,22 @@
       }
 
       .form-control:focus {
-        box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+        border: 2px solid #000000;       
+        outline: none;                    
+        box-shadow: 0 0 4px #c287e8; 
       }
 
       .btn-primary {
         border-radius: 2rem;
         font-weight: 500;
+        background-color: #60d0df;
+        border-color: #60d0df;
+        color: white;
+      }
+
+      .btn-primary:hover {
+        background-color: #2b5d67;
+        border-color: #2b5d67;
       }
 
       .flash-message {
