@@ -76,135 +76,22 @@
     <section class="container py-5">
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4">
 
-            <!-- Card 1 -->
+            {% for product in featured_products %}
             <div class="col">
                 <div class="card h-100 border-0 rounded-3">
-                    <img src="../static/images/MainPage/01.jpg" class="card-img-top" alt="Product 1"
+                    <img src="{{product.image}}" class="card-img-top" alt="Product 1"
                         style="height: 250px; object-fit: cover;">
                     <div class="card-body text-center">
-                        <h6 class="fw-semibold">A4 Multi-subject Clipboard</h6>
-                        <p class="text-muted small mb-3">waterproof with large capacity</p>
+                        <h6 class="fw-semibold">{{product.name}}</h6>
+                        <p class="text-muted small mb-3">{{product.description}}</p>
                         <div class="d-flex justify-content-between align-items-center">
-                            <span class="fw-bold">$200</span>
-                            <a href="#" class="btn btn-sm btn-outline-dark rounded-pill px-3">Add to cart</a>
+                            <span class="fw-bold">Tk. {{product.price}}</span>
+                            <a href="{{ url_for('cart_route.add_to_cart', product_id=product._id) }}" class="btn btn-sm btn-outline-dark rounded-pill px-3">Add to cart</a>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <!-- #3c7a89 -->
-            <!-- Card 2 -->
-            <div class="col">
-                <div class="card h-100 border-0 rounded-3">
-                    <img src="../static/images/MainPage/02.jpg" class="card-img-top" alt="Product 2"
-                        style="height: 250px; object-fit: cover;">
-                    <div class="card-body text-center">
-                        <h6 class="fw-semibold">Colourful DIY Envelop</h6>
-                        <p class="text-muted small mb-3">message card (minimum 5 pages)</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span class="fw-bold">$150</span>
-                            <a href="#" class="btn btn-sm btn-outline-dark rounded-pill px-3">Add to cart</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 3 -->
-            <div class="col">
-                <div class="card h-100 border-0 rounded-3">
-                    <img src="../static/images/MainPage/03.jpg" class="card-img-top" alt="Product 3"
-                        style="height: 250px; object-fit: cover;">
-                    <div class="card-body text-center">
-                        <h6 class="fw-semibold">Sticky Notes with Mixed Shapes</h6>
-                        <p class="text-muted small mb-3">all in one storage box</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span class="fw-bold">$180</span>
-                            <a href="#" class="btn btn-sm btn-outline-dark rounded-pill px-3">Add to cart</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 4 -->
-            <div class="col">
-                <div class="card h-100 border-0 rounded-3">
-                    <img src="../static/images/MainPage/04.jpg" class="card-img-top" alt="Product 4"
-                        style="height: 250px; object-fit: cover;">
-                    <div class="card-body text-center">
-                        <h6 class="fw-semibold">Pencil Case with Side Pocekts</h6>
-                        <p class="text-muted small mb-3">wide opening, supportive frame</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span class="fw-bold">$220</span>
-                            <a href="#" class="btn btn-sm btn-outline-dark rounded-pill px-3">Add to cart</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 5 -->
-            <div class="col">
-                <div class="card h-100 border-0 rounded-3">
-                    <img src="../static/images/MainPage/05.jpg" class="card-img-top" alt="Product 4"
-                        style="height: 250px; object-fit: cover;">
-                    <div class="card-body text-center">
-                        <h6 class="fw-semibold">Wooden Bookcase</h6>
-                        <p class="text-muted small mb-3">shelf organizer, handmade design</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span class="fw-bold">$220</span>
-                            <a href="#" class="btn btn-sm btn-outline-dark rounded-pill px-3">Add to cart</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 6 -->
-            <div class="col">
-                <div class="card h-100 border-0 rounded-3">
-                    <img src="../static/images/MainPage/06.jpg" class="card-img-top" alt="Product 4"
-                        style="height: 250px; object-fit: cover;">
-                    <div class="card-body text-center">
-                        <h6 class="fw-semibold">3 in 1 (Combo Pack)</h6>
-                        <p class="text-muted small mb-3">pastel colours, decoring handnotes</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span class="fw-bold">$220</span>
-                            <a href="#" class="btn btn-sm btn-outline-dark rounded-pill px-3">Add to cart</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 7 -->
-            <div class="col">
-                <div class="card h-100 border-0 rounded-3">
-                    <img src="../static/images/MainPage/07.jpg" class="card-img-top" alt="Product 4"
-                        style="height: 250px; object-fit: cover;">
-                    <div class="card-body text-center">
-                        <h6 class="fw-semibold">Side tote bag</h6>
-                        <p class="text-muted small mb-3">block buckle-up, multiple mini pockets</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span class="fw-bold">$220</span>
-                            <a href="#" class="btn btn-sm btn-outline-dark rounded-pill px-3">Add to cart</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 8 -->
-            <div class="col">
-                <div class="card h-100 border-0 rounded-3">
-                    <img src="../static/images/MainPage/08.jpg" class="card-img-top" alt="Product 4"
-                        style="height: 250px; object-fit: cover;">
-                    <div class="card-body text-center">
-                        <h6 class="fw-semibold">Artistic Paint Brushes</h6>
-                        <p class="text-muted small mb-3">soft, synthetic bristles, easy to clean</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span class="fw-bold">$220</span>
-                            <a href="#" class="btn btn-sm btn-outline-dark rounded-pill px-3">Add to cart</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+            {%endfor%}
         </div>
     </section>
 
