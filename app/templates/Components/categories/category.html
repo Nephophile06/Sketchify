@@ -27,7 +27,7 @@
         }
 
         .card.custom-hover {
-            width: 250px;
+            width: 300px;
             height: 360px;
             border-radius: 15px;
             padding: 1.5rem;
@@ -94,7 +94,7 @@
         /* Info content */
         .card.custom-hover .info h1 {
             margin: 0;
-            font-size: 30px;
+            font-size: 27px;
         }
 
         .card.custom-hover .info p {
@@ -116,7 +116,7 @@
         }
 
         .card.custom-hover .info button:hover {
-            background: dodgerblue;
+            background: #c287e8;
             color: white;
         }
     </style>
@@ -131,7 +131,7 @@
         <section class="container py-5">
             <h1 class="text-secondary p-3 fs-5"><a href="/" class="text-secondary text-decoration-none">Home</a> /{{
                 category_name }}</h1>
-            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4">
+            <div class="row row-cols-1 row-cols-sm-1 row-cols-md-4 g-4">
                 {% for product in products %}
                 <div class="col">
                     <div class="card custom-hover ">
@@ -139,7 +139,7 @@
                         <div class="info">
                             <h1>{{ product.name }}</h1>
                             <p>{{ product.description }}</p>
-                            <p style="color: thistle"> tk. {{product.price}}</p>
+                            <p style="color: white"> Tk. {{product.price}}</p>
                             <form action="{{ url_for('cart_route.add_to_cart', product_id=product._id) }}">
                                 <button type="submit">Add to Cart</button>
                             </form>
