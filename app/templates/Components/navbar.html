@@ -27,12 +27,18 @@
     {%endif%}
 
     <a href="" class="position-relative me-3">
-        <span class="position-absolute top-50 start-100 translate-middle badge rounded-pill bg-danger">
-            {{ session.get('cart')|length if session.get('cart') else 0 }}
-        </span>
-        <img src="{{ url_for('static', filename='cart.svg') }}" alt="Cart" class="cart-icon" width="75" height="75">
+      <span
+        class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+      >
+        {{ session.get('cart')|length if session.get('cart') else 0 }}
+      </span>
+      <img
+        src="{{ url_for('static', filename='cart.svg') }}"
+        alt="Cart"
+        class="cart-icon"
+        width="75"
+        height="75"
+      />
     </a>
-    
-      
   </div>
 </nav>
