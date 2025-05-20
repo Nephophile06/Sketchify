@@ -28,7 +28,8 @@
 
     <a href="" class="position-relative me-3">
       <span
-        class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+        class="position-absolute  translate-middle badge rounded-pill bg-danger"
+        style="top: 35%; left: 67%;"
       >
         {{ session.get('cart')|length if session.get('cart') else 0 }}
       </span>
@@ -36,8 +37,8 @@
         src="{{ url_for('static', filename='cart.svg') }}"
         alt="Cart"
         class="cart-icon"
-        width="75"
-        height="75"
+        width="100"
+        height="100"
       />
     </a>
   </div>
