@@ -1,7 +1,7 @@
 import requests
 import uuid
 from flask import Blueprint, session, redirect, url_for, request, flash
-
+from app.controller.order_controller import save_order
 sslcommerz_route = Blueprint("sslcommerz_route", __name__)
 
 @sslcommerz_route.route("/pay")
@@ -49,6 +49,18 @@ def pay_with_sslcommerz():
 # Payment status routes
 @sslcommerz_route.route("/payment-success", methods=["GET", "POST"])
 def payment_success():
+    cart = session.get('cart')
+    user = session.get('user')
+    if not cart or not user:
+        flash("Session expired or no cart found.", "danger")
+        return redirect(url_for("default_route.home_page"))
+
+    # SSLCommerz sends tran_id via query param usually
+    transaction_id = request.args.get('tran_id') or request.form.get('tran_id')
+
+    # Save order in DB
+    save_order(user, cart, payment_method="SSLCommerz (bKash/Nagad)", transaction_id=transaction_id)
+
     session.pop('cart', None)
     flash("✅ Payment successful via bKash/Nagad!", "success")
     return redirect(url_for("default_route.home_page"))
