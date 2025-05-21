@@ -1,6 +1,6 @@
 import requests
 import uuid
-from flask import Blueprint, session, redirect, url_for, request
+from flask import Blueprint, session, redirect, url_for, request, flash
 
 sslcommerz_route = Blueprint("sslcommerz_route", __name__)
 
@@ -53,7 +53,8 @@ def payment_success():
 
 @sslcommerz_route.route("/payment-failed")
 def payment_failed():
-    return "❌ Payment failed. Try again."
+    flash("❌ Payment failed. Try again.","danger")
+    return redirect(url_for('payment_route.payment_page'))
 
 @sslcommerz_route.route("/payment-canceled")
 def payment_canceled():
