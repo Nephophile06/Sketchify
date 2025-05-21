@@ -44,4 +44,9 @@ def create_app():
     from .routes.checkout_routes import checkout_route
     app.register_blueprint(checkout_route)
     
+    #stripe route
+    from .routes.payment_routes import payment_route
+    app.register_blueprint(payment_route)
+
+    
     return app
