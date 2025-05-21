@@ -1,14 +1,15 @@
 import requests
 import uuid
 from flask import Blueprint, session, redirect, url_for, request, flash
-
+from app.controller.order_controller import save_order
 sslcommerz_route = Blueprint("sslcommerz_route", __name__)
 
 @sslcommerz_route.route("/pay")
 def pay_with_sslcommerz():
     cart = session.get('cart')
     if not cart:
-        return "Cart is empty"
+        flash("Cart is empty.", "warning")
+        return redirect(url_for("cart_route.view_cart"))
 
     total_amount = sum(item['price'] * item['quantity'] for item in cart.values())
 
@@ -17,7 +18,7 @@ def pay_with_sslcommerz():
         'store_passwd': 'tousi682d997d587ca@ssl',
         'total_amount': str(format(total_amount, '.2f')),
         'currency': 'BDT',
-        'tran_id': str(uuid.uuid4()),  # ✅ Unique ID
+        'tran_id': str(uuid.uuid4()),  # Unique transaction ID
         'success_url': url_for('sslcommerz_route.payment_success', _external=True),
         'fail_url': url_for('sslcommerz_route.payment_failed', _external=True),
         'cancel_url': url_for('sslcommerz_route.payment_canceled', _external=True),
@@ -30,32 +31,46 @@ def pay_with_sslcommerz():
         'cus_country': 'Bangladesh',
         'shipping_method': 'NO',
         'product_name': 'Sketchify Cart',
-        'product_category': 'Ecommerce',
-        'product_profile': 'general',
+        'product_category': 'mobile',  # ✅ push mobile payment method
+        'product_profile': 'physical-goods',  # ✅ required for bKash popup
     }
 
     try:
         response = requests.post("https://sandbox.sslcommerz.com/gwprocess/v4/api.php", data=data)
         res_data = response.json()
     except Exception as e:
-        return f"Error talking to SSLCommerz: {str(e)}"
+        return f"Error communicating with SSLCommerz: {str(e)}"
 
     if res_data.get("status") == "SUCCESS":
-        return redirect(res_data["GatewayPageURL"])
+        return redirect(res_data["GatewayPageURL"])  # ✅ Hosted checkout page
     else:
-        return f"❌ Payment gateway init failed: {res_data}"
+        return f"❌ Payment init failed: {res_data}"
 
-    
+# Payment status routes
 @sslcommerz_route.route("/payment-success", methods=["GET", "POST"])
 def payment_success():
+    cart = session.get('cart')
+    user = session.get('user')
+    if not cart or not user:
+        flash("Session expired or no cart found.", "danger")
+        return redirect(url_for("default_route.home_page"))
+
+    # SSLCommerz sends tran_id via query param usually
+    transaction_id = request.args.get('tran_id') or request.form.get('tran_id')
+
+    # Save order in DB
+    save_order(user, cart, payment_method="SSLCommerz (bKash/Nagad)", transaction_id=transaction_id)
+
     session.pop('cart', None)
-    return "✅ Payment successful via bKash/Nagad/SSL!"
+    flash("✅ Payment successful via bKash/Nagad!", "success")
+    return redirect(url_for("default_route.home_page"))
 
 @sslcommerz_route.route("/payment-failed")
 def payment_failed():
-    flash("❌ Payment failed. Try again.","danger")
+    flash("❌ Payment failed. Try again.", "danger")
     return redirect(url_for('payment_route.payment_page'))
 
 @sslcommerz_route.route("/payment-canceled")
 def payment_canceled():
-    return "❌ Payment was canceled."
+    flash("❌ Payment was canceled.", "warning")
+    return redirect(url_for('payment_route.payment_page'))

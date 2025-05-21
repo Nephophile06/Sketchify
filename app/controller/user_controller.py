@@ -49,10 +49,10 @@ def login_user_controller(data):
 
             # Session Define korbo 
             session['user'] = {
-                "username" : user['username'],
-                "email": user['email'],
-                "password" : user['password']
-            }
+                "_id": str(user['_id']),
+                "username": user['username'],
+                "email": user['email']
+            }           
             return True, "Login Successful"
         else:
             return False, "Password do not match"
