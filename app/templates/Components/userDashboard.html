@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="../static/css/homepage.css">
     <style>
         body {
-            background-color: #f8f9fa;
+            background-color: #ecceff;
         }
         .card {
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
@@ -18,7 +18,31 @@
         .dashboard-header {
             margin-top: 100px;
         }
-         .flash-message {
+
+        .custom-sky-btn {
+  background-color: #a2ded0;
+  color: #1f3b3d;
+  border: none;
+}
+
+.custom-sky-btn:hover {
+  background-color: #89cfc0;
+  color: #122c2e;
+}
+
+.btn-edit-profile {
+  background-color: #60d0df;
+  color: white;
+  border: none;
+}
+
+.btn-edit-profile:hover {
+  background-color: #49b6c6;
+  color: white;
+}
+
+
+    .flash-message {
       padding: 10px;
       margin-bottom: 15px;
       border-radius: 5px;
@@ -56,7 +80,7 @@
     <!-- 🔥 End Flash message block -->
      
     <div class="container dashboard-header text-center">
-        <h2>Welcome, {{ session['user']['username'] }} 🎉</h2>
+        <h2>Welcome, {{ session['user']['username'] }}</h2>
         <p class="text-muted">Here's Your Sketchify Profile Overview</p>
     </div>
 
@@ -68,7 +92,7 @@
                 <div class="card p-4 text-center">
                     <h5 class="card-title">My Orders</h5>
                     <p class="card-text text-muted">View and track your past orders.</p>
-                    <a href="/orders" class="btn btn-primary btn-sm">View Orders</a>
+                    <a href="/orders" class="btn custom-sky-btn btn-sm">View Orders</a>
                 </div>
             </div>
         </div>
@@ -79,7 +103,7 @@
                 <div class="card p-4 text-center">
                     <h5 class="card-title">My Profile</h5>
                     <p class="card-text text-muted">Edit your personal information.</p>
-                    <a href="/edit-user-profile" class="btn btn-secondary btn-sm">Edit Profile</a>
+                    <a href="/edit-user-profile" class="btn btn-edit-profile btn-sm">Edit Profile</a>
                 </div>
             </div>
         </div>

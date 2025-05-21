@@ -14,7 +14,7 @@
     ></script>
     <style>
       body {
-        /* background: linear-gradient(135deg, #74ebd5, #acb6e5); */
+        background-color: #ecceff;
         min-height: 100vh;
         display: flex;
         align-items: center;
@@ -35,6 +35,18 @@
       .glass-card:hover {
         transform: translateY(-10px);
         box-shadow: 0 0 25px rgba(246, 139, 46, 0.3);
+      }
+
+      /* 🔮 Lavender Tint */
+      .purple-tint {
+        background-color: #a2ded0;
+  color: #1f3b3d;
+  border: none;
+      }
+
+      .peach-tint {
+        background: rgba(255, 195, 160, 0.15);
+        border: 1px solid rgba(255, 195, 160, 0.3);
       }
 
       .btn-glow:hover {
@@ -81,7 +93,7 @@
   </head>
   <body>
     <div class="container text-center">
-      <h1 class="display-6 fw-bold mb-4">💳 Choose Payment Method</h1>
+      <h1 class="display-6 fw-bold mb-4">Choose Payment Method</h1>
 
       <div class="row justify-content-center gy-4">
         <!-- 🔥 Flash message block -->
@@ -90,9 +102,11 @@
         <div class="flash-message flash-{{ category }}">{{ message }}</div>
         {% endfor %} {% endif %} {% endwith %}
         <!-- 🔥 End Flash message block -->
+        
+        
         <!-- Card Payment -->
         <div class="col-md-5 col-12">
-          <div class="p-4 glass-card h-100">
+          <div class="p-4 glass-card purple-tint h-100">
             <div class="text-center mb-3">
               <i class="fas fa-credit-card text-primary card-icon"></i>
             </div>
@@ -109,8 +123,9 @@
         </div>
 
         <!-- bKash / Nagad -->
+         <!-- 📱 bKash / Nagad – Peach Tint -->
         <div class="col-md-5 col-12">
-          <div class="p-4 glass-card h-100">
+          <div class="p-4 glass-card peach-tint h-100">
             <div class="text-center mb-3">
               <i class="fas fa-mobile-alt text-danger card-icon"></i>
             </div>
