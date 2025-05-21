@@ -44,4 +44,11 @@ def create_app():
     from .routes.checkout_routes import checkout_route
     app.register_blueprint(checkout_route)
     
+    #stripe route
+    from .routes.payment_routes import payment_route
+    app.register_blueprint(payment_route)
+
+    # sslcommerz route
+    from .routes.ssl_commerz_routes import sslcommerz_route
+    app.register_blueprint(sslcommerz_route)
     return app

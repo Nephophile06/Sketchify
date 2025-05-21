@@ -11,4 +11,4 @@ def checkout():
         return redirect(url_for('user_route.login')) 
 
     # If both are OK, go to payment
-    return redirect(url_for('payment.payment_page'))
+    return redirect(url_for('payment_route.payment_page'))
