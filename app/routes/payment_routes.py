@@ -39,10 +39,18 @@ def payment_card():
 
     return redirect(session_stripe.url)
 
-
 @payment_route.route("/payment-page")
 def payment_page():
-    return render_template("Components/Payment/payment_page.html")
+    cart = session.get('cart')
+    user = session.get("user")
+    if not user:
+        return redirect(url_for("user_route.login"))
+    
+    if not cart:
+        return "Cart is empty"
+
+    return render_template("Components/Payment/payment_page.html", cart=cart, user=user)
+
     
 
 @payment_route.route("/payment/success")
