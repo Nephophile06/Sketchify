@@ -15,7 +15,8 @@ def save_order(user, cart, payment_method, transaction_id=None):
         "status": "Paid",
         "created_at": datetime.utcnow(),
         "payment_method": payment_method,
-        "transaction_id": transaction_id
+        "transaction_id": transaction_id,
+        "delivery_status": "Processing"
     }
 
     orders_collection.insert_one(order_data)

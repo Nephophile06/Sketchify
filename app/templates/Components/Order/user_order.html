@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Orders Page - Sketchify</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../static/css/homepage.css" />
+    <style>
+      body {
+        padding: 130px;
+        background-color: #f8f9fa;
+      }
+      table {
+        background-color: white;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+      }
+      th {
+        background-color: #007bff;
+        color: white;
+        vertical-align: middle !important;
+      }
+    </style>
+  </head>
+  <body>
+    {% include 'Components/navbar.html' %}
+
+    <div class="container">
+      <div class="text-center mb-4">
+        <h1 class="fw-bold">🧾 Your Orders</h1>
+      </div>
+
+      {% if orders %}
+      <div class="table-responsive">
+        <table
+          class="table table-bordered table-hover align-middle text-center"
+        >
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Status</th>
+              <th>Items</th>
+              <th>Total (৳)</th>
+              <th>Delivery Status</th>
+              <th>Print</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for order in orders %}
+            <tr>
+              <td>{{ order['created_at'].strftime('%b %d, %Y') }}</td>
+              <td>{{ order['status'] }}</td>
+              <td class="text-start">
+                <ul class="list-unstyled mb-0">
+                  {% for item in order['items'] %}
+                  <li class="mb-2">
+                    {{ item['name'] }} ({{ item['quantity'] }}) - {{
+                    item['price'] }}৳
+                  </li>
+                  {% endfor %}
+                </ul>
+              </td>
+              <td>{{ order['total_amount'] }}</td>
+              <td>{{order['delivery_status']}}</td>
+              <td>
+                <a
+                  href="{{ url_for('order_route.print_invoice', order_id=order['_id']) }}"
+                  class="btn btn-outline-primary btn-sm"
+                  target="_blank"
+                >
+                  🖨️ Print Invoice
+                </a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+      <div class="alert alert-info text-center">No orders found.</div>
+      {% endif %}
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

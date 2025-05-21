@@ -44,6 +44,10 @@ def create_app():
     from .routes.checkout_routes import checkout_route
     app.register_blueprint(checkout_route)
     
+    # orders route
+    from .routes.orders_route import order_route
+    app.register_blueprint(order_route)
+    
     #stripe route
     from .routes.payment_routes import payment_route
     app.register_blueprint(payment_route)
