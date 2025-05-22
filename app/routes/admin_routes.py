@@ -4,6 +4,7 @@ from app.controller.admin_controller import authenticate_admin, user_list_contro
 from app.controller.database_collection_controller import getUsersCollection, getCategoriesCollection, getOrderedProductsCollection
 import io
 import csv
+from bson.objectid import ObjectId
 admin_route = Blueprint('admin_route', __name__)
 
 # Admin credentials accessing 
@@ -88,6 +89,65 @@ def admin_orders_list():
     return orders
 
 
+@admin_route.route("/admin/add-product", methods=["POST"])
+def admin_add_product():
+    name = request.form['name']
+    price = float(request.form['price'])
+    category = request.form['category']
+    image = request.form['image']
+    
+    products_collection = getCategoriesCollection()
+    
+    new_product = {
+        'name': name,
+        'price': price,
+        'category': category,
+        'image': image
+    }
+
+    products_collection.insert_one(new_product)
+    flash("Product Added Successfully", "success")
+    return redirect(url_for("admin_route.admin_products_list"))
+
+@admin_route.route("/admin/update-product/<product_id>",methods=["POST"])
+def admin_update_products(product_id):
+    print(product_id)
+    products_collection = getCategoriesCollection()
+    product = products_collection.find_one({'_id': ObjectId(product_id)})
+    
+    if not product:
+        flash('Product not found', 'danger')
+        return redirect(url_for('admin_route.admin_products_list'))    
+        
+    name = request.form['name']
+    price = float(request.form['price'])
+    category = request.form['category']
+    image_url = request.form['image']
+    
+    updated_product = {
+        'name' : name,
+        'price' : price,
+        'category': category,
+        'image': image_url
+    }
+    
+    products_collection.update_one({'_id':ObjectId(product_id)}, {"$set" : updated_product})
+    flash('Product updated successfully!', 'success')
+    return redirect(url_for('admin_route.admin_products_list'))
+    
+    
+
+@admin_route.route('/admin/delete-product/<product_id>', methods=['POST'])
+def admin_delete_product(product_id):
+    products = getCategoriesCollection()
+    result = products.delete_one({'_id': ObjectId(product_id)})
+    if result.deleted_count == 0:
+        flash('Failed to delete product.', 'danger')
+    else:
+        flash('Product deleted successfully!', 'success')
+    return redirect(url_for('admin_route.admin_products_list'))
+
+
 @admin_route.route('/admin/orders/export/<format>')
 def export_orders(format):
     orders_collection = getOrderedProductsCollection()
@@ -129,6 +189,25 @@ def export_orders(format):
         return response
 
     return "Export format not supported", 400
+
+
+
+@admin_route.route("/admin/orders/<order_id>/update-delivery-status", methods=["POST"])
+def update_delivery_status(order_id):
+    new_status = request.form.get("delivery_status")
+
+    if new_status not in ["Processing", "On the Way", "Delivered"]:
+        flash("Invalid status selected!", "danger")
+        return redirect(url_for("admin_route.admin_orders_list"))
+
+    orders_collection = getOrderedProductsCollection()
+    orders_collection.update_one(
+        {"_id": ObjectId(order_id)},
+        {"$set": {"delivery_status": new_status}}
+    )
+
+    flash("Delivery status updated to '{}'.".format(new_status), "success")
+    return redirect(url_for("admin_route.admin_orders_list"))
 
 
 @admin_route.route("/admin-logout")
