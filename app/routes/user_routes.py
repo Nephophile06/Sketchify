@@ -1,8 +1,10 @@
 from flask import Flask,flash, Blueprint, render_template, request, redirect, url_for
 from app import bcrypt
 import os                                       #environment variables access kore
+import re
 from pymongo import MongoClient
 from app.controller.user_controller import register_user_controller, login_user_controller, update_user_controller, delete_user_controller
+from app.controller.database_collection_controller import getCategoriesCollection, getFeaturedProductsCollection
 from flask import session
 user_route = Blueprint("user_route", __name__)
 
@@ -60,6 +62,32 @@ def user_register():
     #redirect
     return redirect(url_for("user_route.login" if success else "user_route.register"))
 
+
+
+
+@user_route.route("/search")
+def search_products():
+    query = request.args.get("query", "").strip()
+    
+    if not query:
+        flash("Please enter a search term.", "danger")
+        return redirect(url_for("default_route.home_page"))
+
+    products_collection = getCategoriesCollection()
+    featured_prodcuts_collection = getFeaturedProductsCollection()
+    # Escape special regex characters
+    safe_query = re.escape(query)
+
+    # Case-insensitive partial match
+    products = list(products_collection.find({
+        "name": {"$regex": safe_query, "$options": "i"}
+    }))
+    
+    fproducts = list(featured_prodcuts_collection.find({
+        "name" : {"$regex": safe_query, "$options" : "i"}
+    }))
+
+    return render_template("Components/Search/search_results.html", products=products, fproducts = fproducts ,query=query)
 
 
 @user_route.route("/logout")

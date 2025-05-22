@@ -2,11 +2,13 @@
   <a href="/" class="brand-logo">
     <img src="../static/Sketchify.png" alt="SKETCHIFY" height="120" />
   </a>
-  <div class="d-flex align-items-center">
-    <div class="search-container me-3">
-      <input type="text" class="search-box" placeholder="Type a product name" />
-      <button class="search-btn">Search</button>
-    </div>
+  <form action="{{ url_for('user_route.search_products') }}" method="GET" >
+    <div class="d-flex align-items-center">
+      <div class="search-container me-3">
+        <input type="text" class="search-box" placeholder="Type a product name" name="query"/>
+        <button class="search-btn" type="submit">Search</button>
+      </div>
+  </form>
 
     {%if session.get('user')%}
     <span class="me-3">{{ session['user']['username'] }}</span>
