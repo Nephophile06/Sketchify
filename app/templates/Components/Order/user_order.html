@@ -11,20 +11,45 @@
     <link rel="stylesheet" href="../../static/css/homepage.css" />
     <style>
       body {
-        padding: 130px;
-        background-color: #f8f9fa;
+        padding: 150px;
+        background-color: #fdeded;
       }
+      
       table {
-        background-color: white;
+        background-color: #60d0df;
         border-radius: 12px;
         overflow: hidden;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
       }
+
       th {
-        background-color: #007bff;
-        color: white;
+        background-color: #60d0df !important;
+        color: white !important;
         vertical-align: middle !important;
       }
+
+      table td {
+        background-color: #e4fafd !important; /* Light tint to distinguish rows */
+      }
+
+      tbody tr:nth-child(odd) td {
+        background-color: #eafcff !important;
+      }
+
+      tbody tr:nth-child(even) td {
+        background-color: #d5f7fd !important;
+      }
+
+      .btn-outline-primary {
+        color: rgb(0, 0, 0) !important;
+        border-color: #3c7a89 !important;
+      }
+
+      .btn-outline-primary:hover {
+        background-color: #3c7a89 !important;
+        color: white !important;
+      }
+
     </style>
   </head>
   <body>
@@ -38,14 +63,14 @@
       {% if orders %}
       <div class="table-responsive">
         <table
-          class="table table-bordered table-hover align-middle text-center"
+          class="table table-bordered table-hover align-middle text-center font-size-large"
         >
           <thead>
             <tr>
               <th>Date</th>
               <th>Status</th>
               <th>Items</th>
-              <th>Total (৳)</th>
+              <th>Total (Tk.)</th>
               <th>Delivery Status</th>
               <th>Print</th>
             </tr>
@@ -60,7 +85,7 @@
                   {% for item in order['items'] %}
                   <li class="mb-2">
                     {{ item['name'] }} ({{ item['quantity'] }}) - {{
-                    item['price'] }}৳
+                    item['price'] }}Tk.
                   </li>
                   {% endfor %}
                 </ul>

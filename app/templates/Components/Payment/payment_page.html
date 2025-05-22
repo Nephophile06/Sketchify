@@ -20,6 +20,7 @@
         align-items: center;
         justify-content: center;
         padding: 2rem 1rem;
+        font-family: "MS Comic Sans", cursive;
       }
 
       .glass-card {
@@ -34,27 +35,32 @@
 
       .glass-card:hover {
         transform: translateY(-10px);
-        box-shadow: 0 0 25px rgba(246, 139, 46, 0.3);
+        box-shadow: 0 0 25px rgba(0, 0, 0, 0.3);
       }
 
-      /* 🔮 Lavender Tint */
+      /* 🔮 Mint Tint */
       .purple-tint {
-        background-color: #a2ded0;
-  color: #1f3b3d;
-  border: none;
+        background-color: #c0fff0;
+        border: none;
       }
 
       .peach-tint {
-        background: rgba(255, 195, 160, 0.15);
-        border: 1px solid rgba(255, 195, 160, 0.3);
+        background: #c0fff0;
+        border: none;
+      }
+
+      .btn-primary {
+        background-color: #3c7a89 !important;
+        border-color: #3c7a89 !important;
+        color: white !important;
       }
 
       .btn-glow:hover {
-        box-shadow: 0 0 10px rgba(0, 123, 255, 0.5); 
+        box-shadow: 0 0 10px #3c7a89; 
       }
 
       .btn-glow-danger:hover {
-        box-shadow: 0 0 10px rgba(220, 53, 69, 0.5);
+        box-shadow: 0 0 10px #3c7a89;
       }
 
       .card-icon {
@@ -123,7 +129,6 @@
         </div>
 
         <!-- bKash / Nagad -->
-         <!-- 📱 bKash / Nagad – Peach Tint -->
         <div class="col-md-5 col-12">
           <div class="p-4 glass-card peach-tint h-100">
             <div class="text-center mb-3">
@@ -133,7 +138,7 @@
             <p class="-50">
               Make payment via bKash, Nagad or Rocket (SSLCOMMERZ).
             </p>
-            <a href="/pay" class="btn btn-danger btn-glow-danger mt-3"
+            <a href="/pay" class="btn btn-primary btn-glow-danger mt-3"
               >Pay with bKash/Nagad</a
             >
           </div>
