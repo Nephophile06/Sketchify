@@ -13,7 +13,7 @@ def save_order(user, cart, payment_method, transaction_id=None):
         "items": list(cart.values()),
         "total_amount": sum(item['price'] * item['quantity'] for item in cart.values()),
         "status": "Paid",
-        "created_at": datetime.utcnow(),
+        "created_at": datetime.today(),
         "payment_method": payment_method,
         "transaction_id": transaction_id,
         "delivery_status": "Processing"
