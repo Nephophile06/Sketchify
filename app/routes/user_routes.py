@@ -3,7 +3,7 @@ from app import bcrypt
 import os                                       #environment variables access kore
 import re
 from pymongo import MongoClient
-from app.controller.user_controller import register_user_controller, login_user_controller, update_user_controller, delete_user_controller
+from app.controller.user_controller import register_user_controller, login_user_controller, update_user_controller, delete_user_controller, generate_backup_code, send_backup_code_email, login_with_backup_controller
 from app.controller.database_collection_controller import getCategoriesCollection, getFeaturedProductsCollection
 from flask import session
 user_route = Blueprint("user_route", __name__)
@@ -40,13 +40,15 @@ def user_login():
 
 @user_route.route("/user_register", methods=["POST"])
 def user_register():
-
+    backup_code = generate_backup_code()
+    
     data = {
         'full_name' : request.form['name'],
         'username' : request.form['username'],
         'gender' : request.form['gender'],
         'email' : request.form['email'],
-        'password' : request.form['password']
+        'password' : request.form['password'],
+        'backup_code': backup_code
     } 
 
     # Checking for the password length
@@ -55,6 +57,7 @@ def user_register():
         return redirect(url_for("user_route.register"))
     
     success, message = register_user_controller(data)
+    send_backup_code_email(data['email'], backup_code)
 
     # Flash Message
     flash(message, "success" if success else "danger" )
@@ -63,6 +66,24 @@ def user_register():
     return redirect(url_for("user_route.login" if success else "user_route.register"))
 
 
+@user_route.route("/login-backup",methods=["GET", "POST"])
+def login_with_backup():
+    if request.method == "POST":
+        email = request.form["email"]
+        code = request.form["backup_code"]
+        
+        success, message = login_with_backup_controller({
+            "email": email,
+            "backup_code": code
+        })
+        if success:
+            flash(message, "success")
+            return redirect(url_for("user_route.user_dashboard"))
+        else:
+            flash(message, "danger")
+            return redirect(url_for("user_route.login_with_backup"))
+
+    return render_template("Components/login_with_backup.html")
 
 
 @user_route.route("/search")
