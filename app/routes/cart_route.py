@@ -27,7 +27,8 @@ def add_to_cart(product_id):
         cart[product_id_str] = {
             'name': product['name'],
             'price': float(product['price']),
-            'quantity': 1
+            'quantity': 1,
+            # 'category':product['category']
         }
 
     session['cart'] = cart

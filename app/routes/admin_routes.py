@@ -1,7 +1,9 @@
-from flask import Blueprint, render_template, request, session, redirect, url_for, flash
+from flask import Blueprint, render_template, request, session, redirect, url_for, flash, Response
 import os
-from app.controller.admin_controller import authenticate_admin, user_list_controller, product_list_controller
+from app.controller.admin_controller import authenticate_admin, user_list_controller, product_list_controller, orders_list_controller
 from app.controller.database_collection_controller import getUsersCollection, getCategoriesCollection, getOrderedProductsCollection
+import io
+import csv
 admin_route = Blueprint('admin_route', __name__)
 
 # Admin credentials accessing 
@@ -79,6 +81,55 @@ def admin_users_list():
 def admin_products_list():
     products = product_list_controller()
     return render_template('Components/Admin/products-list.html', products = products)
+
+@admin_route.route("/admin/orders-list")
+def admin_orders_list():
+    orders = orders_list_controller()
+    return orders
+
+
+@admin_route.route('/admin/orders/export/<format>')
+def export_orders(format):
+    orders_collection = getOrderedProductsCollection()
+
+    # Use same filtering logic
+    search = request.args.get("search", "")
+    filter_query = {
+        "$or": [
+            {"user_name": {"$regex": search, "$options": "i"}},
+            {"user_email": {"$regex": search, "$options": "i"}},
+            {"payment_method": {"$regex": search, "$options": "i"}},
+        ]
+    } if search else {}
+
+    orders_cursor = orders_collection.find(filter_query).sort("created_at", -1)
+    orders = list(orders_cursor)
+
+    for order in orders:
+        order['_id'] = str(order['_id'])
+
+    if format == 'csv':
+        output = io.StringIO()
+        writer = csv.writer(output)
+
+        writer.writerow(['Order ID', 'User Name', 'Email', 'Payment Method', 'Status', 'Created At'])
+
+        for order in orders:
+            writer.writerow([
+                order.get('_id'),
+                order.get('user_name'),
+                order.get('user_email'),
+                order.get('payment_method'),
+                order.get('delivery_status'),
+                order.get('created_at').strftime('%Y-%m-%d %H:%M') if order.get('created_at') else ''
+            ])
+
+        response = Response(output.getvalue(), content_type='text/csv')
+        response.headers['Content-Disposition'] = 'attachment; filename=orders.csv'
+        return response
+
+    return "Export format not supported", 400
+
 
 @admin_route.route("/admin-logout")
 def admin_logout():
