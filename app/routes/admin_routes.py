@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, session, redirect, url_for, flash
 import os
 from app.controller.admin_controller import authenticate_admin, user_list_controller, product_list_controller
-from app.controller.database_collection_controller import getUsersCollection, getCategoriesCollection
+from app.controller.database_collection_controller import getUsersCollection, getCategoriesCollection, getOrderedProductsCollection
 admin_route = Blueprint('admin_route', __name__)
 
 # Admin credentials accessing 
@@ -47,11 +47,22 @@ def admin_dashboard():
         for category in total_category:
             countC += 1
             category['_id'] = str(category['_id'])
+            
+        # Orders Collections
+        orders_collection = getOrderedProductsCollection()
+        orders_data = orders_collection.find()
+        orders_data = list(orders_data)
+        
+        count_O = 0
+        for order in orders_data:
+            count_O += 1
+            order['_id'] = str(order['_id'])
+            
         return render_template(
             "Components/Admin/dashboard.html",
             total_users = count,
             total_products = countC,
-            total_orders = 0
+            total_orders = count_O
         )
     
 
