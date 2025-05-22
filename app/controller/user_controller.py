@@ -1,8 +1,10 @@
+from flask_mail import Message
 import os                                       #environment variables access kore
 from pymongo import MongoClient
 from app import bcrypt
 from flask import session, flash, redirect, url_for
-
+from app import mail
+import random
 # Database Setup
 def userCollectionDatabase():
     client = MongoClient(os.getenv("MONGO_URI"))
@@ -112,4 +114,20 @@ def delete_user_controller(data):
     else:
         return False, "User Not Found"
 
-    
+
+def generate_backup_code():
+    return str(random.randint(10000000, 99999999))  # 8-digit code
+
+def send_backup_code_email(email, code):
+    subject = "Your Sketchify Backup Login Code"
+    body = f"""
+        Hi there,
+
+        Here is your 8-digit backup login code: {code}
+
+        Please keep this code safe. It can be used to log in if you forget your password.
+
+        - Sketchify Team
+    """
+    msg = Message(subject, recipients=[email], body=body)
+    mail.send(msg)
