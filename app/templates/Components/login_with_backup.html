@@ -53,19 +53,17 @@
                 {% endwith %}
                 <!-- 🔥 End Flash message block -->
 
-                <form method="POST" action="/user_login">
+                <form method="POST" action="">
                     <div class="mb-3">
                         <label for="loginEmail" class="form-label">Email</label>
                         <input type="email" class="form-control" id="loginEmail" name="email"
                             placeholder="Enter your email" required>
                     </div>
                     <div class="mb-3">
-                        <label for="loginPassword" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="loginPassword" name="password"
-                            placeholder="Enter password" required>
+                        <label for="loginPassword" class="form-label">8 Digit Backup Code </label>
+                        <input type="text" class="form-control" name="backup_code" maxlength="8" required />
                     </div>
                     <button type="submit" class="btn btn-primary w-100">Log In</button>
-                    <p class="text-center mt-3">Forgot your password ? <a href="/login-backup">Login with backup-code</a></p>
                     <p class="text-center mt-3">Don't have an account? <a href="/register">Sign up</a></p>
                 </form>
             </div>

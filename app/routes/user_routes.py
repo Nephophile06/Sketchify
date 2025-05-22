@@ -3,7 +3,7 @@ from app import bcrypt
 import os                                       #environment variables access kore
 import re
 from pymongo import MongoClient
-from app.controller.user_controller import register_user_controller, login_user_controller, update_user_controller, delete_user_controller, generate_backup_code, send_backup_code_email
+from app.controller.user_controller import register_user_controller, login_user_controller, update_user_controller, delete_user_controller, generate_backup_code, send_backup_code_email, login_with_backup_controller
 from app.controller.database_collection_controller import getCategoriesCollection, getFeaturedProductsCollection
 from flask import session
 user_route = Blueprint("user_route", __name__)
@@ -66,6 +66,24 @@ def user_register():
     return redirect(url_for("user_route.login" if success else "user_route.register"))
 
 
+@user_route.route("/login-backup",methods=["GET", "POST"])
+def login_with_backup():
+    if request.method == "POST":
+        email = request.form["email"]
+        code = request.form["backup_code"]
+        
+        success, message = login_with_backup_controller({
+            "email": email,
+            "backup_code": code
+        })
+        if success:
+            flash(message, "success")
+            return redirect(url_for("user_route.user_dashboard"))
+        else:
+            flash(message, "danger")
+            return redirect(url_for("user_route.login_with_backup"))
+
+    return render_template("Components/login_with_backup.html")
 
 
 @user_route.route("/search")

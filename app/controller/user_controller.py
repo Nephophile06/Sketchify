@@ -115,6 +115,26 @@ def delete_user_controller(data):
         return False, "User Not Found"
 
 
+def login_with_backup_controller(data):
+    email = data['email']
+    code = data['backup_code'].strip()
+    
+    users_collection = userCollectionDatabase()
+    user = users_collection.find_one({'email' : email, 'backup_code' : code})
+    
+    if not user['email']:
+        return False, "Invalid User Email not found"
+    
+    if user:
+        session["user"] = {
+            "_id" : str(user['_id']),
+            "username" : user["username"],
+            "email" : user["email"]
+        }
+        return True, "Logged in with the 8 digit backup code"
+    else:
+        return False, "Invalid Backup code."
+
 def generate_backup_code():
     return str(random.randint(10000000, 99999999))  # 8-digit code
 
