@@ -109,6 +109,44 @@ def admin_add_product():
     flash("Product Added Successfully", "success")
     return redirect(url_for("admin_route.admin_products_list"))
 
+@admin_route.route("/admin/update-product/<product_id>",methods=["POST"])
+def admin_update_products(product_id):
+    print(product_id)
+    products_collection = getCategoriesCollection()
+    product = products_collection.find_one({'_id': ObjectId(product_id)})
+    
+    if not product:
+        flash('Product not found', 'danger')
+        return redirect(url_for('admin_route.admin_products_list'))    
+        
+    name = request.form['name']
+    price = float(request.form['price'])
+    category = request.form['category']
+    image_url = request.form['image']
+    
+    updated_product = {
+        'name' : name,
+        'price' : price,
+        'category': category,
+        'image': image_url
+    }
+    
+    products_collection.update_one({'_id':ObjectId(product_id)}, {"$set" : updated_product})
+    flash('Product updated successfully!', 'success')
+    return redirect(url_for('admin_route.admin_products_list'))
+    
+    
+
+@admin_route.route('/admin/delete-product/<product_id>', methods=['POST'])
+def admin_delete_product(product_id):
+    products = getCategoriesCollection()
+    result = products.delete_one({'_id': ObjectId(product_id)})
+    if result.deleted_count == 0:
+        flash('Failed to delete product.', 'danger')
+    else:
+        flash('Product deleted successfully!', 'success')
+    return redirect(url_for('admin_route.admin_products_list'))
+
 
 @admin_route.route('/admin/orders/export/<format>')
 def export_orders(format):
