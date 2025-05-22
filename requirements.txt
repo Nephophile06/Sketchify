@@ -36,6 +36,7 @@ Flask-Mail==0.10.0
 Flask-SocketIO==5.5.1
 Flask-WTF==1.2.2
 greenlet==3.2.2
+gunicorn==23.0.0
 h11==0.13.0
 html5lib==1.1
 httpcore==0.14.5
