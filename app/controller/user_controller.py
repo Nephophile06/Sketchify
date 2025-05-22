@@ -107,7 +107,7 @@ def delete_user_controller(data):
     user = userCollectionDatabase()
     user_data = user.find_one({'email' : data['email']})
 
-    if data['email'] == user_data['email']:
+    if data['email'] == user_data['email']: # type: ignore
         user.delete_one({'email' : data['email']})
         session.pop('user')
         return True, "User Deleted"
@@ -122,7 +122,7 @@ def login_with_backup_controller(data):
     users_collection = userCollectionDatabase()
     user = users_collection.find_one({'email' : email, 'backup_code' : code})
     
-    if not user['email']:
+    if not user['email']: # type: ignore
         return False, "Invalid User Email not found"
     
     if user:
