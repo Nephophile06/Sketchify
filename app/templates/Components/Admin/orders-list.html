@@ -200,27 +200,7 @@
   </head>
 
   <body>
-    <!-- Flash messages -->
-    {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-    <div class="container">
-      {% for category, message in messages %}
-      <div class="flash-message flash-{{ category }}">
-        <span class="flash-icon">
-          {% if category == 'success' %}
-          <i class="bi bi-check-circle-fill text-success"></i>
-          {% elif category == 'danger' %}
-          <i class="bi bi-x-circle-fill text-danger"></i>
-          {% else %}
-          <i class="bi bi-info-circle-fill text-primary"></i>
-          {% endif %}
-        </span>
-        {{ message }}
-      </div>
-      {% endfor %}
-    </div>
-    {% endif %}
-    {% endwith %}
+  
 
     <div class="container-fluid">
       <div class="row">
@@ -260,6 +240,27 @@
 
           <!-- Orders Table -->
           <div class="table-responsive rounded shadow-sm">
+                <!-- Flash messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <div class="container">
+      {% for category, message in messages %}
+      <div class="flash-message flash-{{ category }}">
+        <span class="flash-icon">
+          {% if category == 'success' %}
+          <i class="bi bi-check-circle-fill text-success"></i>
+          {% elif category == 'danger' %}
+          <i class="bi bi-x-circle-fill text-danger"></i>
+          {% else %}
+          <i class="bi bi-info-circle-fill text-primary"></i>
+          {% endif %}
+        </span>
+        {{ message }}
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %}
             <table class="table table-striped align-middle mb-0">
               <thead class="table-dark">
                 <tr>
@@ -300,7 +301,16 @@
                   <td title="{{ order.user_name }}">{{ order.user_name }}</td>
                   <td title="{{ order.user_email }}">{{ order.user_email }}</td>
                   <td>{{ order.payment_method }}</td>
-                  <td>{{ order.delivery_status }}</td>
+                  <td>
+                    <form method="POST" action="{{ url_for('admin_route.update_delivery_status', order_id=order._id) }}">
+                      <select name="delivery_status" class="form-select form-select-sm" onchange="this.form.submit()">
+                        <option value="Processing" {% if order.delivery_status == 'Processing' %}selected{% endif %}>Processing</option>
+                        <option value="On the Way" {% if order.delivery_status == 'On the Way' %}selected{% endif %}>On the Way</option>
+                        <option value="Delivered" {% if order.delivery_status == 'Delivered' %}selected{% endif %}>Delivered</option>
+                      </select>
+                    </form>
+                  </td>
+                  
                   <td>
                     <ul class="list-unstyled mb-0">
                       {% for item in order['items'] %}
@@ -320,6 +330,8 @@
                 {% endfor %}
               </tbody>
             </table>
+
+            
           </div>
 
           <!-- Pagination -->
@@ -337,7 +349,12 @@
             </ul>
           </nav>
         </main>
+
+        
       </div>
+
+
+    
     </div>
 
     <!-- Bootstrap JS Bundle (optional, if you use Bootstrap JS components) -->

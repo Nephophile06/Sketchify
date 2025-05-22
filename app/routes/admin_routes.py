@@ -4,6 +4,7 @@ from app.controller.admin_controller import authenticate_admin, user_list_contro
 from app.controller.database_collection_controller import getUsersCollection, getCategoriesCollection, getOrderedProductsCollection
 import io
 import csv
+from bson.objectid import ObjectId
 admin_route = Blueprint('admin_route', __name__)
 
 # Admin credentials accessing 
@@ -129,6 +130,25 @@ def export_orders(format):
         return response
 
     return "Export format not supported", 400
+
+
+
+@admin_route.route("/admin/orders/<order_id>/update-delivery-status", methods=["POST"])
+def update_delivery_status(order_id):
+    new_status = request.form.get("delivery_status")
+
+    if new_status not in ["Processing", "On the Way", "Delivered"]:
+        flash("Invalid status selected!", "danger")
+        return redirect(url_for("admin_route.admin_orders_list"))
+
+    orders_collection = getOrderedProductsCollection()
+    orders_collection.update_one(
+        {"_id": ObjectId(order_id)},
+        {"$set": {"delivery_status": new_status}}
+    )
+
+    flash("Delivery status updated to '{}'.".format(new_status), "success")
+    return redirect(url_for("admin_route.admin_orders_list"))
 
 
 @admin_route.route("/admin-logout")
