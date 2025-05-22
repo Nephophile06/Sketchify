@@ -89,6 +89,27 @@ def admin_orders_list():
     return orders
 
 
+@admin_route.route("/admin/add-product", methods=["POST"])
+def admin_add_product():
+    name = request.form['name']
+    price = float(request.form['price'])
+    category = request.form['category']
+    image = request.form['image']
+    
+    products_collection = getCategoriesCollection()
+    
+    new_product = {
+        'name': name,
+        'price': price,
+        'category': category,
+        'image': image
+    }
+
+    products_collection.insert_one(new_product)
+    flash("Product Added Successfully", "success")
+    return redirect(url_for("admin_route.admin_products_list"))
+
+
 @admin_route.route('/admin/orders/export/<format>')
 def export_orders(format):
     orders_collection = getOrderedProductsCollection()
