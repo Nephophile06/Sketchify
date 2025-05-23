@@ -32,7 +32,7 @@ def register_user_controller(data):
     userCollection.insert_one(data)
     
     # Success Message
-    return True, "User Successfully Registered"
+    return True, "User Successfully Registered. A 8 digit backup code has been sent to your email."
 
 # Login User Controller
 def login_user_controller(data):
