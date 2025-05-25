@@ -21,11 +21,11 @@ User interaction:
 5. User dashboard -> My orders -> showing orders with details (with list) -> invoice print (a4) + can be sent into their email 
 6. Users can delete, update (email + password)
 
-Looking forward to adding more features like mobile app integration, customized theme, rider assign and many more.
-
 Admin interaction:
 1. Username + password for login
 2. Admin dashboard -> total user, total product, total order
 3. Products -> read, add, update, delete
 4. Orders -> every detail of each order… list can be exported as CSV file + can update the delivery status
 5. Logout
+
+Looking forward to adding more features like mobile app integration, customized theme, rider assign and many more.
