@@ -55,7 +55,8 @@
      top: 10px;
      left: 5px;
      color: #000000;
-     font-size: 16px;
+     font-size: 15px;
+     font-weight: 700;
      pointer-events: none;
      transition: 0.3s ease;
  }
@@ -80,15 +81,17 @@
  button {
      width: 100%;
      padding: 12px;
-     background-color: #60d0df;
+     background-color: #3c7a89;
      border: none;
      border-radius: 8px;
      color: white;
      font-size: 16px;
+     font-weight: 700;
+     font-family: inherit;
      cursor: pointer;
      transition: 0.3s ease;
  }
 
  button:hover {
-     background-color: #3c7a89;
+     background-color: #2b5964;
  }

@@ -7,4 +7,4 @@ if __name__ == "__main__":
 
 
 
-# #60d0df (akashi) #3c7a89 (dark green) #a388c8 (soft wisteria purple)
+# Brand Palette: Peach (#fdeded), Purple (#a388c8 / #8f72b5), Teal (#3c7a89 / #2b5964)

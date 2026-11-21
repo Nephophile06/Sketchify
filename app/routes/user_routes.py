@@ -20,10 +20,16 @@ def register():
 
 @user_route.route("/user-dashboard")
 def user_dashboard():
+    if not session.get('user'):
+        flash("Please log in to access your dashboard.", "warning")
+        return redirect(url_for("user_route.login"))
     return render_template("Components/userDashboard.html")
 
 @user_route.route("/edit-user-profile")
 def edit_user_profile():
+    if not session.get('user'):
+        flash("Please log in to edit your profile.", "warning")
+        return redirect(url_for("user_route.login"))
     return render_template("Components/editUserProfile.html")
 
 @user_route.route("/user_login", methods=["POST"])

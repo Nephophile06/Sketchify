@@ -20,24 +20,24 @@
         }
 
         .custom-sky-btn {
-          background-color: #a2ded0;
-          color: #1f3b3d;
+          background-color: #3c7a89;
+          color: #ffffff;
           border: none;
         }
 
         .custom-sky-btn:hover {
-          background-color: #89cfc0;
-          color: #122c2e;
+          background-color: #2b5964;
+          color: #ffffff;
         }
 
         .btn-edit-profile {
-          background-color: #60d0df;
+          background-color: #a388c8;
           color: white;
           border: none;
         }
 
         .btn-edit-profile:hover {
-          background-color: #49b6c6;
+          background-color: #8f72b5;
           color: white;
         }
 
@@ -79,8 +79,8 @@
     <!-- 🔥 End Flash message block -->
      
     <div class="container dashboard-header text-center">
-        <h2>Welcome, {{ session['user']['username'] }}</h2>
-        <p class="text-muted">Here's Your Sketchify Profile Overview</p>
+        <h2 class="fw-bold mb-2">Welcome, {{ session['user']['username'] if session.get('user') else '' }}</h2>
+        <p class="text-muted fs-6">Here's Your Sketchify Profile Overview</p>
     </div>
 
     <div class="container mt-5">
@@ -89,9 +89,9 @@
             <!-- Orders Card -->
             <div class="col-md-6">
                 <div class="card p-4 text-center">
-                    <h5 class="card-title">My Orders</h5>
-                    <p class="card-text text-muted">View and track your past orders.</p>
-                    <a href="/orders" class="btn custom-sky-btn btn-sm">View Orders</a>
+                    <h5 class="card-title fw-bold mb-2">My Orders</h5>
+                    <p class="card-text text-muted mb-3 fs-6">View and track your past orders.</p>
+                    <a href="/orders" class="btn custom-sky-btn btn-sm fw-bold px-4 py-2">View Orders</a>
                 </div>
             </div>
         </div>
@@ -100,9 +100,9 @@
              <!-- Profile Card -->
             <div class="col-md-6">
                 <div class="card p-4 text-center">
-                    <h5 class="card-title">My Profile</h5>
-                    <p class="card-text text-muted">Edit your personal information.</p>
-                    <a href="/edit-user-profile" class="btn btn-edit-profile btn-sm">Edit Profile</a>
+                    <h5 class="card-title fw-bold mb-2">My Profile</h5>
+                    <p class="card-text text-muted mb-3 fs-6">Edit your personal information.</p>
+                    <a href="/edit-user-profile" class="btn btn-edit-profile btn-sm fw-bold px-4 py-2">Edit Profile</a>
                 </div>
             </div>
         </div>
