@@ -18,7 +18,7 @@ def home_page():
 
 @default_route.route("/categories")
 def categories():
-    return render_template("categories.html")
+    return redirect(url_for("categories.category", category_name="new-in"))
 
 @default_route.route("/subscribe", methods=["POST"])
 def subscribe():

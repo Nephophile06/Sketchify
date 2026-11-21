@@ -41,7 +41,7 @@ def create_app():
     app.register_blueprint(admin_route)
     
     # Cart Routes
-    from .routes.cart_route import cart_route
+    from .routes.cart_routes import cart_route
     app.register_blueprint(cart_route)
     
     #Checkout route
@@ -49,7 +49,7 @@ def create_app():
     app.register_blueprint(checkout_route)
     
     # orders route
-    from .routes.orders_route import order_route
+    from .routes.order_routes import order_route
     app.register_blueprint(order_route)
     
     #stripe route
