@@ -49,10 +49,10 @@ def user_register():
     backup_code = generate_backup_code()
     
     data = {
-        'full_name' : request.form['name'],
-        'username' : request.form['username'],
+        'full_name' : request.form['name'].strip(),
+        'username' : request.form['username'].strip(),
         'gender' : request.form['gender'],
-        'email' : request.form['email'],
+        'email' : request.form['email'].strip(),
         'password' : request.form['password'],
         'backup_code': backup_code
     } 

@@ -10,106 +10,273 @@
     <style>
         body {
             background-color: #f2ebf7;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding-top: 125px; /* Matches navbar height */
+            overflow-x: hidden;
         }
-        .card {
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            border-radius: 15px;
+
+        .dashboard-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px 60px;
+            box-sizing: border-box;
+            width: 100%;
+            position: relative;
         }
+
         .dashboard-header {
-            margin-top: 30px;
+            margin-bottom: 2.2rem;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .dashboard-header h2 {
+            font-size: 2.1rem;
+            font-weight: 700;
+            color: #2c2538;
+            margin-bottom: 0.35rem;
+            letter-spacing: -0.2px;
+        }
+
+        .dashboard-header p {
+            font-size: 1.05rem;
+            color: #726b7d;
+            margin-bottom: 0;
+        }
+
+        .dashboard-cards-container {
+            max-width: 760px;
+            width: 100%;
+            position: relative;
+            z-index: 2;
+        }
+
+        .dashboard-card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 34px 28px;
+            box-shadow: 0 10px 25px rgba(143, 114, 181, 0.08);
+            border: 1px solid rgba(194, 170, 227, 0.3);
+            transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            height: 100%;
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 16px 32px rgba(143, 114, 181, 0.16);
+            border-color: rgba(194, 170, 227, 0.55);
+        }
+
+        .card-icon-bubble {
+            width: 58px;
+            height: 58px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 18px;
+            transition: transform 0.25s ease;
+        }
+
+        .dashboard-card:hover .card-icon-bubble {
+            transform: scale(1.08);
+        }
+
+        .bubble-orders {
+            background-color: #eaf3f5;
+        }
+
+        .bubble-profile {
+            background-color: #f4eef9;
+        }
+
+        .dashboard-card .card-title {
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: #2c2538;
+            margin-bottom: 8px;
+        }
+
+        .dashboard-card .card-text {
+            font-size: 0.95rem;
+            color: #726b7d;
+            margin-bottom: 24px;
+            line-height: 1.5;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-dashboard {
+            width: 100%;
+            max-width: 200px;
+            padding: 10px 24px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.25s ease;
+            border: none;
+            margin-top: auto;
         }
 
         .custom-sky-btn {
-          background-color: #3c7a89;
-          color: #ffffff;
-          border: none;
+            background-color: #3c7a89;
+            color: #ffffff;
         }
 
         .custom-sky-btn:hover {
-          background-color: #2b5964;
-          color: #ffffff;
+            background-color: #2b5964;
+            color: #ffffff;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(60, 122, 137, 0.3);
         }
 
         .btn-edit-profile {
-          background-color: #c2aae3;
-          color: white;
-          border: none;
+            background-color: #c2aae3;
+            color: #ffffff;
         }
 
         .btn-edit-profile:hover {
-          background-color: #8f72b5;
-          color: white;
+            background-color: #8f72b5;
+            color: #ffffff;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(143, 114, 181, 0.35);
         }
 
+        /* 🐶 Screen Bottom-Left Book & Puppy Bookmark Cutout */
+        .screen-corner-puppy {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            z-index: 1000;
+            pointer-events: auto;
+            cursor: pointer;
+            line-height: 0;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.3s ease;
+            filter: drop-shadow(4px -4px 16px rgba(44, 37, 56, 0.16));
+        }
 
-    .flash-message {
-      padding: 10px;
-      margin-bottom: 15px;
-      border-radius: 5px;
-      font-size: 0.95em;
-    }
+        .screen-corner-puppy:hover {
+            transform: translateY(-8px) scale(1.03);
+            filter: drop-shadow(6px -8px 24px rgba(44, 37, 56, 0.25));
+        }
 
-    .flash-success {
-      background-color: #d4edda;
-      color: #155724;
-      border: 1px solid #c3e6cb;
-    }
+        .corner-puppy-img {
+            width: 260px;
+            height: auto;
+            display: block;
+            vertical-align: bottom;
+            user-select: none;
+        }
 
-    .flash-danger {
-      background-color: #f8d7da;
-      color: #721c24;
-      border: 1px solid #f5c6cb;
-    }
+        @media (max-width: 1200px) {
+            .corner-puppy-img {
+                width: 220px;
+            }
+        }
+
+        @media (max-width: 991px) {
+            .corner-puppy-img {
+                width: 170px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .corner-puppy-img {
+                width: 130px;
+            }
+        }
+            .screen-corner-puppy {
+                left: 5px;
+            }
+        }
     </style>
 </head>
-<body style="padding-top: 145px; padding-bottom: 50px; background-color: #f2ebf7;">
+<body>
 
     {% include 'Components/navbar.html' %}
 
-     <!-- 🔥 Flash message block -->
+    <!-- 🔥 Flash message block -->
     {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
-    {% for category, message in messages %}
-    <div class="flash-message flash-{{ category }}">
-      {{ message }}
+    <div class="flash-container">
+      {% for category, message in messages %}
+      <div class="flash-message flash-{{ category }}">
+        <span>{{ message }}</span>
+        <button type="button" class="flash-close-btn" onclick="this.parentElement.remove()" title="Close">&times;</button>
+      </div>
+      {% endfor %}
     </div>
-    {% endfor %}
     {% endif %}
     {% endwith %}
     <!-- 🔥 End Flash message block -->
-     
-    <div class="container dashboard-header text-center">
-        <h2 class="fw-bold mb-2">Welcome, {{ session['user']['username'] if session.get('user') else '' }}</h2>
-        <p class="text-muted fs-6">Here's Your Sketchify Profile Overview</p>
-    </div>
 
-    <div class="container mt-5">
-        <div class="row g-4 justify-content-center mb-4">
+    <main class="dashboard-main">
 
-            <!-- Orders Card -->
-            <div class="col-md-6">
-                <div class="card p-4 text-center">
-                    <h5 class="card-title fw-bold mb-2">My Orders</h5>
-                    <p class="card-text text-muted mb-3 fs-6">View and track your past orders.</p>
-                    <a href="/orders" class="btn custom-sky-btn btn-sm fw-bold px-4 py-2">View Orders</a>
+        <div class="dashboard-header">
+            <h2>Welcome, {{ session['user']['username'] if session.get('user') else '' }}</h2>
+            <p>Here's Your Sketchify Profile Overview</p>
+        </div>
+
+        <div class="container dashboard-cards-container">
+            <div class="row g-4 justify-content-center">
+
+                <!-- Orders Card -->
+                <div class="col-12 col-md-6">
+                    <div class="dashboard-card">
+                        <div class="card-icon-bubble bubble-orders">
+                            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#3c7a89" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                                <line x1="3" y1="6" x2="21" y2="6"></line>
+                                <path d="M16 10a4 4 0 0 1-8 0"></path>
+                            </svg>
+                        </div>
+                        <h4 class="card-title">My Orders</h4>
+                        <p class="card-text">View and track your past orders.</p>
+                        <a href="/orders" class="btn btn-dashboard custom-sky-btn">View Orders</a>
+                    </div>
                 </div>
+
+                <!-- Profile Card -->
+                <div class="col-12 col-md-6">
+                    <div class="dashboard-card">
+                        <div class="card-icon-bubble bubble-profile">
+                            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#8f72b5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                        </div>
+                        <h4 class="card-title">My Profile</h4>
+                        <p class="card-text">Edit your personal information.</p>
+                        <a href="/edit-user-profile" class="btn btn-dashboard btn-edit-profile">Edit Profile</a>
+                    </div>
+                </div>
+
             </div>
         </div>
-           
-        <div class="row justify-content-center">
-             <!-- Profile Card -->
-            <div class="col-md-6">
-                <div class="card p-4 text-center">
-                    <h5 class="card-title fw-bold mb-2">My Profile</h5>
-                    <p class="card-text text-muted mb-3 fs-6">Edit your personal information.</p>
-                    <a href="/edit-user-profile" class="btn btn-edit-profile btn-sm fw-bold px-4 py-2">Edit Profile</a>
-                </div>
-            </div>
-        </div>
 
-        </div>
+    </main>
+
+    <!-- 🐶 Screen Corner Book & Puppy Bookmark (Bottom-Left Corner of Viewport) -->
+    <div class="screen-corner-puppy" title="Sketchify Bookmark & Book">
+        <img src="{{ url_for('static', filename='stickers/book_and_puppy.png') }}" alt="Book and Puppy Bookmark" class="corner-puppy-img">
     </div>
-
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

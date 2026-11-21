@@ -56,44 +56,30 @@
         background-color: #3c7a89 !important;
         color: white !important;
       }
-
-      .flash-message {
-        padding: 10px;
-        margin-bottom: 15px;
-        border-radius: 5px;
-        font-size: 0.95em;
-      }
-
-      .flash-success {
-        background-color: #d4edda;
-        color: #155724;
-        border: 1px solid #c3e6cb;
-      }
-
-      .flash-danger {
-        background-color: #f8d7da;
-        color: #721c24;
-        border: 1px solid #f5c6cb;
-      }
-
     </style>
   </head>
   <body>
     {% include 'Components/navbar.html' %}
 
+    <!-- 🔥 Flash message block -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <div class="flash-container">
+      {% for category, message in messages %}
+      <div class="flash-message flash-{{ category }}">
+        <span>{{ message }}</span>
+        <button type="button" class="flash-close-btn" onclick="this.parentElement.remove()" title="Close">&times;</button>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %}
+    <!-- 🔥 End Flash message block -->
+
     <div class="container">
       <div class="text-center mb-4">
         <h1 class="fw-bold">🧾 Your Orders</h1>
       </div>
-
-      <div class="mt-5">
-      <!-- 🔥 Flash message block -->
-      {% with messages = get_flashed_messages(with_categories=true) %} {% if
-      messages %} {% for category, message in messages %}
-      <div class="flash-message flash-{{ category }}">{{ message }}</div>
-      {% endfor %} {% endif %} {% endwith %}
-      <!-- 🔥 End Flash message block -->
-    </div>
 
       {% if orders %}
       <div class="table-responsive">

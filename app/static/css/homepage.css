@@ -165,7 +165,7 @@ body {
 .site-footer,
 footer {
     background-color: #c2aae3;
-    color: #ffffff;
+    color: #264653;
     padding: 55px 0 25px 0;
     text-align: left;
     font-family: 'Comic Neue', cursive, sans-serif;
@@ -182,8 +182,8 @@ footer {
 
 .footer-grid {
     display: grid;
-    grid-template-columns: 1.35fr 0.85fr 0.95fr 1.15fr;
-    gap: 40px;
+    grid-template-columns: 1.35fr 1fr 1.35fr;
+    gap: 55px;
     align-items: start;
 }
 
@@ -192,11 +192,16 @@ footer {
     flex-direction: column;
 }
 
+.footer-col-categories {
+    justify-self: center;
+    padding-left: 20px;
+}
+
 .footer-heading {
     font-size: 1.25rem;
     font-weight: 700;
     margin-bottom: 16px;
-    color: #ffffff;
+    color: #264653;
     letter-spacing: 0.3px;
     position: relative;
     padding-bottom: 8px;
@@ -209,16 +214,16 @@ footer {
     bottom: 0;
     left: 0;
     width: 35px;
-    height: 2.5px;
-    background-color: #ffe8f0;
+    height: 3px;
+    background-color: #3c7a89;
     border-radius: 2px;
 }
 
 .footer-text {
-    font-size: 0.92rem;
-    font-weight: 400;
+    font-size: 0.95rem;
+    font-weight: 600;
     line-height: 1.65;
-    color: #f7effb;
+    color: #2b4550;
     margin-bottom: 14px;
 }
 
@@ -230,24 +235,26 @@ footer {
 }
 
 .social-chip {
-    background: rgba(255, 255, 255, 0.16);
-    color: #ffffff !important;
-    padding: 6px 16px;
+    background: #ffffff;
+    color: #3c7a89 !important;
+    padding: 7px 18px;
     border-radius: 50px;
     text-decoration: none !important;
     font-weight: 700;
     font-size: 0.88rem;
     display: inline-flex;
     align-items: center;
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    border: 1.5px solid rgba(60, 122, 137, 0.35);
+    box-shadow: 0 2px 8px rgba(38, 70, 83, 0.08);
     transition: all 0.25s ease;
 }
 
 .social-chip:hover {
-    background: #ffffff;
-    color: #3c7a89 !important;
+    background: #3c7a89;
+    color: #ffffff !important;
+    border-color: #3c7a89;
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 12px rgba(60, 122, 137, 0.25);
 }
 
 .footer-nav-list {
@@ -261,41 +268,53 @@ footer {
 }
 
 .footer-nav-list a {
-    color: #f7effb;
+    color: #264653;
     text-decoration: none;
-    font-size: 0.92rem;
-    font-weight: 600;
+    font-size: 0.95rem;
+    font-weight: 700;
     transition: all 0.2s ease;
     display: inline-block;
 }
 
 .footer-nav-list a:hover {
-    color: #ffffff;
+    color: #3c7a89;
     transform: translateX(4px);
     text-decoration: underline;
 }
 
-.footer-trust-badges {
+.footer-trust-list {
+    list-style: none;
+    padding: 0;
+    margin: 12px 0 0 0;
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    margin-top: 8px;
+    gap: 10px;
 }
 
-.trust-badge {
-    font-size: 0.85rem;
-    font-weight: 600;
-    background: rgba(255, 255, 255, 0.12);
-    padding: 6px 12px;
-    border-radius: 8px;
-    color: #ffffff;
-    display: inline-block;
-    width: fit-content;
-    border: 1px solid rgba(255, 255, 255, 0.15);
+.trust-item {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #2b4550;
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding-left: 18px;
+}
+
+.trust-item::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: #3c7a89;
 }
 
 .footer-bottom-bar {
-    border-top: 1px solid rgba(255, 255, 255, 0.22);
+    border-top: 1.5px solid rgba(38, 70, 83, 0.18);
     margin-top: 45px;
     padding-top: 22px;
     display: flex;
@@ -306,22 +325,28 @@ footer {
 }
 
 .copyright-text {
-    font-size: 0.85rem;
-    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.88rem;
+    color: #2b4550;
+    font-weight: 700;
     margin: 0;
 }
 
 .footer-tagline {
-    font-size: 0.85rem;
-    color: rgba(255, 255, 255, 0.85);
+    font-size: 0.88rem;
+    color: #2b4550;
     margin: 0;
     font-style: italic;
+    font-weight: 700;
 }
 
 @media (max-width: 992px) {
     .footer-grid {
         grid-template-columns: 1fr 1fr;
         gap: 35px;
+    }
+    .footer-col-categories {
+        justify-self: auto;
+        padding-left: 0;
     }
 }
 
@@ -722,5 +747,102 @@ footer {
   #div1, #div2, #div3, #div4, #div5 {
     grid-area: auto;
     height: 220px;
+  }
+}
+
+/* ========================================================
+   Floating Toast Notifications (Upper Right Corner)
+   ======================================================== */
+.flash-container {
+  position: fixed;
+  top: 95px;
+  right: 25px;
+  z-index: 99999;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+  pointer-events: none;
+}
+
+.flash-message {
+  width: fit-content;
+  max-width: 440px;
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-family: 'Comic Neue', cursive, sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.14);
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  pointer-events: auto;
+  animation: toastSlideIn 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+@keyframes toastSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.flash-close-btn {
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+  color: inherit;
+  opacity: 0.65;
+  padding: 0;
+  margin: 0;
+  transition: opacity 0.2s ease;
+}
+
+.flash-close-btn:hover {
+  opacity: 1;
+}
+
+.flash-success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1.5px solid #c3e6cb;
+}
+
+.flash-danger {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1.5px solid #f5c6cb;
+}
+
+.flash-warning {
+  background-color: #fff3cd;
+  color: #856404;
+  border: 1.5px solid #ffeeba;
+}
+
+.flash-info {
+  background-color: #d1ecf1;
+  color: #0c5460;
+  border: 1.5px solid #bee5eb;
+}
+
+@media (max-width: 576px) {
+  .flash-container {
+    top: 80px;
+    right: 15px;
+    left: 15px;
+    align-items: stretch;
+  }
+  .flash-message {
+    width: auto;
+    max-width: 100%;
   }
 }

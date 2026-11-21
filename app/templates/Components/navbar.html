@@ -285,5 +285,15 @@
       }, 1200);
     });
   });
+
+  // Auto dismiss floating flash toast messages after 4.5 seconds
+  setTimeout(function() {
+    var flashes = document.querySelectorAll('.flash-message');
+    flashes.forEach(function(el) {
+      el.style.opacity = '0';
+      el.style.transform = 'translateX(40px)';
+      setTimeout(function() { el.remove(); }, 350);
+    });
+  }, 4500);
 })();
 </script>

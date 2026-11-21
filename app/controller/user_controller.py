@@ -118,7 +118,7 @@ def delete_user_controller(data):
 
 
 def login_with_backup_controller(data):
-    email = data['email']
+    email = data['email'].strip()
     code = data['backup_code'].strip()
     
     users_collection = userCollectionDatabase()

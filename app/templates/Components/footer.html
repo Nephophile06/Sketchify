@@ -3,7 +3,7 @@
     <div class="footer-grid">
       <!-- Col 1: Brand & About -->
       <div class="footer-col footer-col-brand">
-        <h3 class="footer-heading">Sketchify ✨</h3>
+        <h3 class="footer-heading">Sketchify</h3>
         <p class="footer-text">
           A cozy creative haven for handpicked art supplies, aesthetic stationery, and cute desk organizers. Curated with love to spark your everyday imagination.
         </p>
@@ -18,7 +18,7 @@
       </div>
 
       <!-- Col 2: Categories -->
-      <div class="footer-col">
+      <div class="footer-col footer-col-categories">
         <h3 class="footer-heading">Categories</h3>
         <ul class="footer-nav-list">
           <li><a href="{{ url_for('categories.category', category_name='new-in') }}">New Arrivals</a></li>
@@ -29,36 +29,24 @@
         </ul>
       </div>
 
-      <!-- Col 3: Customer Care & Quick Links -->
-      <div class="footer-col">
-        <h3 class="footer-heading">Customer Care</h3>
-        <ul class="footer-nav-list">
-          <li><a href="{{ url_for('user_route.user_dashboard') }}">My Dashboard</a></li>
-          <li><a href="{{ url_for('order_route.orders_by_username') }}">Order History</a></li>
-          <li><a href="{{ url_for('cart_route.view_cart') }}">Shopping Cart</a></li>
-          <li><a href="{{ url_for('user_route.login') }}">Account Login</a></li>
-          <li><a href="{{ url_for('user_route.register') }}">Create Account</a></li>
-        </ul>
-      </div>
-
-      <!-- Col 4: Trust, Safety & Policy -->
+      <!-- Col 3: Trust, Safety & Policy -->
       <div class="footer-col footer-col-trust" id="privacy-policy">
         <h3 class="footer-heading">Privacy & Trust</h3>
         <p class="footer-text">
-          We collect your essential information solely for order fulfillment, customer support, and personalizing your shopping experience. We never spam.
+          We collect your essential information solely for order fulfillment, customer support, and personalizing your shopping experience.
         </p>
-        <div class="footer-trust-badges">
-          <span class="trust-badge">🔒 Secure Checkout</span>
-          <span class="trust-badge">📦 Careful Packaging</span>
-          <span class="trust-badge">🚚 Fast Nationwide Delivery</span>
-        </div>
+        <ul class="footer-trust-list">
+          <li class="trust-item">Secure Checkout</li>
+          <li class="trust-item">Careful Packaging</li>
+          <li class="trust-item">Fast Nationwide Delivery</li>
+        </ul>
       </div>
     </div>
 
     <!-- Bottom Copyright Strip -->
     <div class="footer-bottom-bar">
       <p class="copyright-text">© 2024 Sketchify. All rights reserved.</p>
-      <p class="footer-tagline">Handcrafted with 💜 for artists, dreamers & stationery lovers</p>
+      <p class="footer-tagline">Handcrafted with 🎨 for artists, dreamers & stationery lovers</p>
     </div>
   </div>
 </footer>

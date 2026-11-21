@@ -15,24 +15,6 @@
 
 
     <style>
-      .flash-message {
-        padding: 10px;
-        margin-bottom: 15px;
-        border-radius: 5px;
-        font-size: 0.95em;
-      }
-
-      .flash-success {
-        background-color: #d4edda;
-        color: #155724;
-        border: 1px solid #c3e6cb;
-      }
-
-      .flash-danger {
-        background-color: #f8d7da;
-        color: #721c24;
-        border: 1px solid #f5c6cb;
-      }
 
       body {
         padding-top: 145px;
@@ -78,14 +60,21 @@
     <!-- Navigation Bar -->
 
     {% include 'Components/navbar.html' %}
-    <div class="mt-5">
-      <!-- 🔥 Flash message block -->
-      {% with messages = get_flashed_messages(with_categories=true) %} {% if
-      messages %} {% for category, message in messages %}
-      <div class="flash-message flash-{{ category }}">{{ message }}</div>
-      {% endfor %} {% endif %} {% endwith %}
-      <!-- 🔥 End Flash message block -->
+
+    <!-- 🔥 Flash message block -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <div class="flash-container">
+      {% for category, message in messages %}
+      <div class="flash-message flash-{{ category }}">
+        <span>{{ message }}</span>
+        <button type="button" class="flash-close-btn" onclick="this.parentElement.remove()" title="Close">&times;</button>
+      </div>
+      {% endfor %}
     </div>
+    {% endif %}
+    {% endwith %}
+    <!-- 🔥 End Flash message block -->
 
     <h1 class="categories-title">CATEGORIES</h1>
 

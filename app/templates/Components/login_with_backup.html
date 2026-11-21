@@ -61,7 +61,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="loginPassword" class="form-label">8 Digit Backup Code <span class="required-star">*</span></label>
-                        <input type="text" class="form-control" name="backup_code" placeholder="e.g. 12345678" maxlength="8" required />
+                        <input type="text" class="form-control" name="backup_code" placeholder="e.g. 12345678" maxlength="8" minlength="8" pattern="[0-9]{8}" title="Please enter all 8 digits" required />
                     </div>
                     <button type="submit" class="btn btn-primary w-100">Log In</button>
                     <p class="text-center mt-3">Remember password? <a href="/login">Back to password login</a></p>
