@@ -89,6 +89,9 @@ def update_user_controller(data):
 
     # Email update logic
     if new_email != current_email:
+        existing_user = userCollection.find_one({'email': new_email})
+        if existing_user:
+            return False, "This email is already in use by another account."
         update_user_data['email'] = new_email
 
     # If anything changed, update DB
@@ -103,16 +106,15 @@ def update_user_controller(data):
 
 # Delete user controller
 def delete_user_controller(data):
-
     user = userCollectionDatabase()
-    user_data = user.find_one({'email' : data['email']})
+    user_data = user.find_one({'email': data['email']})
 
-    if data['email'] == user_data['email']: # type: ignore
-        user.delete_one({'email' : data['email']})
-        session.pop('user')
-        return True, "User Deleted"
-    else:
+    if not user_data:
         return False, "User Not Found"
+
+    user.delete_one({'email': data['email']})
+    session.pop('user', None)
+    return True, "User Deleted"
 
 
 def login_with_backup_controller(data):
@@ -120,20 +122,17 @@ def login_with_backup_controller(data):
     code = data['backup_code'].strip()
     
     users_collection = userCollectionDatabase()
-    user = users_collection.find_one({'email' : email, 'backup_code' : code})
+    user = users_collection.find_one({'email': email, 'backup_code': code})
     
-    if not user['email']: # type: ignore
-        return False, "Invalid User Email not found"
+    if not user:
+        return False, "Invalid email or backup code."
     
-    if user:
-        session["user"] = {
-            "_id" : str(user['_id']),
-            "username" : user["username"],
-            "email" : user["email"]
-        }
-        return True, "Logged in with the 8 digit backup code"
-    else:
-        return False, "Invalid Backup code."
+    session["user"] = {
+        "_id": str(user['_id']),
+        "username": user["username"],
+        "email": user["email"]
+    }
+    return True, "Logged in with the 8 digit backup code"
 
 def generate_backup_code():
     return str(random.randint(10000000, 99999999))  # 8-digit code
@@ -149,5 +148,10 @@ def send_backup_code_email(email, code):
 
         - Sketchify Team
     """
-    msg = Message(subject, recipients=[email], body=body)
-    mail.send(msg)
+    try:
+        msg = Message(subject, recipients=[email], body=body)
+        mail.send(msg)
+        return True
+    except Exception as e:
+        print("Mail sending error:", e)
+        return False

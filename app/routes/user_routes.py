@@ -57,10 +57,14 @@ def user_register():
         return redirect(url_for("user_route.register"))
     
     success, message = register_user_controller(data)
-    send_backup_code_email(data['email'], backup_code)
+    if success:
+        sent = send_backup_code_email(data['email'], backup_code)
+        if not sent:
+            flash(f"Account created! Note: Email could not be sent. Your backup login code is: {backup_code}", "warning")
+            return redirect(url_for("user_route.login"))
 
     # Flash Message
-    flash(message, "success" if success else "danger" )
+    flash(message, "success" if success else "danger")
 
     #redirect
     return redirect(url_for("user_route.login" if success else "user_route.register"))
@@ -113,7 +117,7 @@ def search_products():
 
 @user_route.route("/logout")
 def logout():
-    session.pop('user')
+    session.pop('user', None)
     success = True
     flash("You have been logged out", "success" if success else "danger")
     return redirect(url_for('default_route.home_page'))  

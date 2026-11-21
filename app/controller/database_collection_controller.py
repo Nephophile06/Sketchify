@@ -1,5 +1,8 @@
 from pymongo import MongoClient
+from dotenv import load_dotenv
 import os
+
+load_dotenv()
 
 cluster = MongoClient(os.getenv("MONGO_URI"))
 main_database = cluster['Sketchify']
@@ -23,3 +26,8 @@ def getFeaturedProductsCollection():
 def getOrderedProductsCollection():
     orders_collection = main_database['Orders']
     return orders_collection
+
+# Feedback Collection
+def getFeedbackCollection():
+    feedback_collection = main_database['Feedback']
+    return feedback_collection

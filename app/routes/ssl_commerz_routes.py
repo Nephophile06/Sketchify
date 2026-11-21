@@ -1,5 +1,6 @@
 import requests
 import uuid
+import os
 from flask import Blueprint, session, redirect, url_for, request, flash
 from app.controller.order_controller import save_order
 sslcommerz_route = Blueprint("sslcommerz_route", __name__)
@@ -11,11 +12,17 @@ def pay_with_sslcommerz():
         flash("Cart is empty.", "warning")
         return redirect(url_for("cart_route.view_cart"))
 
+    user = session.get('user', {})
     total_amount = sum(item['price'] * item['quantity'] for item in cart.values())
 
+    store_id = os.getenv('SSLCOMMERZ_STORE_ID', 'tousi682d997d587ca')
+    store_passwd = os.getenv('SSLCOMMERZ_STORE_PASSWD', 'tousi682d997d587ca@ssl')
+    is_sandbox = os.getenv('SSLCOMMERZ_IS_SANDBOX', 'true').lower() == 'true'
+    gateway_url = "https://sandbox.sslcommerz.com/gwprocess/v4/api.php" if is_sandbox else "https://securepay.sslcommerz.com/gwprocess/v4/api.php"
+
     data = {
-        'store_id': 'tousi682d997d587ca',
-        'store_passwd': 'tousi682d997d587ca@ssl',
+        'store_id': store_id,
+        'store_passwd': store_passwd,
         'total_amount': str(format(total_amount, '.2f')),
         'currency': 'BDT',
         'tran_id': str(uuid.uuid4()),  # Unique transaction ID
@@ -23,20 +30,20 @@ def pay_with_sslcommerz():
         'fail_url': url_for('sslcommerz_route.payment_failed', _external=True),
         'cancel_url': url_for('sslcommerz_route.payment_canceled', _external=True),
         'emi_option': 0,
-        'cus_name': 'Customer Name',
-        'cus_email': 'customer@email.com',
+        'cus_name': user.get('username', 'Customer Name'),
+        'cus_email': user.get('email', 'customer@email.com'),
         'cus_phone': '01711111111',
         'cus_add1': 'Dhaka',
         'cus_city': 'Dhaka',
         'cus_country': 'Bangladesh',
         'shipping_method': 'NO',
         'product_name': 'Sketchify Cart',
-        'product_category': 'mobile',  # ✅ push mobile payment method
+        'product_category': 'Stationery & Art Supplies',  # ✅ push mobile payment method
         'product_profile': 'physical-goods',  # ✅ required for bKash popup
     }
 
     try:
-        response = requests.post("https://sandbox.sslcommerz.com/gwprocess/v4/api.php", data=data)
+        response = requests.post(gateway_url, data=data)
         res_data = response.json()
     except Exception as e:
         return f"Error communicating with SSLCommerz: {str(e)}"

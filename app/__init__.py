@@ -1,6 +1,10 @@
 from flask import Flask
 from dotenv import load_dotenv
 import os
+
+# Load environment variables early
+load_dotenv()
+
 from pymongo import MongoClient
 from flask_bcrypt import Bcrypt
 from flask_mail import Mail
@@ -16,8 +20,7 @@ Users_first_collection = None
 def create_app():
     app = Flask(__name__)
     # Secret Key
-    app.secret_key = "$anika202!$#"
-    load_dotenv()
+    app.secret_key = os.getenv("SECRET_KEY", "$anika202!$#")
     
     bcrypt.init_app(app)
 
