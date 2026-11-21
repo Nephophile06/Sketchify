@@ -1,4 +1,4 @@
-from flask import Blueprint, session, redirect, url_for, request, render_template
+from flask import Blueprint, session, redirect, url_for, request, render_template, jsonify
 from bson.objectid import ObjectId
 from app.controller.database_collection_controller import getCategoriesCollection, getFeaturedProductsCollection
 cart_route = Blueprint('cart_route', __name__)
@@ -8,14 +8,29 @@ def add_to_cart(product_id):
     products_collection = getCategoriesCollection()
     featured_collection = getFeaturedProductsCollection()
 
+    is_ajax = (
+        request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+        or request.args.get('format') == 'json'
+        or 'application/json' in request.headers.get('Accept', '')
+    )
+
+    try:
+        obj_id = ObjectId(product_id)
+    except Exception:
+        obj_id = product_id
+
     # Try to find in products
-    product = products_collection.find_one({"_id": ObjectId(product_id)})
+    product = products_collection.find_one({"_id": obj_id})
+    if not product and isinstance(obj_id, ObjectId):
+        product = products_collection.find_one({"_id": str(product_id)})
     
     # If not found, try in featured products
     if not product:
-        product = featured_collection.find_one({"_id": ObjectId(product_id)})
+        product = featured_collection.find_one({"_id": obj_id})
     
     if not product:
+        if is_ajax:
+            return jsonify({'success': False, 'message': 'Product not found'}), 404
         return redirect(request.referrer or url_for('default_route.home_page'))
 
     cart = session.get('cart', {})
@@ -32,6 +47,17 @@ def add_to_cart(product_id):
         }
 
     session['cart'] = cart
+    session.modified = True
+
+    if is_ajax:
+        return jsonify({
+            'success': True,
+            'cart_count': len(cart),
+            'total_items': sum(item.get('quantity', 1) for item in cart.values()),
+            'product_name': product.get('name', 'Product'),
+            'message': f"{product.get('name', 'Product')} added to cart!"
+        })
+
     return redirect(request.referrer or url_for('default_route.home_page'))
 
 

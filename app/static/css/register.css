@@ -1,97 +1,135 @@
 @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,400&display=swap');
 
  body {
-     background: #a388c8;
+     background: linear-gradient(135deg, #c2aae3 0%, #d8bfe3 40%, #ecd0dc 70%, #fce2e8 100%);
+     background-color: #c7b4de;
      font-family: 'Comic Neue', cursive, sans-serif;
      display: flex;
      justify-content: center;
      align-items: center;
-     height: 100vh;
+     min-height: 100vh;
+     padding: 30px 15px;
      margin: 0;
  }
- .logo {
-     width: 200px;
-     margin-bottom: 1px;
+
+ .logo-link {
      display: block;
-     margin-left: auto;
-     margin-right: auto;
+     text-align: center;
+     margin-bottom: 20px;
+     text-decoration: none;
+ }
+
+ .logo {
+     width: 185px;
+     height: auto;
+     display: inline-block;
+     transition: transform 0.2s ease;
+ }
+
+ .logo:hover {
+     transform: scale(1.04);
  }
 
  .form-card {
      background: #fdeded;
-     padding: 40px 30px;
-     border-radius: 16px;
-     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+     padding: 36px 34px;
+     border-radius: 18px;
+     box-shadow: 0 10px 30px rgba(163, 136, 200, 0.16);
+     border: 1px solid rgba(163, 136, 200, 0.2);
      width: 100%;
-     max-width: 400px;
+     max-width: 440px;
  }
 
- .form-card h2 {
+ .form-card h3 {
      text-align: center;
-     margin-bottom: 30px;
-     color: #000000;
- }
-
- .input-group {
-     position: relative;
-     margin-bottom: 25px;
- }
-
- .input-group input,
- .input-group select {
-     width: 100%;
-     border: none;
-     border-bottom: 2px solid #bdbdbd;
-     outline: none;
-     background: transparent;
-     padding: 10px 5px;
-     font-size: 16px;
-     font-family: 'Comic Neue', cursive, sans-serif;
-     transition: all 0.3s ease;
- }
-
- .input-group label {
-     position: absolute;
-     top: 10px;
-     left: 5px;
-     color: #000000;
-     font-size: 15px;
+     margin-bottom: 22px;
+     color: #264653;
      font-weight: 700;
-     pointer-events: none;
-     transition: 0.3s ease;
+     font-size: 1.85rem;
  }
 
- .input-group input:focus~label,
- .input-group input:valid~label,
- .input-group select:focus~label,
- .input-group select:valid~label {
-     top: -10px;
-     left: 5px;
-     font-size: 13px;
-     outline:none;
-     color: #3c7a89;
+ .required-star {
+     color: #d9534f;
+     font-weight: 700;
+     margin-left: 2px;
  }
 
- .input-group input:focus,
- .input-group select:focus {
-     border-bottom-color: #3c7a89;
-     outline: none !important;
+ .field-group {
+     margin-bottom: 16px;
  }
 
- button {
+ .form-label {
+     display: block;
+     font-weight: 700;
+     font-size: 0.95rem;
+     margin-bottom: 0.4rem;
+     color: #264653;
+ }
+
+ .form-control,
+ .form-select {
      width: 100%;
-     padding: 12px;
+     box-sizing: border-box;
+     padding: 11px 15px;
+     font-size: 0.95rem;
+     font-family: 'Comic Neue', cursive, sans-serif;
+     border-radius: 10px;
+     border: 1.5px solid #e2d9eb;
+     background-color: #ffffff;
+     color: #264653;
+     transition: all 0.2s ease;
+     outline: none;
+ }
+
+ .form-control::placeholder {
+     color: #9c95a8;
+     font-size: 0.92rem;
+ }
+
+ .form-control:focus,
+ .form-select:focus {
+     border-color: #3c7a89;
+     background-color: #ffffff;
+     outline: none;
+     box-shadow: 0 0 0 3px rgba(60, 122, 137, 0.18);
+ }
+
+ .btn-submit {
+     width: 100%;
+     padding: 13px 20px;
      background-color: #3c7a89;
      border: none;
-     border-radius: 8px;
+     border-radius: 10px;
      color: white;
-     font-size: 16px;
+     font-size: 1.05rem;
      font-weight: 700;
      font-family: inherit;
      cursor: pointer;
-     transition: 0.3s ease;
+     transition: all 0.2s ease;
+     box-shadow: 0 4px 12px rgba(60, 122, 137, 0.22);
+     margin-top: 10px;
  }
 
- button:hover {
+ .btn-submit:hover {
      background-color: #2b5964;
+     transform: translateY(-1px);
+     box-shadow: 0 6px 16px rgba(60, 122, 137, 0.32);
+ }
+
+ .login-redirect-text {
+     display: block;
+     text-align: center;
+     margin-top: 18px;
+     color: #41403e;
+     font-size: 0.95rem;
+ }
+
+ .login-link {
+     color: #3c7a89;
+     text-decoration: none;
+     font-weight: 700;
+ }
+
+ .login-link:hover {
+     text-decoration: underline;
  }

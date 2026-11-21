@@ -84,6 +84,51 @@
     font-size: 0.75rem;
     padding: 0.25em 0.55em;
     pointer-events: none;
+    transition: transform 0.2s ease;
+  }
+  @keyframes cartBadgeBounce {
+    0% { transform: translate(-50%, -50%) scale(1); }
+    40% { transform: translate(-50%, -50%) scale(1.6); }
+    70% { transform: translate(-50%, -50%) scale(0.9); }
+    100% { transform: translate(-50%, -50%) scale(1); }
+  }
+  @keyframes cartIconWiggle {
+    0% { transform: rotate(0deg); }
+    25% { transform: rotate(-10deg) scale(1.08); }
+    50% { transform: rotate(10deg) scale(1.08); }
+    75% { transform: rotate(-5deg); }
+    100% { transform: rotate(0deg); }
+  }
+  .cart-badge-bounce {
+    animation: cartBadgeBounce 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+  .cart-icon-wiggle {
+    animation: cartIconWiggle 0.5s ease;
+  }
+  .cart-toast {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    background-color: #3c7a89;
+    color: #ffffff;
+    padding: 12px 24px;
+    border-radius: 50px;
+    box-shadow: 0 10px 25px rgba(60, 122, 137, 0.35);
+    font-family: 'Comic Neue', cursive, sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    z-index: 9999;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .cart-toast.show {
+    opacity: 1;
+    transform: translateY(0);
   }
   .button-55 {
     align-self: center;
@@ -145,9 +190,10 @@
     >
     {% endif %}
 
-    <a href="/cart" class="position-relative d-inline-block">
+    <a href="/cart" class="position-relative d-inline-block" id="navbar-cart-link" title="View Cart">
       <span
         class="position-absolute translate-middle badge rounded-pill bg-danger cart-badge"
+        id="navbar-cart-badge"
       >
         {{ session.get('cart')|length if session.get('cart') else 0 }}
       </span>
@@ -155,7 +201,89 @@
         src="{{ url_for('static', filename='cart.svg') }}"
         alt="Cart"
         class="cart-icon"
+        id="navbar-cart-icon"
       />
     </a>
   </div>
 </nav>
+
+<div id="cart-toast" class="cart-toast">
+  <span>🛒</span>
+  <span id="cart-toast-msg">Item added to cart!</span>
+</div>
+
+<script>
+(function() {
+  function showCartToast(message) {
+    var toast = document.getElementById('cart-toast');
+    var msg = document.getElementById('cart-toast-msg');
+    if (!toast) return;
+    if (msg && message) msg.textContent = message;
+    toast.classList.add('show');
+    clearTimeout(window.__cartToastTimeout);
+    window.__cartToastTimeout = setTimeout(function() {
+      toast.classList.remove('show');
+    }, 2200);
+  }
+
+  function animateCart() {
+    var badge = document.getElementById('navbar-cart-badge');
+    var icon = document.getElementById('navbar-cart-icon');
+    if (badge) {
+      badge.classList.remove('cart-badge-bounce');
+      void badge.offsetWidth;
+      badge.classList.add('cart-badge-bounce');
+    }
+    if (icon) {
+      icon.classList.remove('cart-icon-wiggle');
+      void icon.offsetWidth;
+      icon.classList.add('cart-icon-wiggle');
+    }
+  }
+
+  document.addEventListener('click', function(e) {
+    var btn = e.target.closest('a[href*="/add-to-cart/"]');
+    if (!btn) return;
+
+    e.preventDefault();
+    var href = btn.getAttribute('href');
+    if (!href) return;
+
+    var originalText = btn.textContent;
+    btn.style.pointerEvents = 'none';
+    btn.textContent = 'Added! ✓';
+
+    fetch(href, {
+      headers: {
+        'X-Requested-With': 'XMLHttpRequest',
+        'Accept': 'application/json'
+      }
+    })
+    .then(function(res) {
+      if (!res.ok) throw new Error('Network error');
+      return res.json();
+    })
+    .then(function(data) {
+      if (data && data.success) {
+        var badge = document.getElementById('navbar-cart-badge');
+        if (badge && data.cart_count !== undefined) {
+          badge.textContent = data.cart_count;
+        }
+        animateCart();
+        showCartToast(data.message || 'Added to cart!');
+      } else {
+        window.location.href = href;
+      }
+    })
+    .catch(function(err) {
+      window.location.href = href;
+    })
+    .finally(function() {
+      setTimeout(function() {
+        btn.textContent = originalText;
+        btn.style.pointerEvents = '';
+      }, 1200);
+    });
+  });
+})();
+</script>

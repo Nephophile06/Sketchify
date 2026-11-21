@@ -91,46 +91,46 @@
 
     <!-- Category Grid -->
     <div id="cssportal-grid">
-      <div class="category-tile" id="div1">
-        <a
-          href="{{url_for('categories.category', category_name='new-in')}}"
-          class="category-label"
-          style="text-decoration: none"
-          >New In</a
-        >
-      </div>
-      <div class="category-tile" id="div2">
-        <a
-          href="{{url_for('categories.category', category_name='gift-items')}}"
-          class="category-label"
-          style="text-decoration: none"
-          >Gift Items</a
-        >
-      </div>
-      <div class="category-tile" id="div3">
-        <a
-          href="{{url_for('categories.category', category_name='art-supplies')}}"
-          class="category-label"
-          style="text-decoration: none"
-          >Art Supplies</a
-        >
-      </div>
-      <div class="category-tile" id="div4">
-        <a
-          href="{{url_for('categories.category', category_name='desk-organizers')}}"
-          class="category-label"
-          style="text-decoration: none"
-          >Desk Organizers</a
-        >
-      </div>
-      <div class="category-tile" id="div5">
-        <a
-          href="{{url_for('categories.category', category_name='stationaries')}}"
-          class="category-label"
-          style="text-decoration: none"
-          >Stationaries</a
-        >
-      </div>
+      <a
+        href="{{url_for('categories.category', category_name='new-in')}}"
+        class="category-tile"
+        id="div1"
+        aria-label="New In"
+      >
+        <span class="category-label">New In</span>
+      </a>
+      <a
+        href="{{url_for('categories.category', category_name='gift-items')}}"
+        class="category-tile"
+        id="div2"
+        aria-label="Gift Items"
+      >
+        <span class="category-label">Gift Items</span>
+      </a>
+      <a
+        href="{{url_for('categories.category', category_name='art-supplies')}}"
+        class="category-tile"
+        id="div3"
+        aria-label="Art Supplies"
+      >
+        <span class="category-label">Art Supplies</span>
+      </a>
+      <a
+        href="{{url_for('categories.category', category_name='desk-organizers')}}"
+        class="category-tile"
+        id="div4"
+        aria-label="Desk Organizers"
+      >
+        <span class="category-label">Desk Organizers</span>
+      </a>
+      <a
+        href="{{url_for('categories.category', category_name='stationaries')}}"
+        class="category-tile"
+        id="div5"
+        aria-label="Stationaries"
+      >
+        <span class="category-label">Stationaries</span>
+      </a>
     </div>
 
     <!-- Featured Products -->

@@ -77,12 +77,16 @@
   </head>
   <body>
     <div class="login-card">
-      <img
-        src="{{ url_for('static', filename='Sketchify.png') }}"
-        alt="Sketchify Logo"
-        class="img-fluid d-block mx-auto mb-3"
-        style="max-width: 200px; height: auto;"
-      />
+      <a href="/" title="Back to Home" class="d-block text-center mb-3">
+        <img
+          src="{{ url_for('static', filename='Sketchify.png') }}"
+          alt="Sketchify Logo"
+          class="img-fluid d-block mx-auto"
+          style="max-width: 190px; height: auto; transition: transform 0.2s ease;"
+          onmouseover="this.style.transform='scale(1.04)'"
+          onmouseout="this.style.transform='scale(1)'"
+        />
+      </a>
 
       <h2>Admin Login</h2>
 

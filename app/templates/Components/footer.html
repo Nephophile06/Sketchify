@@ -1,20 +1,64 @@
-<footer>
-  <div class="footer-content">
-    <div class="left-section">
-      <h3>Join the Sketchify Community</h3>
-      <p>We are more than just a store. We are a community of creators, dreamers, and the inner yourself. Follow us on social media, share your work, and explore new ideas together!</p>
-      <div class="footer-links">
-        <a href="https://www.facebook.com/sketchify.244664" target="_blank" rel="noopener noreferrer">Facebook</a>
-        <a href="https://www.instagram.com/sketchify.244664" target="_blank" rel="noopener noreferrer">Instagram</a>
+<footer class="site-footer">
+  <div class="footer-container">
+    <div class="footer-grid">
+      <!-- Col 1: Brand & About -->
+      <div class="footer-col footer-col-brand">
+        <h3 class="footer-heading">Sketchify ✨</h3>
+        <p class="footer-text">
+          A cozy creative haven for handpicked art supplies, aesthetic stationery, and cute desk organizers. Curated with love to spark your everyday imagination.
+        </p>
+        <div class="footer-social-chips">
+          <a href="https://www.facebook.com/sketchify.244664" target="_blank" rel="noopener noreferrer" class="social-chip" title="Facebook">
+            Facebook
+          </a>
+          <a href="https://www.instagram.com/sketchify.244664" target="_blank" rel="noopener noreferrer" class="social-chip" title="Instagram">
+            Instagram
+          </a>
+        </div>
       </div>
-      <p class="copyright-text">© 2024 Sketchify. All rights reserved.</p>
+
+      <!-- Col 2: Categories -->
+      <div class="footer-col">
+        <h3 class="footer-heading">Categories</h3>
+        <ul class="footer-nav-list">
+          <li><a href="{{ url_for('categories.category', category_name='new-in') }}">New Arrivals</a></li>
+          <li><a href="{{ url_for('categories.category', category_name='art-supplies') }}">Art Supplies</a></li>
+          <li><a href="{{ url_for('categories.category', category_name='stationaries') }}">Stationaries</a></li>
+          <li><a href="{{ url_for('categories.category', category_name='desk-organizers') }}">Desk Organizers</a></li>
+          <li><a href="{{ url_for('categories.category', category_name='gift-items') }}">Gift Items</a></li>
+        </ul>
+      </div>
+
+      <!-- Col 3: Customer Care & Quick Links -->
+      <div class="footer-col">
+        <h3 class="footer-heading">Customer Care</h3>
+        <ul class="footer-nav-list">
+          <li><a href="{{ url_for('user_route.user_dashboard') }}">My Dashboard</a></li>
+          <li><a href="{{ url_for('order_route.orders_by_username') }}">Order History</a></li>
+          <li><a href="{{ url_for('cart_route.view_cart') }}">Shopping Cart</a></li>
+          <li><a href="{{ url_for('user_route.login') }}">Account Login</a></li>
+          <li><a href="{{ url_for('user_route.register') }}">Create Account</a></li>
+        </ul>
+      </div>
+
+      <!-- Col 4: Trust, Safety & Policy -->
+      <div class="footer-col footer-col-trust" id="privacy-policy">
+        <h3 class="footer-heading">Privacy & Trust</h3>
+        <p class="footer-text">
+          We collect your essential information solely for order fulfillment, customer support, and personalizing your shopping experience. We never spam.
+        </p>
+        <div class="footer-trust-badges">
+          <span class="trust-badge">🔒 Secure Checkout</span>
+          <span class="trust-badge">📦 Careful Packaging</span>
+          <span class="trust-badge">🚚 Fast Nationwide Delivery</span>
+        </div>
+      </div>
     </div>
 
-    <div class="right-section">
-      <h3>Privacy Policy</h3>
-      <p>We collect your name, email, phone number, shipping address, and payment information to process your orders. We also use cookies to enhance the user experience.</p>
-      <p>Your information will be used for: Order processing, Providing customer support, Promotional communications.</p>
-      <p>We use cookies to save your preferences and enhance website functionality.</p>
+    <!-- Bottom Copyright Strip -->
+    <div class="footer-bottom-bar">
+      <p class="copyright-text">© 2024 Sketchify. All rights reserved.</p>
+      <p class="footer-tagline">Handcrafted with 💜 for artists, dreamers & stationery lovers</p>
     </div>
   </div>
-</footer>    
+</footer>

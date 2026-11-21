@@ -35,11 +35,11 @@
 
         <div class="right-side">
             <div class="form-container">
-                <img src="{{ url_for('static', filename='Sketchify.png') }}" alt="Sketchify Logo" class="logo">
+                <a href="/" class="logo-link" title="Back to Home">
+                    <img src="{{ url_for('static', filename='Sketchify.png') }}" alt="Sketchify Logo" class="logo">
+                </a>
 
-                <h3 class="mb-4 text-center fw-bold">Log In</h3>
-
-
+                <h3 class="mb-4 text-center fw-bold" style="color: #264653; font-size: 1.85rem;">Log In</h3>
 
                 <!-- 🔥 Flash message block -->
                 {% with messages = get_flashed_messages(with_categories=true) %}
@@ -55,16 +55,17 @@
 
                 <form method="POST" action="">
                     <div class="mb-3">
-                        <label for="loginEmail" class="form-label">Email</label>
+                        <label for="loginEmail" class="form-label">Email <span class="required-star">*</span></label>
                         <input type="email" class="form-control" id="loginEmail" name="email"
                             placeholder="Enter your email" required>
                     </div>
                     <div class="mb-3">
-                        <label for="loginPassword" class="form-label">8 Digit Backup Code </label>
-                        <input type="text" class="form-control" name="backup_code" maxlength="8" required />
+                        <label for="loginPassword" class="form-label">8 Digit Backup Code <span class="required-star">*</span></label>
+                        <input type="text" class="form-control" name="backup_code" placeholder="e.g. 12345678" maxlength="8" required />
                     </div>
                     <button type="submit" class="btn btn-primary w-100">Log In</button>
-                    <p class="text-center mt-3">Don't have an account? <a href="/register">Sign up</a></p>
+                    <p class="text-center mt-3">Remember password? <a href="/login">Back to password login</a></p>
+                    <p class="text-center mt-2">Don't have an account? <a href="/register">Sign up</a></p>
                 </form>
             </div>
         </div>
