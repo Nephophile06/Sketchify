@@ -5,7 +5,7 @@
      height: 100%;
      margin: 0;
      font-family: 'Comic Neue', cursive, sans-serif;
-     background-color: #c7b4de;
+     background-color: #c2aae3;
      overflow-x: hidden;
  }
 
@@ -37,8 +37,8 @@
      padding: 38px 36px;
      background-color: #fdeded;
      border-radius: 18px;
-     box-shadow: 0 10px 30px rgba(163, 136, 200, 0.16);
-     border: 1px solid rgba(163, 136, 200, 0.2);
+     box-shadow: 0 10px 30px rgba(194, 170, 227, 0.22);
+     border: 1px solid rgba(194, 170, 227, 0.3);
  }
 
  .logo-link {

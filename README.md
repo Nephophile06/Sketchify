@@ -10,7 +10,7 @@
 
 Sketchify follows an intentional, warm pastel aesthetic:
 - **Ambient Peach / Rose Tint:** `#fdeded` / `#fce2e8`
-- **Sunset Wisteria / Purple:** `#c2aae3` / `#a388c8` / `#8f72b5`
+- **Sunset Wisteria / Purple:** `#c2aae3` (initial) / `#8f72b5` (hover)
 - **Deep Teal Accent:** `#3c7a89` / `#2b5964`
 - **Typography:** Comic Neue & clean sans-serif
 

@@ -164,7 +164,7 @@ body {
    ======================================================== */
 .site-footer,
 footer {
-    background-color: #a388c8;
+    background-color: #c2aae3;
     color: #ffffff;
     padding: 55px 0 25px 0;
     text-align: left;
@@ -348,7 +348,7 @@ footer {
     background-color: #ffffff;
     border-radius: 24px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
-    border: 1px solid rgba(163, 136, 200, 0.2);
+    border: 1px solid rgba(194, 170, 227, 0.25);
 }
 
 .feedback-title {
@@ -379,9 +379,9 @@ footer {
 }
 
 .feedback-input:focus {
-    border-color: #a388c8;
+    border-color: #c2aae3;
     background-color: #ffffff;
-    box-shadow: 0 0 0 4px rgba(163, 136, 200, 0.18);
+    box-shadow: 0 0 0 4px rgba(194, 170, 227, 0.22);
     outline: none;
 }
 
@@ -392,7 +392,7 @@ footer {
 }
 
 .feedback-submit-btn {
-    background-color: #a388c8;
+    background-color: #c2aae3;
     color: #ffffff;
     font-size: 1rem;
     font-weight: 700;
@@ -401,7 +401,7 @@ footer {
     border: none;
     cursor: pointer;
     letter-spacing: 0.5px;
-    box-shadow: 0 3px 10px rgba(163, 136, 200, 0.3);
+    box-shadow: 0 3px 10px rgba(194, 170, 227, 0.35);
     transition: all 0.25s ease;
 }
 
@@ -409,7 +409,7 @@ footer {
     background-color: #8f72b5;
     color: #ffffff;
     transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(163, 136, 200, 0.45);
+    box-shadow: 0 6px 16px rgba(143, 114, 181, 0.45);
 }
 
 .feedback-disclaimer {
@@ -690,10 +690,10 @@ footer {
 
 .card.custom-hover .info .btn-add-cart:hover,
 .card.custom-hover .info button:hover {
-  background-color: #a388c8;
+  background-color: #8f72b5;
   color: #ffffff;
   transform: translateY(-1px);
-  box-shadow: 0 4px 10px rgba(163, 136, 200, 0.4);
+  box-shadow: 0 4px 10px rgba(143, 114, 181, 0.4);
 }
 
 .product-card-img {

@@ -7,4 +7,4 @@ if __name__ == "__main__":
 
 
 
-# Brand Palette: Peach (#fdeded), Purple (#a388c8 / #8f72b5), Teal (#3c7a89 / #2b5964)
+# Brand Palette: Peach (#fdeded), Purple (#c2aae3 / #8f72b5), Teal (#3c7a89 / #2b5964)
