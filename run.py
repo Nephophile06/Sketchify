@@ -7,4 +7,4 @@ if __name__ == "__main__":
 
 
 
-# #60d0df (akashi) #3c7a89 (dark green) #c287e8 (purple)
+# #60d0df (akashi) #3c7a89 (dark green) #a388c8 (soft wisteria purple)

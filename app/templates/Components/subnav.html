@@ -1,27 +1,65 @@
-<nav style="background-color: #60d0df; width: 100%;" class="text-center py-3">
+<style>
+  .category-filter-chips {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin: 12px 0 24px 0;
+  }
+  .filter-chip {
+    text-decoration: none;
+    background: #ffffff;
+    color: #3c7a89;
+    font-size: 0.95rem;
+    font-weight: 600;
+    padding: 8px 20px;
+    border-radius: 50px;
+    border: 1px solid rgba(60, 122, 137, 0.2);
+    box-shadow: 0 2px 8px rgba(60, 122, 137, 0.06);
+    transition: all 0.25s ease;
+    text-transform: capitalize;
+    display: inline-flex;
+    align-items: center;
+  }
+  .filter-chip:hover {
+    background-color: rgba(96, 208, 223, 0.18);
+    color: #265560;
+    border-color: #60d0df;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(60, 122, 137, 0.12);
+  }
+  .filter-chip.active {
+    background-color: #3c7a89;
+    color: #ffffff !important;
+    border-color: #3c7a89;
+    box-shadow: 0 3px 10px rgba(60, 122, 137, 0.28);
+  }
+</style>
+
+<div class="category-filter-chips">
   <a
     href="{{url_for('categories.category', category_name='new-in')}}"
-    class="text-decoration-none text-dark fs-5 px-3 py-2 rounded hover-effect"
-    >new in</a
+    class="filter-chip {% if category_name == 'new-in' %}active{% endif %}"
+    >New In</a
   >
   <a
     href="{{url_for('categories.category', category_name='gift-items')}}"
-    class="text-decoration-none text-dark fs-5 px-3 py-2 rounded hover-effect"
-    >gift items</a
+    class="filter-chip {% if category_name == 'gift-items' %}active{% endif %}"
+    >Gift Items</a
   >
   <a
     href="{{url_for('categories.category', category_name='stationaries')}}"
-    class="text-decoration-none text-dark fs-5 px-3 py-2 rounded hover-effect"
-    >stationaries</a
+    class="filter-chip {% if category_name == 'stationaries' %}active{% endif %}"
+    >Stationaries</a
   >
   <a
     href="{{url_for('categories.category', category_name='art-supplies')}}"
-    class="text-decoration-none text-dark fs-5 px-3 py-2 rounded hover-effect"
-    >art supplies</a
+    class="filter-chip {% if category_name == 'art-supplies' %}active{% endif %}"
+    >Art Supplies</a
   >
   <a
     href="{{url_for('categories.category', category_name='desk-organizers')}}"
-    class="text-decoration-none text-dark fs-5 px-3 py-2 rounded hover-effect"
-    >desk organizer</a
+    class="filter-chip {% if category_name == 'desk-organizers' %}active{% endif %}"
+    >Desk Organizer</a
   >
-</nav>
+</div>

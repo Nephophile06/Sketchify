@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sketchify Signup</title>
-  <link rel="stylesheet" href="../static/css/register.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/register.css') }}">
   <style>
     .flash-message {
       padding: 10px;
@@ -39,7 +39,7 @@
 
 <body>
   <div class="form-card">
-    <img src="../static/Sketchify.png" alt="Sketchify Logo" class="logo">
+    <img src="{{ url_for('static', filename='Sketchify.png') }}" alt="Sketchify Logo" class="logo">
 
     <h1 style="font-size: 25px; text-align:center; font-weight:500">Sign Up</h1>
 

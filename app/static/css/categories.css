@@ -1,6 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,400&display=swap');
+
 body {
     background-color: #fdeded;
-    font-family: 'MS Comic Sans', cursive;
+    font-family: 'Comic Neue', cursive, sans-serif;
 }
 
 .navbar {
@@ -8,7 +10,8 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1px 30px;
+    height: 125px;
+    padding: 0 45px;
 }
 
 .search-container {
@@ -39,17 +42,18 @@ body {
 }
 
 .cart-icon {
-    width: 100px;
+    width: 95px;
+    height: 95px;
 }
 
 
 footer {
-    background-color: #c287e8;
+    background-color: #a388c8;
     color: #fdeded;
     padding-bottom: 50px;
     padding-top: 50px;
     text-align: left;
-    font-family: cursive;
+    font-family: 'Comic Neue', cursive, sans-serif;
 }
 
 .footer-content {
@@ -57,7 +61,7 @@ footer {
     justify-content: space-between;
     margin-left: 100px;
     margin-right: 50px;
-    background-color: #c287e8;
+    background-color: #a388c8;
     color: #fdeded;
 }
 

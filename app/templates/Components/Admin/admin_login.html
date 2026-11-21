@@ -39,7 +39,7 @@
       .form-control:focus {
         border: 2px solid #000000;       
         outline: none;                    
-        box-shadow: 0 0 4px #c287e8; 
+        box-shadow: 0 0 4px #a388c8; 
       }
 
       .btn-primary {
@@ -78,9 +78,10 @@
   <body>
     <div class="login-card">
       <img
-        src="../../static/Sketchify.png"
-        alt=""
-        class="img-fluid h-25 d-block mx-auto mb-3"
+        src="{{ url_for('static', filename='Sketchify.png') }}"
+        alt="Sketchify Logo"
+        class="img-fluid d-block mx-auto mb-3"
+        style="max-width: 200px; height: auto;"
       />
 
       <h2>Admin Login</h2>

@@ -1,37 +1,153 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+<style>
+  .navbar.fixed-top {
+    background-color: #fdeded !important;
+    height: 125px !important;
+    padding: 0 45px !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+    z-index: 1040;
+    box-sizing: border-box !important;
+  }
+  .brand-logo {
+    display: inline-flex;
+    align-items: center;
+    height: 100%;
+    text-decoration: none;
+    padding: 0;
+    margin: 0;
+  }
+  .navbar-logo-img {
+    height: 110px;
+    width: auto;
+    max-height: 115px;
+    object-fit: contain;
+    display: block;
+    transition: transform 0.2s ease;
+  }
+  .navbar-logo-img:hover {
+    transform: scale(1.04);
+  }
+  .search-container {
+    background-color: #ffffff;
+    border-radius: 50px;
+    padding: 6px 10px 6px 18px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+  }
+  .search-box {
+    border: none;
+    outline: none;
+    padding: 6px 10px;
+    background: transparent;
+    width: 230px;
+    font-size: 15px;
+    color: #3C7A89;
+    font-family: 'Comic Neue', cursive, sans-serif;
+  }
+  .search-box::placeholder {
+    color: #8faab0;
+  }
+  .search-btn {
+    background-color: #3C7A89;
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  .search-btn:hover {
+    background-color: #2b5964;
+  }
+  .cart-icon {
+    width: 95px;
+    height: 95px;
+    object-fit: contain;
+    display: block;
+    transition: transform 0.2s ease;
+  }
+  .cart-icon:hover {
+    transform: scale(1.06);
+  }
+  .cart-badge {
+    top: 32%;
+    left: 68%;
+    font-size: 0.75rem;
+    padding: 0.25em 0.55em;
+    pointer-events: none;
+  }
+  .button-55 {
+    align-self: center;
+    background-color: #fff;
+    background-image: none;
+    border-radius: 15px 225px 255px 15px 15px 255px 225px 15px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: #41403e;
+    box-shadow: rgba(0, 0, 0, .15) 2px 4px 10px -2px;
+    box-sizing: border-box;
+    color: #41403e;
+    cursor: pointer;
+    display: inline-block;
+    font-family: 'Comic Neue', cursive, sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 22px;
+    outline: none;
+    padding: 0.45rem 1.25rem;
+    text-decoration: none;
+    transition: all 200ms ease-in-out;
+    user-select: none;
+  }
+  .button-55:hover {
+    box-shadow: rgba(0, 0, 0, .25) 2px 6px 10px -3px;
+    transform: translateY(-1px);
+    color: #000;
+  }
+</style>
+
 <nav class="navbar fixed-top">
-  <a href="/" class="brand-logo">
-    <img src="../static/Sketchify.png" alt="SKETCHIFY" height="120" />
+  <a href="/" class="brand-logo" title="Sketchify Home">
+    <img src="{{ url_for('static', filename='Sketchify.png') }}" alt="SKETCHIFY" class="navbar-logo-img" />
   </a>
-  <form action="{{ url_for('user_route.search_products') }}" method="GET" >
-    <div class="d-flex align-items-center">
-      <div class="search-container me-3">
-        <input type="text" class="search-box" placeholder="Type a product name" name="query"/>
+
+  <div class="d-flex align-items-center">
+    <form action="{{ url_for('user_route.search_products') }}" method="GET" class="me-3 mb-0">
+      <div class="search-container">
+        <input type="text" class="search-box" placeholder="Type a product name" name="query" />
         <button class="search-btn" type="submit">Search</button>
       </div>
-  </form>
+    </form>
 
-    {%if session.get('user')%}
-    <span class="me-3">{{ session['user']['username'] }}</span>
+    {% if session.get('user') %}
+    <span class="me-3 fw-bold text-dark">{{ session['user']['username'] }}</span>
     <a
       href="/user-dashboard"
-      class="me-3"
-      style="color: #3c7a89; text-decoration: none"
+      class="me-3 text-decoration-none fw-semibold"
+      style="color: #3c7a89"
       >Profile</a
     >
-    <a href="{{url_for('user_route.logout')}}" class="button-55" role="button"
+    <a href="{{ url_for('user_route.logout') }}" class="button-55 me-3" role="button"
       >Logout</a
     >
-    {%else%}
-
-    <a href="{{ url_for('user_route.login') }}" class="button-55" role="button"
+    {% else %}
+    <a href="{{ url_for('user_route.login') }}" class="button-55 me-3" role="button"
       >Login</a
     >
-    {%endif%}
+    {% endif %}
 
-    <a href="/cart" class="position-relative me-3">
+    <a href="/cart" class="position-relative d-inline-block">
       <span
-        class="position-absolute  translate-middle badge rounded-pill bg-danger"
-        style="top: 35%; left: 67%;"
+        class="position-absolute translate-middle badge rounded-pill bg-danger cart-badge"
       >
         {{ session.get('cart')|length if session.get('cart') else 0 }}
       </span>
@@ -39,8 +155,6 @@
         src="{{ url_for('static', filename='cart.svg') }}"
         alt="Cart"
         class="cart-icon"
-        width="100"
-        height="100"
       />
     </a>
   </div>
