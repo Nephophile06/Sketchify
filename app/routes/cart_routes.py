@@ -83,6 +83,8 @@ def update_quantity():
             cart[product_id]["quantity"] -= 1
             if cart[product_id]["quantity"] <= 0:
                 del cart[product_id]
+        elif action == "remove":
+            del cart[product_id]
 
     session["cart"] = cart
     return redirect(url_for("cart_route.view_cart"))

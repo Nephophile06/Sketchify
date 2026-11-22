@@ -22,28 +22,42 @@ def payment_card():
     total_price = sum(item['price'] * item['quantity'] for item in cart.values())
     amount_in_poisha = int(total_price * 100)  # Stripe needs the amount in the smallest currency unit
 
-    # Create a Stripe Checkout session
-    session_stripe = stripe.checkout.Session.create(
-        payment_method_types=['card'],
-        line_items=[
-            {
-                'price_data': {
-                    'currency': 'bdt',
-                    'product_data': {
-                        'name': 'Sketchify Cart Purchase',
-                    },
-                    'unit_amount': amount_in_poisha,
-                },
-                'quantity': 1,
-            },
-        ],
-        mode='payment',
-        success_url=url_for('payment_route.success', _external=True) + '?session_id={CHECKOUT_SESSION_ID}',
-        cancel_url=url_for('payment_route.cancel', _external=True),
-        client_reference_id=user.get('_id'),  # Optional: track user
-    )
+    # Verify Stripe API key is configured
+    stripe_key = os.getenv('stripe_api_key') or getattr(stripe, 'api_key', None)
+    if not stripe_key or not str(stripe_key).strip():
+        flash("⚠️ Card payment is currently unconfigured (missing stripe_api_key in .env). Please use bKash / Nagad or add a Stripe secret key.", "warning")
+        return redirect(url_for('payment_route.payment_page'))
 
-    return redirect(session_stripe.url)
+    stripe.api_key = stripe_key.strip()
+
+    try:
+        # Create a Stripe Checkout session
+        session_stripe = stripe.checkout.Session.create(
+            payment_method_types=['card'],
+            line_items=[
+                {
+                    'price_data': {
+                        'currency': 'bdt',
+                        'product_data': {
+                            'name': 'Sketchify Cart Purchase',
+                        },
+                        'unit_amount': amount_in_poisha,
+                    },
+                    'quantity': 1,
+                },
+            ],
+            mode='payment',
+            success_url=url_for('payment_route.success', _external=True) + '?session_id={CHECKOUT_SESSION_ID}',
+            cancel_url=url_for('payment_route.cancel', _external=True),
+            client_reference_id=str(user.get('_id', '')),  # Track user
+        )
+        return redirect(session_stripe.url)
+    except stripe._error.AuthenticationError:
+        flash("⚠️ Stripe Authentication Error: The provided stripe_api_key in .env is invalid. Please check your Stripe keys or use bKash / Nagad.", "danger")
+        return redirect(url_for('payment_route.payment_page'))
+    except Exception as e:
+        flash(f"⚠️ Could not initiate card payment: {str(e)}", "danger")
+        return redirect(url_for('payment_route.payment_page'))
 
 
 @payment_route.route("/payment-page")
@@ -51,12 +65,15 @@ def payment_page():
     cart = session.get('cart')
     user = session.get("user")
     if not user:
+        flash("Please log in to proceed with payment.", "warning")
         return redirect(url_for("user_route.login"))
     
     if not cart:
-        return "Cart is empty"
+        flash("Your cart is empty.", "info")
+        return redirect(url_for("cart_route.view_cart"))
 
-    return render_template("Components/Payment/payment_page.html", cart=cart, user=user)
+    total_price = sum(item['price'] * item['quantity'] for item in cart.values())
+    return render_template("Components/Payment/payment_page.html", cart=cart, user=user, total=total_price)
 
 
 @payment_route.route("/payment/success")

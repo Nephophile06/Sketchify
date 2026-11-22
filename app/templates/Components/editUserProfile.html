@@ -5,12 +5,272 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Profile - Sketchify</title>
+    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/homepage.css') }}">
+    <style>
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding-top: 125px; /* Fixed navbar height */
+            background-color: #fdeded;
+            position: relative;
+        }
 
+        /* 🔙 Minimal Underlined Back Link at Top-Left Margin */
+        .back-nav-wrapper {
+            position: absolute;
+            top: 48px;
+            left: 50px;
+            z-index: 10;
+        }
+
+        .btn-back-dashboard {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            background: transparent;
+            color: #4a3e56;
+            border: none;
+            padding: 4px 0;
+            font-size: 1.05rem;
+            font-weight: 600;
+            text-decoration: underline;
+            text-underline-offset: 5px;
+            text-decoration-thickness: 1.5px;
+            text-decoration-color: rgba(74, 62, 86, 0.45);
+            transition: all 0.25s ease;
+            cursor: pointer;
+        }
+
+        .btn-back-dashboard:hover {
+            color: #3c7a89;
+            text-decoration-color: #3c7a89;
+            transform: translateX(-4px);
+        }
+
+        .btn-back-dashboard i {
+            font-size: 1.15rem;
+            transition: transform 0.2s ease;
+        }
+
+        .btn-back-dashboard:hover i {
+            transform: translateX(-2px);
+        }
+
+        /* 📦 Center content wrapper - vertically centered with generous clearance */
+        .edit-profile-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 45px 20px 85px;
+            box-sizing: border-box;
+            position: relative;
+            width: 100%;
+        }
+
+        .edit-profile-container {
+            max-width: 1100px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .page-main-title {
+            font-size: 2.35rem;
+            font-weight: 700;
+            color: #2c2538;
+            margin: 0 0 42px;
+            text-align: center;
+            letter-spacing: -0.2px;
+        }
+
+        .section-outside-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #2c2538;
+            margin-bottom: 16px;
+        }
+
+        .section-outside-title.text-danger {
+            color: #d9534f !important;
+        }
+
+        .profile-card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 34px 30px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            box-sizing: border-box;
+        }
+
+        .danger-card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 34px 30px;
+            box-shadow: 0 8px 24px rgba(220, 53, 69, 0.04);
+            border: 1px solid rgba(220, 53, 69, 0.22);
+            box-sizing: border-box;
+        }
+
+        .form-label-custom {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: #3b324a;
+            margin-bottom: 8px;
+        }
+
+        .label-badge-readonly {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #8c8596;
+            background: #f0eaf7;
+            padding: 2px 10px;
+            border-radius: 20px;
+        }
+
+        .form-control-custom {
+            width: 100%;
+            padding: 12px 16px;
+            font-size: 1.05rem;
+            color: #2c2538;
+            background-color: #ffffff;
+            border: 1.5px solid #e2d9ec;
+            border-radius: 14px;
+            outline: none;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+            box-sizing: border-box;
+        }
+
+        .form-control-custom:focus {
+            border-color: #3c7a89;
+            box-shadow: 0 0 0 3px rgba(60, 122, 137, 0.15);
+        }
+
+        .form-control-custom[readonly] {
+            background-color: #f7f7f9;
+            color: #726b7d;
+            border-color: #e5e5ea;
+            cursor: not-allowed;
+        }
+
+        .form-hint {
+            display: block;
+            font-size: 0.92rem;
+            color: #7b7385;
+            margin-top: 6px;
+        }
+
+        .btn-update-custom {
+            width: 100%;
+            padding: 13px 28px;
+            background-color: #3c7a89;
+            color: #ffffff;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.12rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 14px rgba(60, 122, 137, 0.22);
+            margin-top: 10px;
+        }
+
+        .btn-update-custom:hover {
+            background-color: #2b5964;
+            color: #ffffff;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 18px rgba(60, 122, 137, 0.32);
+        }
+
+        /* ⚠️ Danger Card Elements */
+        .danger-card-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #d9534f;
+            margin: 0;
+        }
+
+        .danger-card-desc {
+            font-size: 1.02rem;
+            color: #635870;
+            line-height: 1.55;
+            margin-bottom: 20px;
+        }
+
+        .danger-bullet-item {
+            display: flex;
+            align-items: center;
+            font-size: 1.02rem;
+            color: #4a3e56;
+            margin-bottom: 16px;
+        }
+
+        .danger-bullet-item i {
+            font-size: 1.05rem;
+            flex-shrink: 0;
+            margin-right: 10px;
+        }
+
+        @media (min-width: 992px) {
+            .danger-bullet-text {
+                white-space: nowrap;
+            }
+        }
+
+        .danger-alert-box {
+            background-color: #fff2f2;
+            border: 1px solid rgba(220, 53, 69, 0.2);
+            border-radius: 12px;
+            padding: 13px 18px;
+            font-size: 0.95rem;
+            line-height: 1.45;
+            color: #a91b1b;
+            margin-bottom: 24px;
+        }
+
+        .btn-delete-custom {
+            width: 100%;
+            padding: 12px 28px;
+            background-color: #ffffff;
+            color: #dc3545;
+            border: 1.5px solid #dc3545;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-delete-custom:hover {
+            background-color: #dc3545;
+            color: #ffffff;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 14px rgba(220, 53, 69, 0.25);
+        }
+
+        @media (max-width: 991px) {
+            .back-nav-wrapper {
+                position: static;
+                margin: 0 auto 18px;
+                text-align: left;
+                width: 100%;
+                max-width: 1100px;
+                padding: 0 10px;
+            }
+            .page-main-title {
+                margin-bottom: 28px;
+            }
+        }
+    </style>
 </head>
 
-<body style="padding-top: 145px;">
+<body>
     {% include 'Components/navbar.html' %}
 
     <!-- Flash Messages -->
@@ -27,55 +287,113 @@
     {% endif %}
     {% endwith %}
 
-    <div class="container">
-        <h3 class="mb-3">Update Profile</h3>
-
-        <div class="row g-3 mb-3">
-            <!-- Profile Update Form -->
-            <div class="col-12 col-md-8">
-                <form action="/updateInfo" method="POST" class="border p-3 rounded bg-light shadow-sm">
-                    <div class="mb-2">
-                        <label for="username" class="form-label">Username</label>
-                        <input type="text" class="form-control" id="username" value="{{ session['user']['username'] }}"
-                            readonly>
-                    </div>
-
-                    <div class="mb-2">
-                        <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email" name="email"
-                            value="{{ session['user']['email'] }}">
-                    </div>
-
-                    <div class="mb-2">
-                        <label for="new_password" class="form-label">New Password</label>
-                        <input type="password" class="form-control" name="new_password" >
-                    </div>
-
-                    <button class="button-65 w-100" role="button">Update</button>
-                </form>
-            </div>
-
-
+    <main class="edit-profile-wrapper">
+        <!-- 🔙 Minimal Underlined Back Link (Positioned at Top-Left Margin) -->
+        <div class="back-nav-wrapper">
+            <a href="{{ url_for('user_route.user_dashboard') }}" class="btn-back-dashboard" title="Return to Dashboard">
+                <i class="bi bi-arrow-left"></i>
+                <span>Back to Dashboard</span>
+            </a>
         </div>
-        <div class="row">
-            <!-- Delete Profile Section -->
-            <div class="col-12 col-md-6">
-                <div class="border p-3 rounded bg-white shadow-sm h-100 d-flex flex-column justify-content-between">
-                    <div>
-                        <h5 class="text-danger">Delete My Profile</h5>
-                        <p class="text-muted small">Warning: This action is irreversible. Your account and all
-                            associated data will be permanently deleted.</p>
+
+        <div class="container edit-profile-container">
+            <!-- 🏷️ Update Profile Title -->
+            <h2 class="page-main-title">Update Profile</h2>
+
+            <!-- 2 Columns Grid: Wider Spread & Balanced Gap (gx-lg-5) -->
+            <div class="row g-4 gx-lg-5 align-items-stretch">
+                <!-- Left Column: Personal Information (col-12 col-md-6) -->
+                <div class="col-12 col-md-6 d-flex flex-column">
+                    <!-- Heading OUTSIDE the card -->
+                    <h5 class="section-outside-title">Personal Information</h5>
+
+                    <div class="profile-card flex-grow-1 d-flex flex-column justify-content-between">
+                        <form action="/updateInfo" method="POST" class="d-flex flex-column h-100 justify-content-between">
+                            <div>
+                                <div class="mb-3">
+                                    <label for="username" class="form-label-custom d-flex justify-content-between align-items-center">
+                                        <span>Username</span>
+                                        <span class="label-badge-readonly"><i class="bi bi-lock-fill me-1"></i>Fixed</span>
+                                    </label>
+                                    <input type="text" class="form-control-custom" id="username" 
+                                        value="{{ session['user']['username'] }}" readonly>
+                                    <small class="form-hint">Your username is permanent and cannot be changed.</small>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="email" class="form-label-custom">Email Address</label>
+                                    <input type="email" class="form-control-custom" id="email" name="email"
+                                        value="{{ session['user']['email'] }}" required>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="new_password" class="form-label-custom">New Password</label>
+                                    <input type="password" class="form-control-custom" id="new_password" name="new_password"
+                                        placeholder="Leave blank to keep current password">
+                                    <small class="form-hint">
+                                        Only fill this if you want to set a new password.
+                                    </small>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn-update-custom">
+                                <i class="bi bi-check2-circle me-1"></i>
+                                Update Profile
+                            </button>
+                        </form>
                     </div>
-                    <form action="/delete-user" method="POST"
-                        onsubmit="return confirm('Are you sure you want to delete your profile?');">
-                         <input type="email" class="form-control" id="email" name="email"
-                            value="{{ session['user']['email'] }}" hidden>
-                        <button type="submit" class="button-45 mt-2">Delete My Account</button>
-                    </form>
+                </div>
+
+                <!-- Right Column: Delete Account (col-12 col-md-6) -->
+                <div class="col-12 col-md-6 d-flex flex-column">
+                    <!-- Heading OUTSIDE the card -->
+                    <h5 class="section-outside-title text-danger">Delete Account</h5>
+
+                    <div class="danger-card flex-grow-1 d-flex flex-column justify-content-between">
+                        <div>
+                            <div class="d-flex align-items-center gap-2 mb-2">
+                                <i class="bi bi-shield-exclamation text-danger fs-5"></i>
+                                <span class="danger-card-title">Irreversible Action</span>
+                            </div>
+                            <p class="danger-card-desc">
+                                Once deleted, your account cannot be recovered:
+                            </p>
+
+                            <!-- 3 Concise Points: Each on a single line -->
+                            <ul class="list-unstyled mb-3">
+                                <li class="danger-bullet-item">
+                                    <i class="bi bi-x-circle-fill text-danger"></i>
+                                    <span class="danger-bullet-text">Profile details & saved addresses will be erased.</span>
+                                </li>
+                                <li class="danger-bullet-item">
+                                    <i class="bi bi-x-circle-fill text-danger"></i>
+                                    <span class="danger-bullet-text">Past order history, receipts, and tracking will be lost.</span>
+                                </li>
+                                <li class="danger-bullet-item mb-0">
+                                    <i class="bi bi-x-circle-fill text-danger"></i>
+                                    <span class="danger-bullet-text">Account cannot be restored after deletion.</span>
+                                </li>
+                            </ul>
+
+                            <div class="danger-alert-box">
+                                <i class="bi bi-exclamation-triangle-fill me-1 text-danger"></i>
+                                <strong>Warning:</strong> Deletion takes effect immediately.
+                            </div>
+                        </div>
+
+                        <form action="/delete-user" method="POST"
+                            onsubmit="return confirm('Are you sure you want to permanently delete your account? This action cannot be undone.');">
+                            <input type="email" name="email" value="{{ session['user']['email'] }}" hidden>
+                            <button type="submit" class="btn-delete-custom">
+                                <i class="bi bi-trash3 me-1"></i>
+                                Delete My Account
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

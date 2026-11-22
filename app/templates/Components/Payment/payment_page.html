@@ -1,152 +1,527 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Payment Page</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <script
-      src="https://kit.fontawesome.com/a076d05399.js"
-      crossorigin="anonymous"
-    ></script>
+    <title>Payment - Sketchify</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,400&display=swap"
+        rel="stylesheet">
     <style>
-      body {
-        background-color: #f2ebf7;
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 2rem 1rem;
-        font-family: 'Comic Neue', cursive, sans-serif;
-      }
-
-      .glass-card {
-        /* background: rgba(255, 255, 255, 0.15); */
-        border-radius: 20px;
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-      }
-
-      .glass-card:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 0 25px rgba(0, 0, 0, 0.3);
-      }
-
-      /* 🔮 Purple & Peach Tints */
-      .purple-tint {
-        background-color: #f2ebf7;
-        border: none;
-      }
-
-      .peach-tint {
-        background: #fdeded;
-        border: none;
-      }
-
-      .btn-primary {
-        background-color: #3c7a89 !important;
-        border-color: #3c7a89 !important;
-        color: white !important;
-      }
-
-      .btn-glow:hover {
-        box-shadow: 0 0 10px #3c7a89; 
-      }
-
-      .btn-glow-danger:hover {
-        box-shadow: 0 0 10px #3c7a89;
-      }
-
-      .card-icon {
-        font-size: 2.5rem;
-      }
-
-      @media (max-width: 768px) {
-        .glass-card {
-          margin-bottom: 1rem;
+        body {
+            font-family: 'Comic Neue', cursive, sans-serif;
+            background-color: #fdeded;
+            color: #2c2538;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 50px 20px;
         }
 
-        .card-icon {
-          font-size: 2rem;
+        .payment-wrapper {
+            max-width: 860px;
+            width: 100%;
+            margin: 0 auto;
+            position: relative;
         }
-      }
 
-      .flash-message {
-        padding: 10px;
-        margin-bottom: 15px;
-        border-radius: 5px;
-        font-size: 0.95em;
-      }
+        /* 🔙 Minimal Back Navigation Link */
+        .payment-nav-back {
+            margin-bottom: 24px;
+        }
 
-      .flash-success {
-        background-color: #d4edda;
-        color: #155724;
-        border: 1px solid #c3e6cb;
-      }
+        .btn-back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: transparent;
+            color: #4a3e56;
+            border: none;
+            padding: 4px 0;
+            font-size: 1.05rem;
+            font-weight: 600;
+            text-decoration: underline;
+            text-underline-offset: 5px;
+            text-decoration-thickness: 1.5px;
+            text-decoration-color: rgba(74, 62, 86, 0.4);
+            transition: all 0.25s ease;
+            cursor: pointer;
+        }
 
-      .flash-danger {
-        background-color: #f8d7da;
-        color: #721c24;
-        border: 1px solid #f5c6cb;
-      }
+        .btn-back-link:hover {
+            color: #3c7a89;
+            text-decoration-color: #3c7a89;
+            transform: translateX(-4px);
+        }
+
+        .btn-back-link i {
+            font-size: 1.15rem;
+            transition: transform 0.2s ease;
+        }
+
+        .btn-back-link:hover i {
+            transform: translateX(-2px);
+        }
+
+        /* 🏷️ Header & Amount Display (Clean Natural Subtitle) */
+        .payment-header-area {
+            text-align: center;
+            margin-bottom: 38px;
+        }
+
+        .payment-page-title {
+            font-size: 2.35rem;
+            font-weight: 700;
+            color: #2c2538;
+            letter-spacing: -0.3px;
+            margin-bottom: 8px;
+        }
+
+        .payment-order-subtext {
+            font-size: 1.25rem;
+            color: #554a62;
+            font-weight: 500;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .total-amount-highlight {
+            font-size: 1.45rem;
+            font-weight: 700;
+            color: #3c7a89;
+        }
+
+        .total-items-badge {
+            font-size: 1.02rem;
+            color: #8c8299;
+            font-weight: 500;
+            margin-left: 2px;
+        }
+
+        /* 📦 Payment Method Cards */
+        .payment-method-card {
+            background: #ffffff;
+            border-radius: 22px;
+            padding: 34px 28px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+            border: 1.5px solid rgba(0, 0, 0, 0.06);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+            transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        .payment-method-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 14px 36px rgba(60, 122, 137, 0.12);
+            border-color: rgba(60, 122, 137, 0.28);
+        }
+
+        .method-icon-bubble {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            transition: transform 0.2s ease;
+        }
+
+        .payment-method-card:hover .method-icon-bubble {
+            transform: scale(1.08);
+        }
+
+        .icon-bubble-card {
+            background-color: #eaf4f6;
+            color: #3c7a89;
+        }
+
+        .icon-bubble-mfs {
+            background-color: #fbeded;
+            color: #e04b5a;
+        }
+
+        .method-card-title {
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: #2c2538;
+            margin-bottom: 8px;
+        }
+
+        .method-card-desc {
+            font-size: 0.98rem;
+            color: #6e6479;
+            line-height: 1.5;
+            margin-bottom: 20px;
+            min-height: 48px;
+        }
+
+        /* 🏷️ Gateway Brand Badges */
+        .gateway-badges-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 22px;
+        }
+
+        .brand-badge {
+            background-color: #f7f4fa;
+            color: #4a3e56;
+            font-size: 0.85rem;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 6px;
+            border: 1px solid #e7dfef;
+            letter-spacing: 0.2px;
+        }
+
+        .badge-bkash {
+            color: #d12053;
+            border-color: rgba(209, 32, 83, 0.2);
+            background-color: #fff2f5;
+        }
+
+        .badge-nagad {
+            color: #f26522;
+            border-color: rgba(242, 101, 34, 0.2);
+            background-color: #fff6f2;
+        }
+
+        .badge-rocket {
+            color: #8c3494;
+            border-color: rgba(140, 52, 148, 0.2);
+            background-color: #faf2fb;
+        }
+
+        /* 🔒 Security Note */
+        .security-note {
+            font-size: 0.88rem;
+            color: #8c8299;
+            font-weight: 600;
+            margin-bottom: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .security-note i {
+            font-size: 0.95rem;
+        }
+
+        /* 🔘 Payment Buttons */
+        .btn-payment-action {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            padding: 13px 26px;
+            background-color: #3c7a89;
+            color: #ffffff;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.08rem;
+            font-weight: 700;
+            text-decoration: none;
+            cursor: pointer;
+            box-shadow: 0 4px 14px rgba(60, 122, 137, 0.24);
+            transition: all 0.22s ease;
+        }
+
+        .btn-payment-action:hover {
+            background-color: #2b5964;
+            color: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(60, 122, 137, 0.34);
+        }
+
+        /* 🔥 Flash Messages */
+        .flash-container {
+            max-width: 860px;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .flash-message {
+            padding: 12px 18px;
+            border-radius: 10px;
+            font-size: 0.98rem;
+            margin-bottom: 12px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.04);
+        }
+
+        .flash-warning {
+            background-color: #fff9db;
+            color: #856404;
+            border: 1px solid #ffeeba;
+        }
+
+        .flash-danger {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .flash-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        /* 🐰🛵 Delivery Mascots (Flanking Payment Cards on Left & Right) */
+        .payment-mascot {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 90;
+            pointer-events: auto;
+            cursor: pointer;
+            line-height: 0;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.3s ease;
+        }
+
+        /* 📦 Left Mascot: Bunny Packing Parcel */
+        .payment-mascot-left {
+            left: 28px;
+            filter: drop-shadow(4px 6px 16px rgba(44, 37, 56, 0.12));
+        }
+
+        .payment-mascot-left:hover {
+            transform: translateY(calc(-50% - 8px)) scale(1.06);
+            filter: drop-shadow(6px 10px 22px rgba(44, 37, 56, 0.22));
+        }
+
+        .mascot-bunny-img {
+            width: 145px;
+            height: auto;
+            display: block;
+            user-select: none;
+        }
+
+        /* 🛵 Right Mascot: Scooter Delivery Rider */
+        .payment-mascot-right {
+            right: 28px;
+            filter: drop-shadow(-4px 6px 16px rgba(44, 37, 56, 0.12));
+        }
+
+        .payment-mascot-right:hover {
+            transform: translateY(calc(-50% - 8px)) scale(1.06);
+            filter: drop-shadow(-6px 10px 22px rgba(44, 37, 56, 0.22));
+        }
+
+        .mascot-scooter-img {
+            width: 155px;
+            height: auto;
+            display: block;
+            user-select: none;
+        }
+
+        /* Large desktop: anchor closely beside payment cards */
+        @media (min-width: 1250px) {
+            .payment-mascot-left {
+                position: absolute;
+                left: -160px;
+                top: 52%;
+            }
+
+            .payment-mascot-right {
+                position: absolute;
+                right: -165px;
+                top: 52%;
+            }
+        }
+
+        /* Laptops & Mid Screens */
+        @media (max-width: 1249px) and (min-width: 992px) {
+            .payment-mascot-left {
+                position: fixed;
+                left: 20px;
+                top: 50%;
+            }
+
+            .mascot-bunny-img {
+                width: 125px;
+            }
+
+            .payment-mascot-right {
+                position: fixed;
+                right: 20px;
+                top: 50%;
+            }
+
+            .mascot-scooter-img {
+                width: 135px;
+            }
+        }
+
+        @media (max-width: 991px) and (min-width: 769px) {
+            .payment-mascot-left {
+                position: fixed;
+                left: 10px;
+                top: 50%;
+            }
+
+            .mascot-bunny-img {
+                width: 100px;
+            }
+
+            .payment-mascot-right {
+                position: fixed;
+                right: 10px;
+                top: 50%;
+            }
+
+            .mascot-scooter-img {
+                width: 110px;
+            }
+        }
+
+        /* Mobile or short screens: hide to prevent overlap */
+        @media (max-width: 768px),
+        (max-height: 520px) {
+            .payment-mascot {
+                display: none;
+            }
+        }
     </style>
-  </head>
-  <body>
-    <div class="container text-center">
-      <h1 class="display-6 fw-bold mb-4">Choose Payment Method</h1>
+</head>
 
-      <div class="row justify-content-center gy-4">
+<body>
+    <div class="payment-wrapper">
+        <!-- 🔙 Back to Cart Navigation -->
+        <div class="payment-nav-back">
+            <a href="{{ url_for('cart_route.view_cart') }}" class="btn-back-link" title="Return to Cart">
+                <i class="bi bi-arrow-left"></i>
+                <span>Back to Cart</span>
+            </a>
+        </div>
+
         <!-- 🔥 Flash message block -->
-        {% with messages = get_flashed_messages(with_categories=true) %} {% if
-        messages %} {% for category, message in messages %}
-        <div class="flash-message flash-{{ category }}">{{ message }}</div>
-        {% endfor %} {% endif %} {% endwith %}
-        <!-- 🔥 End Flash message block -->
-        
-        
-        <!-- Card Payment -->
-        <div class="col-md-5 col-12">
-          <div class="p-4 glass-card purple-tint h-100">
-            <div class="text-center mb-3">
-              <i class="fas fa-credit-card text-primary card-icon"></i>
-            </div>
-            <h5 class="fw-semibold">Pay with Card</h5>
-            <p class="-50">
-              Use Visa, Mastercard or any international debit/credit card.
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <div class="flash-container">
+            {% for category, message in messages %}
+            <div class="flash-message flash-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+
+        <!-- 🏷️ Header & Amount to Pay -->
+        <div class="payment-header-area">
+            <h1 class="payment-page-title">Choose Payment Method</h1>
+            <p class="payment-order-subtext">
+                <span>Total to Pay:</span>
+                <span class="total-amount-highlight">
+                    Tk. {{ total|int if total == total|int else "%.2f"|format(total) }}
+                </span>
+                {% if cart %}
+                <span class="total-items-badge">&bull; {{ cart|length }} {% if cart|length == 1 %}item{% else %}items{%
+                    endif %}</span>
+                {% endif %}
             </p>
-            <a
-              href="{{ url_for('payment_route.payment_card') }}"
-              class="btn btn-primary btn-glow mt-3"
-              >Proceed with Card</a
-            >
-          </div>
         </div>
 
-        <!-- bKash / Nagad -->
-        <div class="col-md-5 col-12">
-          <div class="p-4 glass-card peach-tint h-100">
-            <div class="text-center mb-3">
-              <i class="fas fa-mobile-alt text-danger card-icon"></i>
+        <!-- 📦 2 Payment Options Side-by-Side -->
+        <div class="row g-4 justify-content-center align-items-stretch">
+            <!-- 💳 Option 1: Card Payment (Stripe) -->
+            <div class="col-12 col-md-6 d-flex flex-column">
+                <div class="payment-method-card">
+                    <div>
+                        <div class="method-icon-bubble icon-bubble-card">
+                            <i class="bi bi-credit-card-2-front"></i>
+                        </div>
+                        <h4 class="method-card-title">Debit / Credit Card</h4>
+                        <p class="method-card-desc">
+                            Pay with Visa, Mastercard, AMEX or any international debit/credit card.
+                        </p>
+                        <div class="gateway-badges-row">
+                            <span class="brand-badge">VISA</span>
+                            <span class="brand-badge">Mastercard</span>
+                            <span class="brand-badge">AMEX</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="security-note">
+                            <i class="bi bi-shield-lock-fill text-success"></i>
+                            <span>Powered & Secured by Stripe</span>
+                        </div>
+                        <a href="{{ url_for('payment_route.payment_card') }}" class="btn-payment-action">
+                            <span>Proceed with Card</span>
+                            <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
             </div>
-            <h5 class="fw-semibold">Pay with bKash / Nagad</h5>
-            <p class="-50">
-              Use bKash, Nagad, Rocket or any mobile banking app.
-            </p>
-            <a href="/pay" class="btn btn-primary btn-glow-danger mt-3"
-              >Pay with bKash/Nagad</a
-            >
-          </div>
+
+            <!-- 📱 Option 2: bKash / Nagad / MFS (SSLCommerz) -->
+            <div class="col-12 col-md-6 d-flex flex-column">
+                <div class="payment-method-card">
+                    <div>
+                        <div class="method-icon-bubble icon-bubble-mfs">
+                            <i class="bi bi-phone-fill"></i>
+                        </div>
+                        <h4 class="method-card-title">bKash / Nagad / MFS</h4>
+                        <p class="method-card-desc">
+                            Fast & easy checkout with bKash, Nagad, Rocket or local mobile banking.
+                        </p>
+                        <div class="gateway-badges-row">
+                            <span class="brand-badge badge-bkash">bKash</span>
+                            <span class="brand-badge badge-nagad">Nagad</span>
+                            <span class="brand-badge badge-rocket">Rocket</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="security-note">
+                            <i class="bi bi-shield-check text-success"></i>
+                            <span>Powered by SSLCommerz</span>
+                        </div>
+                        <a href="/pay" class="btn-payment-action">
+                            <span>Pay with bKash / Nagad</span>
+                            <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
+
+        <!-- 🐰 Left Mascot: Bunny Packing Parcel -->
+        <div class="payment-mascot payment-mascot-left" title="Packing your order with care!">
+            <img src="{{ url_for('static', filename='stickers/bunny_delivery.png') }}" alt="Bunny Packing Parcel"
+                class="mascot-bunny-img">
+        </div>
+
+        <!-- 🛵 Right Mascot: Scooter Delivery Rider -->
+        <div class="payment-mascot payment-mascot-right" title="Fast delivery on the way!">
+            <img src="{{ url_for('static', filename='stickers/scooter_delivery.png') }}" alt="Scooter Delivery Rider"
+                class="mascot-scooter-img">
+        </div>
     </div>
-  </body>
+
+    <!-- Bootstrap Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
 </html>
