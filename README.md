@@ -1,4 +1,4 @@
-# 🎨 Sketchify - Aesthetic Stationery & Art Supplies E-Commerce
+# Sketchify - an E-Commerce site for Stationery & Art Supplies
 
 > *"The vision is to create a space that reduces clutter and brings visual comfort in browsing to creative minds."*
 
@@ -6,7 +6,7 @@
 
 ---
 
-## 🎨 Brand Design & Color Palette
+## Brand Design & Color Palette
 
 Sketchify follows an intentional, warm pastel aesthetic:
 - **Ambient Peach / Rose Tint:** `#fdeded` / `#fce2e8`
@@ -16,7 +16,7 @@ Sketchify follows an intentional, warm pastel aesthetic:
 
 ---
 
-## 📁 Project Architecture & Folder Structure
+## Project Architecture & Folder Structure
 
 ```text
 Sketchify/
@@ -99,7 +99,7 @@ Sketchify/
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 - **Backend:** Python 3.10+, Flask, Jinja2, Gunicorn (Production)
 - **Database:** MongoDB (Local or MongoDB Atlas) via `pymongo`
@@ -112,7 +112,7 @@ Sketchify/
 
 ---
 
-## 🚀 How to Run Locally (Local Setup Guide)
+## How to Run Locally (Local Setup Guide)
 
 ### 1. Prerequisites
 Ensure you have the following installed on your machine:
@@ -190,11 +190,11 @@ python run.py
 ```
 
 The application will launch on:
-👉 **`http://127.0.0.1:5000/`** (or `http://localhost:5000/`)
+**`http://127.0.0.1:5000/`** (or `http://localhost:5000/`)
 
 ---
 
-## 🌐 Key Application URLs
+## Key Application URLs
 
 | Route | Description |
 | :--- | :--- |
@@ -212,7 +212,7 @@ The application will launch on:
 
 ---
 
-## 🛡️ Admin Access
+## Admin Access
 1. Navigate to `http://127.0.0.1:5000/admin/login`
 2. Enter the credentials configured in your `.env`:
    - **Username:** `admin` (or your `ADMIN_NAME`)
@@ -221,7 +221,7 @@ The application will launch on:
 
 ---
 
-## 📦 Deployment (Render Cloud)
+## Deployment (Render Cloud)
 The repository includes configuration ready for Render:
 - **Build Command:** `pip install -r requirements.txt`
 - **Start Command:** `gunicorn run:app`
