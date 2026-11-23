@@ -39,41 +39,47 @@ def admin_authentication():
 @admin_route.route("/admin/dashboard")
 @admin_required
 def admin_dashboard():
-    # real user count from the database
+    # Users count
     users_collection = getUsersCollection()
-    total_users = users_collection.find()
-    total_users = list(total_users)
+    total_users_count = users_collection.count_documents({})
     
-    count = 0
-    for user in total_users:
-        count += 1
-        user['_id'] = str(user['_id'])
-        
-    # Real categories count from the database
+    # Products count
     categories_collection = getCategoriesCollection()
-    total_category = categories_collection.find()
-    total_category = list(total_category)
+    total_products_count = categories_collection.count_documents({})
     
-    countC = 0
-    for category in total_category:
-        countC += 1
-        category['_id'] = str(category['_id'])
-        
-    # Orders Collections
+    # Orders
     orders_collection = getOrderedProductsCollection()
-    orders_data = orders_collection.find()
-    orders_data = list(orders_data)
+    orders_list = list(orders_collection.find().sort('created_at', -1))
     
-    count_O = 0
-    for order in orders_data:
-        count_O += 1
+    total_orders_count = len(orders_list)
+    total_revenue = sum(float(o.get('total_amount', 0)) for o in orders_list)
+    
+    # Recent 6 orders
+    recent_orders = []
+    for order in orders_list[:6]:
         order['_id'] = str(order['_id'])
-        
+        recent_orders.append(order)
+
+    # Payment methods breakdown for chart
+    payment_counts = {}
+    for o in orders_list:
+        pm = str(o.get('payment_method', 'Other'))
+        if 'SSLCommerz' in pm or 'bKash' in pm or 'Nagad' in pm:
+            method_name = 'bKash / Nagad'
+        elif 'Stripe' in pm or 'Card' in pm:
+            method_name = 'Card (Stripe)'
+        else:
+            method_name = 'Other'
+        payment_counts[method_name] = payment_counts.get(method_name, 0) + 1
+
     return render_template(
         "Components/Admin/dashboard.html",
-        total_users = count,
-        total_products = countC,
-        total_orders = count_O
+        total_users=total_users_count,
+        total_products=total_products_count,
+        total_orders=total_orders_count,
+        total_revenue=total_revenue,
+        recent_orders=recent_orders,
+        payment_counts=payment_counts
     )
 
 

@@ -1,126 +1,340 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Admin Login</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
+    <title>Admin Login - Sketchify</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
+    
     <style>
-      body {
-        background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        font-family: "";
-      }
+        * {
+            box-sizing: border-box;
+        }
 
-      .login-card {
-        background-color: #fdeded;
-        color: #000000;
-        padding: 2rem;
-        border-radius: 1rem;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-        width: 100%;
-        max-width: 400px;
-        height: 500px;
-      }
+        body {
+            font-family: 'Comic Neue', cursive, sans-serif;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px 20px;
+            color: #2c2538;
+            margin: 0;
+            position: relative;
+        }
 
-      .login-card h2 {
-        font-weight: 600;
-        margin-bottom: 1.5rem;
-        text-align: center;
-      }
+        /* 📦 Admin Card Wrapper */
+        .admin-card-wrapper {
+            width: 100%;
+            max-width: 440px;
+            position: relative;
+            z-index: 5;
+        }
 
-      .form-control:focus {
-        border: 2px solid #000000;       
-        outline: none;                    
-        box-shadow: 0 0 4px #c2aae3; 
-      }
+        .admin-login-card {
+            background-color: #fdeded;
+            border-radius: 22px;
+            padding: 42px 36px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            text-align: center;
+        }
 
-      .btn-primary {
-        border-radius: 2rem;
-        font-weight: 500;
-        background-color: #3c7a89;
-        border-color: #3c7a89;
-        color: white;
-      }
+        /* 🏷️ Logo */
+        .admin-logo-link {
+            display: inline-block;
+            margin-bottom: 16px;
+            text-decoration: none;
+        }
 
-      .btn-primary:hover {
-        background-color: #2b5964;
-        border-color: #2b5964;
-      }
+        .admin-logo-img {
+            max-width: 185px;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            transition: transform 0.25s ease;
+        }
 
-      .flash-message {
-        padding: 10px;
-        margin-bottom: 15px;
-        border-radius: 5px;
-        font-size: 0.95em;
-      }
+        .admin-logo-img:hover {
+            transform: scale(1.04);
+        }
 
-      .flash-success {
-        background-color: #d4edda;
-        color: #155724;
-        border: 1px solid #c3e6cb;
-      }
+        .admin-login-title {
+            font-size: 1.95rem;
+            font-weight: 700;
+            color: #2c2538;
+            margin-bottom: 6px;
+            letter-spacing: -0.3px;
+        }
 
-      .flash-danger {
-        background-color: #f8d7da;
-        color: #721c24;
-        border: 1px solid #f5c6cb;
-      }
+        .admin-login-subtext {
+            color: #7b7189;
+            font-size: 0.96rem;
+            margin-bottom: 24px;
+        }
+
+        /* 🔥 Flash Messages */
+        .flash-message {
+            padding: 11px 16px;
+            border-radius: 10px;
+            font-size: 0.94rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .flash-danger {
+            background-color: #fdf0f0;
+            color: #b02a37;
+            border: 1px solid #f8c8cb;
+        }
+
+        .flash-success {
+            background-color: #edf7ed;
+            color: #1e7e34;
+            border: 1px solid #c7e8c9;
+        }
+
+        /* 📝 Form Controls */
+        .form-group-custom {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        .form-label-custom {
+            display: block;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #4a3e56;
+            margin-bottom: 6px;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 15px;
+            color: #8c8299;
+            font-size: 1.15rem;
+            pointer-events: none;
+            transition: color 0.2s ease;
+        }
+
+        .input-control-custom {
+            width: 100%;
+            padding: 12px 16px 12px 44px;
+            font-size: 1rem;
+            font-family: 'Comic Neue', cursive, sans-serif;
+            border-radius: 10px;
+            border: 1.5px solid #ded5e7;
+            background-color: #ffffff;
+            color: #2c2538;
+            transition: all 0.22s ease;
+        }
+
+        .input-control-custom:focus {
+            outline: none;
+            background-color: #ffffff;
+            border-color: #3c7a89;
+            box-shadow: 0 0 0 3px rgba(60, 122, 137, 0.18);
+        }
+
+        .input-control-custom:focus + .input-icon,
+        .input-wrapper:focus-within .input-icon {
+            color: #3c7a89;
+        }
+
+        .input-control-custom::placeholder {
+            color: #a49bad;
+            font-size: 0.93rem;
+        }
+
+        /* 👁️ Password Toggle */
+        .btn-toggle-eye {
+            position: absolute;
+            right: 14px;
+            background: none;
+            border: none;
+            color: #8c8299;
+            font-size: 1.15rem;
+            cursor: pointer;
+            padding: 4px;
+            line-height: 1;
+            transition: color 0.2s ease;
+        }
+
+        .btn-toggle-eye:hover {
+            color: #3c7a89;
+        }
+
+        /* 🔘 Login Button */
+        .btn-admin-submit {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            padding: 13px 24px;
+            background-color: #3c7a89;
+            color: #ffffff;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.08rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 4px 14px rgba(60, 122, 137, 0.25);
+            transition: all 0.22s ease;
+            margin-top: 6px;
+        }
+
+        .btn-admin-submit:hover {
+            background-color: #2b5964;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(60, 122, 137, 0.35);
+            color: #ffffff;
+        }
+
+        .btn-admin-submit i {
+            font-size: 1.15rem;
+            transition: transform 0.2s ease;
+        }
+
+        .btn-admin-submit:hover i {
+            transform: translateX(3px);
+        }
+
+        /* 🔒 Footer Security Note */
+        .admin-security-footer {
+            margin-top: 24px;
+            font-size: 0.85rem;
+            color: #8c8299;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .admin-security-footer i {
+            font-size: 0.95rem;
+            color: #3c7a89;
+        }
+
+        /* Responsive */
+        @media (max-width: 576px) {
+            .admin-login-card {
+                padding: 32px 22px;
+            }
+        }
     </style>
-  </head>
-  <body>
-    <div class="login-card">
-      <a href="/" title="Back to Home" class="d-block text-center mb-3">
-        <img
-          src="{{ url_for('static', filename='Sketchify.png') }}"
-          alt="Sketchify Logo"
-          class="img-fluid d-block mx-auto"
-          style="max-width: 190px; height: auto; transition: transform 0.2s ease;"
-          onmouseover="this.style.transform='scale(1.04)'"
-          onmouseout="this.style.transform='scale(1)'"
-        />
-      </a>
+</head>
+<body>
+    <!-- 📦 Admin Card Wrapper -->
+    <div class="admin-card-wrapper">
+        <div class="admin-login-card">
+            <a href="/" title="Back to Home" class="admin-logo-link">
+                <img
+                    src="{{ url_for('static', filename='Sketchify.png') }}"
+                    alt="Sketchify Logo"
+                    class="admin-logo-img"
+                />
+            </a>
 
-      <h2>Admin Login</h2>
+            <h2 class="admin-login-title">Admin Login</h2>
+            <p class="admin-login-subtext">Sign in to manage Sketchify products, orders & users</p>
 
-      <div class="mt-5">
-        <!-- 🔥 Flash message block -->
-        {% with messages = get_flashed_messages(with_categories=true) %} {% if
-        messages %} {% for category, message in messages %}
-        <div class="flash-message flash-{{ category }}">{{ message }}</div>
-        {% endfor %} {% endif %} {% endwith %}
-        <!-- 🔥 End Flash message block -->
-      </div>
-      <form method="POST" action="/admin-authenticate">
-        <div class="mb-3">
-          <label for="username" class="form-label">Username</label>
-          <input
-            type="text"
-            class="form-control"
-            id="username"
-            name="username"
-            required
-          />
+            <!-- 🔥 Flash message block -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            {% for category, message in messages %}
+            <div class="flash-message flash-{{ category }}">
+                <i class="bi {% if category == 'success' %}bi-check-circle-fill{% else %}bi-exclamation-triangle-fill{% endif %}"></i>
+                <span>{{ message }}</span>
+            </div>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+
+            <form method="POST" action="/admin-authenticate">
+                <div class="form-group-custom">
+                    <label for="username" class="form-label-custom">Username</label>
+                    <div class="input-wrapper">
+                        <i class="bi bi-person-fill input-icon"></i>
+                        <input
+                            type="text"
+                            class="input-control-custom"
+                            id="username"
+                            name="username"
+                            placeholder="Enter admin username"
+                            required
+                            autocomplete="username"
+                        />
+                    </div>
+                </div>
+
+                <div class="form-group-custom">
+                    <label for="password" class="form-label-custom">Password</label>
+                    <div class="input-wrapper">
+                        <i class="bi bi-lock-fill input-icon"></i>
+                        <input
+                            type="password"
+                            class="input-control-custom"
+                            id="password"
+                            name="password"
+                            placeholder="Enter admin password"
+                            required
+                            autocomplete="current-password"
+                        />
+                        <button type="button" class="btn-toggle-eye" id="togglePassword" title="Show/Hide Password" aria-label="Toggle password visibility">
+                            <i class="bi bi-eye-fill"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-admin-submit">
+                    <span>Sign In to Dashboard</span>
+                    <i class="bi bi-arrow-right"></i>
+                </button>
+            </form>
+
+            <div class="admin-security-footer">
+                <i class="bi bi-shield-check"></i>
+                <span>Authorized administrator access only</span>
+            </div>
         </div>
-        <div class="mb-3">
-          <label for="password" class="form-label">Password</label>
-          <input
-            type="password"
-            class="form-control"
-            id="password"
-            name="password"
-            required
-          />
-        </div>
-        <button type="submit" class="btn btn-primary w-100 mt-3">Login</button>
-      </form>
     </div>
-  </body>
+
+    <!-- Password visibility toggle script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const toggleBtn = document.getElementById('togglePassword');
+            const passwordInput = document.getElementById('password');
+            if (toggleBtn && passwordInput) {
+                toggleBtn.addEventListener('click', function () {
+                    const isPassword = passwordInput.getAttribute('type') === 'password';
+                    passwordInput.setAttribute('type', isPassword ? 'text' : 'password');
+                    const icon = toggleBtn.querySelector('i');
+                    if (icon) {
+                        icon.className = isPassword ? 'bi bi-eye-slash-fill' : 'bi bi-eye-fill';
+                    }
+                });
+            }
+        });
+    </script>
+</body>
 </html>
