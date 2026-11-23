@@ -751,12 +751,13 @@ footer {
 }
 
 /* ========================================================
-   Floating Toast Notifications (Upper Right Corner)
+   Floating Toast Notifications (Bottom Right Corner)
    ======================================================== */
 .flash-container {
   position: fixed;
-  top: 95px;
+  bottom: 25px;
   right: 25px;
+  top: auto;
   z-index: 99999;
   display: flex;
   flex-direction: column;
@@ -836,7 +837,8 @@ footer {
 
 @media (max-width: 576px) {
   .flash-container {
-    top: 80px;
+    bottom: 20px;
+    top: auto;
     right: 15px;
     left: 15px;
     align-items: stretch;

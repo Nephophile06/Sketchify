@@ -1,110 +1,160 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Search Results</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Bootstrap CSS -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
-      rel="stylesheet"
-    />
+<head>
+  <meta charset="UTF-8" />
+  <title>Search Results - Sketchify</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Custom Styles -->
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='css/homepage.css') }}"
-    />
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
 
-    <style>
-      .btn-purple {
-        background-color: #c2aae3;
-        color: white;
-      }
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,400&display=swap"
+    rel="stylesheet">
 
-      .btn-purple:hover {
-        background-color: #8f72b5;
-        color: white;
-      }
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/homepage.css') }}" />
 
-      .card-title {
-        font-weight: 800;
-        letter-spacing: 0.1px;
-      }
-    </style>
-  </head>
-  <body style="padding-top: 145px;">
-    {% include 'Components/navbar.html' %}
+  <style>
+    body {
+      font-family: 'Comic Neue', cursive, sans-serif;
+      background-color: #fdeded;
+    }
 
-    <div class="container my-4">
-      <h3 class="fw-bold mb-4 text-dark">Search Results for: "<span class="text-primary-emphasis">{{ query }}</span>"</h3>
+    .btn-purple {
+      background-color: #c2aae3;
+      color: white;
+      transition: all 0.2s ease;
+    }
 
-      {% if fproducts %}
-      <h4 class="fw-bold mb-3 text-secondary">Featured Products</h4>
-      <div class="row mb-5">
-        {% for product in fproducts %}
-        <div class="col-md-3 mb-4">
-          <div class="card h-100 shadow-sm border-0">
-            <img
-              src="{{ product.image }}"
-              class="card-img-top product-card-img"
-              alt="{{ product.name }}"
-            />
-            <div class="card-body d-flex flex-column">
-              <h5 class="card-title fw-bold text-dark mb-1">{{ product.name }}</h5>
-              <p class="text-muted small mb-1 text-capitalize">{{ product.category }}</p>
-              <p class="fw-bold mb-3 text-dark fs-5">Tk. {{ product.price }}</p>
-              <a
-                href="{{ url_for('cart_route.add_to_cart', product_id=product._id) }}"
-                class="btn btn-purple w-100 mt-auto fw-bold py-2"
-              >
-                <i class="bi bi-cart-plus me-1"></i> Add to Cart
-              </a>
-            </div>
-          </div>
+    .btn-purple:hover {
+      background-color: #8f72b5;
+      color: white;
+      transform: translateY(-2px);
+    }
+
+    .card-title {
+      font-weight: 800;
+      letter-spacing: 0.1px;
+    }
+
+    .product-card-img {
+      height: 220px;
+      object-fit: cover;
+      border-radius: 12px 12px 0 0;
+    }
+
+    .search-badge-info {
+      background-color: #ffffff;
+      border: 1px solid #e8dff0;
+      color: #5d4f72;
+      padding: 6px 16px;
+      border-radius: 30px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+    }
+  </style>
+</head>
+
+<body style="padding-top: 145px;">
+  {% include 'Components/navbar.html' %}
+
+  <div class="container my-4">
+    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-4">
+      <div>
+        <h3 class="fw-bold mb-1 text-dark">
+          Search Results for: "<span class="text-primary-emphasis">{{ query }}</span>"
+        </h3>
+        {% set total_found = (fproducts|length) + (products|length) %}
+        {% if total_found > 0 %}
+        <div class="search-badge-info mt-2">
+          <i class="bi bi-check2-circle text-success fs-5"></i>
+          <span>{{ total_found }} item(s) found</span>
         </div>
-        {% endfor %}
+        {% endif %}
       </div>
-      {% endif %} {% if products %}
-      <h4 class="fw-bold mb-3 text-secondary">Other Items</h4>
-      <div class="row">
-        {% for product in products %}
-        <div class="col-md-3 mb-4">
-          <div class="card h-100 shadow-sm border-0">
-            <img
-              src="{{ product.image }}"
-              class="card-img-top product-card-img"
-              alt="{{ product.name }}"
-            />
-            <div class="card-body d-flex flex-column">
-              <h5 class="card-title fw-bold text-dark mb-1">{{ product.name }}</h5>
-              <p class="text-muted small mb-1 text-capitalize">{{ product.category }}</p>
-              <p class="fw-bold mb-3 text-dark fs-5">Tk. {{ product.price }}</p>
-              <a
-                href="{{ url_for('cart_route.add_to_cart', product_id=product._id) }}"
-                class="btn btn-purple w-100 mt-auto fw-bold py-2"
-              >
-                <i class="bi bi-cart-plus me-1"></i> Add to Cart
-              </a>
-            </div>
-          </div>
-        </div>
-        {% endfor %}
-      </div>
-      {% else %}
-      <div class="alert alert-warning mt-4">
-        No products found matching your search.
-      </div>
-      {% endif %}
     </div>
 
-    {% include 'Components/footer.html' %}
+    {% set total_found = (fproducts|length) + (products|length) %}
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  </body>
+    {% if total_found > 0 %}
+
+    {% if fproducts %}
+    <h4 class="fw-bold mb-3 text-secondary">Featured Products</h4>
+    <div class="row mb-4">
+      {% for product in fproducts %}
+      <div class="col-md-3 mb-4">
+        <div class="card h-100 shadow-sm border-0 rounded-4 overflow-hidden">
+          <img src="{{ product.image }}" class="card-img-top product-card-img" alt="{{ product.name }}"
+            onerror="this.src='https://placehold.co/300x220/fdeded/3c7a89?text=Product'" />
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title fw-bold text-dark mb-1">{{ product.name }}</h5>
+            <p class="text-muted small mb-1 text-capitalize">{{ product.category }}</p>
+            <p class="fw-bold mb-3 text-dark fs-5">Tk. {{ product.price }}</p>
+            <a href="{{ url_for('cart_route.add_to_cart', product_id=product._id) }}"
+              class="btn btn-purple w-100 mt-auto fw-bold py-2 rounded-pill">
+              <i class="bi bi-cart-plus me-1"></i> Add to Cart
+            </a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if products %}
+    <h4 class="fw-bold mb-3 text-secondary">Other Items</h4>
+    <div class="row mb-4">
+      {% for product in products %}
+      <div class="col-md-3 mb-4">
+        <div class="card h-100 shadow-sm border-0 rounded-4 overflow-hidden">
+          <img src="{{ product.image }}" class="card-img-top product-card-img" alt="{{ product.name }}"
+            onerror="this.src='https://placehold.co/300x220/fdeded/3c7a89?text=Product'" />
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title fw-bold text-dark mb-1">{{ product.name }}</h5>
+            <p class="text-muted small mb-1 text-capitalize">{{ product.category }}</p>
+            <p class="fw-bold mb-3 text-dark fs-5">Tk. {{ product.price }}</p>
+            <a href="{{ url_for('cart_route.add_to_cart', product_id=product._id) }}"
+              class="btn btn-purple w-100 mt-auto fw-bold py-2 rounded-pill">
+              <i class="bi bi-cart-plus me-1"></i> Add to Cart
+            </a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Friendly availability note as user requested: "ei koektai available ache" -->
+    <div class="text-center py-4 text-muted">
+      <p class="mb-0 fw-semibold" style="color: #7d6b91; font-size: 0.95rem;">
+        <i class="bi bi-stars me-1 text-warning"></i> Only these items are currently available for "{{ query }}".
+      </p>
+    </div>
+
+    {% else %}
+    <!-- Only shown when literally 0 products were found -->
+    <div class="alert alert-warning mt-4 py-4 text-center rounded-4 shadow-sm border-0"
+      style="background-color: #fff9e6; color: #856404;">
+      <i class="bi bi-search fs-2 d-block mb-2 text-warning"></i>
+      <h5 class="fw-bold mb-1">No products found matching "{{ query }}"</h5>
+      <p class="mb-0 small text-secondary">Try searching with a different keyword or explore our homepage categories!
+      </p>
+    </div>
+    {% endif %}
+  </div>
+
+  {% include 'Components/footer.html' %}
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
 </html>

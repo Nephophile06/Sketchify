@@ -168,7 +168,7 @@
   <div class="d-flex align-items-center">
     <form action="{{ url_for('user_route.search_products') }}" method="GET" class="me-3 mb-0">
       <div class="search-container">
-        <input type="text" class="search-box" placeholder="Type a product name" name="query" />
+        <input type="text" class="search-box" placeholder="Type a product name" name="query" value="{{ query or request.args.get('query', '') }}" autocomplete="off" />
         <button class="search-btn" type="submit">Search</button>
       </div>
     </form>

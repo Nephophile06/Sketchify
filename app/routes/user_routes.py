@@ -109,16 +109,22 @@ def search_products():
     # Escape special regex characters
     safe_query = re.escape(query)
 
-    # Case-insensitive partial match
-    products = list(products_collection.find({
-        "name": {"$regex": safe_query, "$options": "i"}
-    }))
-    
-    fproducts = list(featured_prodcuts_collection.find({
-        "name" : {"$regex": safe_query, "$options" : "i"}
-    }))
+    search_condition = {
+        "$or": [
+            {"name": {"$regex": safe_query, "$options": "i"}},
+            {"category": {"$regex": safe_query, "$options": "i"}}
+        ]
+    }
 
-    return render_template("Components/Search/search_results.html", products=products, fproducts = fproducts ,query=query)
+    # Case-insensitive partial match
+    products = list(products_collection.find(search_condition))
+    fproducts = list(featured_prodcuts_collection.find(search_condition))
+
+    # Deduplicate: if an item is already in fproducts, don't duplicate it in products
+    f_names = set(str(p.get('name', '')).strip().lower() for p in fproducts)
+    unique_products = [p for p in products if str(p.get('name', '')).strip().lower() not in f_names]
+
+    return render_template("Components/Search/search_results.html", products=unique_products, fproducts=fproducts, query=query)
 
 
 @user_route.route("/logout")
