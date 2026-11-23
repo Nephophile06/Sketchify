@@ -1,363 +1,618 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Orders List</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Orders Management - Sketchify Admin</title>
 
-    <!-- Bootstrap CSS & Icons -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
-      rel="stylesheet"
-    />
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
 
     <style>
-      body {
-        background-color: #f8f9fa;
-        font-family: "";
-        min-height: 100vh;
-      }
+        * {
+            box-sizing: border-box;
+        }
 
-      .sidebar {
-        height: 100vh;
-        background: linear-gradient(to bottom, #212529, #343a40);
-        color: white;
-        padding-top: 2rem;
-      }
+        body {
+            background-color: #f8f6fb;
+            font-family: 'Comic Neue', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            color: #2c2538;
+            min-height: 100vh;
+            margin: 0;
+        }
 
-      .sidebar a {
-        color: #adb5bd;
-        text-decoration: none;
-        display: block;
-        padding: 12px 20px;
-        transition: 0.2s ease;
-      }
+        /* 📋 Main Content Area (46px generous left spacing matching dashboard) */
+        main {
+            padding: 38px 46px 54px !important;
+        }
 
-      .sidebar a:hover,
-      .sidebar a.active {
-        background-color: #495057;
-        color: #fff;
-        border-radius: 8px;
-      }
+        @media (max-width: 991px) {
+            main {
+                padding: 24px 24px 36px !important;
+            }
+        }
 
-      /* Flash messages */
-      .flash-message {
-        padding: 1rem 1.25rem;
-        margin-bottom: 1.5rem;
-        border-radius: 0.5rem;
-        font-size: 1rem;
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-      }
-      .flash-success {
-        background-color: #e6f4ea;
-        color: #276749;
-        border: 1px solid #c6e6c8;
-      }
-      .flash-danger {
-        background-color: #fdecea;
-        color: #7b1e1e;
-        border: 1px solid #f5c2c7;
-      }
-      .flash-icon {
-        font-size: 1.2rem;
-      }
+        /* 🏷️ Top Header Bar */
+        .dashboard-page-title {
+            font-size: 2.15rem;
+            font-weight: 700;
+            color: #2c2538;
+            letter-spacing: -0.3px;
+            margin-bottom: 5px;
+        }
 
-      /* Main content */
-      main {
-        padding-top: 1rem;
-      }
+        .dashboard-page-subtext {
+            color: #6e6479;
+            font-size: 1rem;
+            margin: 0;
+        }
 
-      /* Page title */
-      h2 {
-        font-weight: 600;
-        margin-bottom: 1.5rem;
-      }
+        /* 📥 Export CSV Button */
+        .btn-export-csv {
+            background-color: #ffffff;
+            color: #3c7a89;
+            font-weight: 700;
+            font-size: 0.95rem;
+            padding: 10px 22px;
+            border-radius: 12px;
+            border: 1.5px solid #3c7a89;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 2px 8px rgba(60, 122, 137, 0.08);
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
 
-      /* Search & Export form */
-      form.d-flex {
-        flex-wrap: wrap;
-        gap: 0.75rem;
-        align-items: center;
-        margin-bottom: 1.5rem;
-      }
+        .btn-export-csv:hover {
+            background-color: #3c7a89;
+            color: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(60, 122, 137, 0.25);
+        }
 
-      form.d-flex input[type="text"] {
-        max-width: 300px;
-      }
+        /* 🔥 Flash Messages */
+        .dashboard-flash {
+            padding: 13px 20px;
+            border-radius: 12px;
+            font-size: 0.98rem;
+            font-weight: 600;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+        }
 
-      form.d-flex .btn {
-        min-width: 110px;
-      }
+        .flash-success {
+            background-color: #eaf6ed;
+            color: #1e7e34;
+            border: 1.5px solid #c3e6cb;
+        }
 
-      /* Export buttons group */
-      .export-buttons {
-        margin-left: auto;
-        display: flex;
-        gap: 0.5rem;
-      }
+        .flash-danger {
+            background-color: #fdf0f0;
+            color: #b02a37;
+            border: 1.5px solid #f8c8cb;
+        }
 
-      /* Table responsive & styling */
-      .table-responsive {
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        border-radius: 0.5rem;
-        background: white;
-        overflow-x: auto;
-      }
+        /* 📊 White Surface Card */
+        .dash-section-card {
+            background-color: #ffffff;
+            border-radius: 18px;
+            padding: 26px 26px;
+            box-shadow: 0 8px 24px rgba(44, 37, 56, 0.05);
+            border: 1px solid #ebe5f0;
+        }
 
-      table.table {
-        margin-bottom: 0;
-        font-size: 0.9rem;
-        color: #212529;
-      }
+        /* 🔍 Table Toolbar */
+        .table-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 22px;
+            padding-bottom: 18px;
+            border-bottom: 1px solid #f2edf5;
+        }
 
-      thead.table-dark th {
-        background-color: #212529;
-        border-bottom: 3px solid #343a40;
-        vertical-align: middle;
-        font-weight: 600;
-        padding: 10px 12px;
-      }
+        .count-badge-orders {
+            background-color: #eaf3f5;
+            color: #2d5c67;
+            font-weight: 700;
+            font-size: 0.92rem;
+            padding: 7px 16px;
+            border-radius: 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
 
-      tbody tr.table-info {
-        background-color: #e9f4ff;
-        transition: background-color 0.25s ease;
-      }
+        .search-box-wrapper {
+            position: relative;
+            flex-grow: 1;
+            max-width: 360px;
+        }
 
-      tbody tr.table-info:hover {
-        background-color: #c7deff !important;
-        cursor: default;
-      }
+        .search-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #8f859d;
+            font-size: 0.95rem;
+            pointer-events: none;
+        }
 
-      tbody tr td {
-        vertical-align: middle;
-        padding: 8px 12px;
-        white-space: nowrap;
-        max-width: 180px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
+        .search-input {
+            padding-left: 38px;
+            padding-right: 14px;
+            height: 42px;
+            border-radius: 12px;
+            border: 1.5px solid #e6dfec;
+            background-color: #faf8fc;
+            font-size: 0.92rem;
+            font-weight: 600;
+            color: #2c2538;
+            transition: all 0.2s ease;
+            width: 100%;
+        }
 
-      /* Items list inside table */
-      tbody tr td ul {
-        padding-left: 1rem;
-        margin-bottom: 0;
-        max-height: 70px;
-        overflow-y: auto;
-      }
+        .search-input:focus {
+            background-color: #ffffff;
+            border-color: #3c7a89;
+            box-shadow: 0 0 0 3px rgba(60, 122, 137, 0.15);
+            outline: none;
+        }
 
-      tbody tr td ul li {
-        font-size: 0.85rem;
-        color: #495057;
-        line-height: 1.1;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        max-width: 260px;
-      }
+        .btn-search-orders {
+            background-color: #3c7a89;
+            color: #ffffff;
+            font-weight: 700;
+            border-radius: 12px;
+            height: 42px;
+            padding: 0 18px;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+        }
 
-      /* Pagination */
-      nav {
-        margin-top: 1.5rem;
-        display: flex;
-        justify-content: center;
-      }
+        .btn-search-orders:hover {
+            background-color: #2e626e;
+            color: #ffffff;
+        }
 
-      ul.pagination {
-        gap: 0.5rem;
-      }
+        /* 🗂️ DISTINCT ELEVATED ORDER CARDS TABLE */
+        .table-orders-cards {
+            width: 100%;
+            margin: 0;
+            border-collapse: separate !important;
+            border-spacing: 0 10px !important;
+        }
 
-      ul.pagination .page-item.active .page-link {
-        background-color: #0d6efd;
-        border-color: #0d6efd;
-        color: white;
-      }
+        /* Teal Gradient Header Bar (Flat square corners, normal theme) */
+        .table-orders-cards thead tr {
+            background: linear-gradient(135deg, #3c7a89 0%, #2e626e 100%);
+            box-shadow: 0 4px 14px rgba(60, 122, 137, 0.18);
+            border-radius: 0 !important;
+        }
 
-      ul.pagination .page-link {
-        color: #0d6efd;
-        border-radius: 0.5rem;
-        padding: 0.4rem 1rem;
-        font-weight: 600;
-      }
+        .table-orders-cards th {
+            background: transparent !important;
+            color: #ffffff !important;
+            font-size: 0.94rem;
+            font-weight: 700;
+            padding: 14px 18px;
+            border: none !important;
+            border-radius: 0 !important;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
 
-      ul.pagination .page-link:hover {
-        background-color: #0d6efd;
-        color: white;
-      }
+        .table-orders-cards th:first-child {
+            border-radius: 0 !important;
+        }
 
-      /* Sort arrow styling */
-      .sort-arrow {
-        font-size: 0.8rem;
-        margin-left: 4px;
-      }
+        .table-orders-cards th:last-child {
+            border-radius: 0 !important;
+        }
+
+        .table-orders-cards th a {
+            color: #ffffff !important;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* Individual Floating Order Rows */
+        .table-orders-cards tbody tr {
+            background-color: #ffffff;
+            box-shadow: 0 2px 8px rgba(44, 37, 56, 0.04);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+        }
+
+        .table-orders-cards tbody tr:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(60, 122, 137, 0.14);
+        }
+
+        .table-orders-cards tbody td {
+            padding: 16px 18px;
+            font-size: 0.96rem;
+            vertical-align: middle;
+            color: #2c2538;
+            border-top: 1.5px solid #edf2f5;
+            border-bottom: 1.5px solid #edf2f5;
+        }
+
+        .table-orders-cards tbody td:first-child {
+            border-left: 4px solid #3c7a89 !important;
+            border-top-left-radius: 12px;
+            border-bottom-left-radius: 12px;
+        }
+
+        .table-orders-cards tbody td:last-child {
+            border-right: 1.5px solid #edf2f5;
+            border-top-right-radius: 12px;
+            border-bottom-right-radius: 12px;
+        }
+
+        /* Specific Cell Elements */
+        .order-num-pill {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #eaf3f5;
+            color: #2d5c67;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 0.88rem;
+        }
+
+        .customer-avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #e0f0f2, #c7e4e8);
+            color: #265560;
+            font-weight: 700;
+            font-size: 0.98rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            border: 1.5px solid #ffffff;
+            box-shadow: 0 2px 6px rgba(60, 122, 137, 0.12);
+        }
+
+        .customer-email-link {
+            color: #495057;
+            font-size: 0.92rem;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .customer-email-link:hover {
+            color: #3c7a89;
+            text-decoration: underline !important;
+        }
+
+        /* Normal Theme Payment Method Badge */
+        .badge-method-pill {
+            background-color: #f3ecf9;
+            color: #6a4993;
+            font-size: 0.84rem;
+            font-weight: 600;
+            padding: 5px 12px;
+            border-radius: 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* Normal Theme Status Select */
+        .status-select-custom {
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.88rem;
+            padding: 6px 12px;
+            cursor: pointer;
+            border: 1.5px solid #dcd6e4;
+            background-color: #ffffff;
+            color: #2c2538;
+            transition: all 0.2s ease;
+            max-width: 140px;
+        }
+
+        .status-select-custom:focus {
+            border-color: #3c7a89;
+            box-shadow: 0 0 0 3px rgba(60, 122, 137, 0.15);
+            outline: none;
+        }
+
+        .btn-invoice-action {
+            font-size: 0.88rem;
+            font-weight: 700;
+            padding: 7px 16px;
+            border-radius: 10px;
+            background-color: #eaf3f5;
+            color: #3c7a89;
+            border: 1.5px solid #3c7a89;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-invoice-action:hover {
+            background-color: #3c7a89;
+            color: #ffffff;
+            border-color: #3c7a89;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(60, 122, 137, 0.25);
+        }
+
+        /* 📄 Pagination */
+        .pagination-container {
+            margin-top: 28px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .pagination {
+            gap: 6px;
+            margin: 0;
+        }
+
+        .pagination .page-link {
+            color: #3c7a89;
+            border-radius: 10px !important;
+            border: 1.5px solid #d4e3e6;
+            padding: 7px 16px;
+            font-weight: 700;
+            font-size: 0.92rem;
+            background-color: #ffffff;
+            transition: all 0.2s ease;
+        }
+
+        .pagination .page-link:hover {
+            background-color: #eaf3f5;
+            border-color: #3c7a89;
+            color: #265560;
+        }
+
+        .pagination .page-item.active .page-link {
+            background-color: #3c7a89 !important;
+            border-color: #3c7a89 !important;
+            color: #ffffff !important;
+            box-shadow: 0 4px 12px rgba(60, 122, 137, 0.3);
+        }
     </style>
-  </head>
+</head>
 
-  <body>
-  
-
+<body>
     <div class="container-fluid">
-      <div class="row">
-        {% include 'Components/Admin/sidebar.html' %}
+        <div class="row">
+            <!-- Sidebar Navigation -->
+            {% include 'Components/Admin/sidebar.html' %}
 
-        <main class="col-md-10 ms-sm-auto col-lg-10 px-md-4 pt-4">
-          <h2>📦 Orders List</h2>
+            <!-- Main Content Area -->
+            <main class="col-md-10 ms-sm-auto col-lg-10">
+                <!-- 🏷️ Top Header Bar -->
+                <div class="dashboard-header-bar d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+                    <div>
+                        <h1 class="dashboard-page-title">Orders Management</h1>
+                        <p class="dashboard-page-subtext">View, search, update delivery status, and export customer orders.</p>
+                    </div>
 
-          <!-- Search & Export -->
-          <form method="GET" class="d-flex">
-            <input
-              type="text"
-              name="search"
-              value="{{ search }}"
-              placeholder="Search orders..."
-              class="form-control"
-            />
-            <input type="hidden" name="sort_by" value="{{ sort_by }}" />
-            <input type="hidden" name="order" value="{{ order }}" />
-            <button class="btn btn-success" type="submit">
-              <i class="bi bi-search"></i> Search
-            </button>
-
-            <div class="export-buttons">
-              <a
-                href="{{ url_for('admin_route.export_orders', format='csv', search=search) }}"
-                class="btn btn-outline-primary"
-                title="Export as CSV"
-              >
-                <i class="bi bi-file-earmark-spreadsheet-fill"></i> CSV
-              </a>
-            </div>
-          </form>
-
-          <!-- Orders Table -->
-          <div class="table-responsive rounded shadow-sm">
-                <!-- Flash messages -->
-    {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-    <div class="container">
-      {% for category, message in messages %}
-      <div class="flash-message flash-{{ category }}">
-        <span class="flash-icon">
-          {% if category == 'success' %}
-          <i class="bi bi-check-circle-fill text-success"></i>
-          {% elif category == 'danger' %}
-          <i class="bi bi-x-circle-fill text-danger"></i>
-          {% else %}
-          <i class="bi bi-info-circle-fill text-primary"></i>
-          {% endif %}
-        </span>
-        {{ message }}
-      </div>
-      {% endfor %}
-    </div>
-    {% endif %}
-    {% endwith %}
-            <table class="table table-striped align-middle mb-0">
-              <thead class="table-dark">
-                <tr>
-                  <th>#</th>
-                  <th>
                     <a
-                      href="?search={{ search }}&sort_by=created_at&order={{ 'asc' if order == 'desc' else 'desc' }}"
-                      class="text-white text-decoration-none"
-                      title="Sort by placed date"
+                        href="{{ url_for('admin_route.export_orders', format='csv', search=search) }}"
+                        class="btn btn-export-csv"
+                        title="Download CSV Spreadsheet"
                     >
-                      Placed
-                      {% if sort_by == 'created_at' %}
-                      <span class="sort-arrow">
-                        {% if order == 'asc' %}
-                        <i class="bi bi-arrow-up"></i>
-                        {% else %}
-                        <i class="bi bi-arrow-down"></i>
-                        {% endif %}
-                      </span>
-                      {% endif %}
+                        <i class="bi bi-file-earmark-arrow-down-fill"></i>
+                        <span>Export Orders to CSV</span>
                     </a>
-                  </th>
-                  <th>User</th>
-                  <th>Email</th>
-                  <th>Payment</th>
-                  <th>Status</th>
-                  <th>Items</th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for order in orders %}
-                <tr class="table-info">
-                  <td>{{ loop.index + (page - 1) * 10 }}</td>
-                  <td>
-                    {{ order.created_at.strftime('%Y-%m-%d %H:%M') if
-                    order.created_at else 'N/A' }}
-                  </td>
-                  <td title="{{ order.user_name }}">{{ order.user_name }}</td>
-                  <td title="{{ order.user_email }}">{{ order.user_email }}</td>
-                  <td>{{ order.payment_method }}</td>
-                  <td>
-                    <form method="POST" action="{{ url_for('admin_route.update_delivery_status', order_id=order._id) }}">
-                      <select name="delivery_status" class="form-select form-select-sm" onchange="this.form.submit()">
-                        <option value="Processing" {% if order.delivery_status == 'Processing' %}selected{% endif %}>Processing</option>
-                        <option value="On the Way" {% if order.delivery_status == 'On the Way' %}selected{% endif %}>On the Way</option>
-                        <option value="Delivered" {% if order.delivery_status == 'Delivered' %}selected{% endif %}>Delivered</option>
-                      </select>
-                    </form>
-                  </td>
-                  
-                  <td>
-                    <ul class="list-unstyled mb-0">
-                      {% for item in order['items'] %}
-                      <li title="{{ item.name }}">
-                        {{ item.name }} (x{{ item.quantity }}) - ${{ "%.2f"|format(item.price) }}
-                      </li>
-                      {% endfor %}
-                    </ul>
-                  </td>
-                </tr>
-                {% else %}
-                <tr>
-                  <td colspan="7" class="text-center text-muted py-4">
-                    No orders found.
-                  </td>
-                </tr>
+                </div>
+
+                <!-- 🔥 Flash Messages -->
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                {% for category, message in messages %}
+                <div class="dashboard-flash flash-{{ category }}">
+                    <i class="bi {% if category == 'success' %}bi-check-circle-fill{% else %}bi-exclamation-triangle-fill{% endif %} fs-5"></i>
+                    <span>{{ message }}</span>
+                </div>
                 {% endfor %}
-              </tbody>
-            </table>
+                {% endif %}
+                {% endwith %}
 
-            
-          </div>
+                <!-- 📊 Orders Card & Table -->
+                <div class="dash-section-card">
+                    <div class="table-toolbar">
+                        <form method="GET" class="d-flex align-items-center gap-2 m-0 flex-grow-1" style="max-width: 440px;">
+                            <div class="search-box-wrapper">
+                                <i class="bi bi-search search-icon"></i>
+                                <input
+                                    type="text"
+                                    name="search"
+                                    value="{{ search }}"
+                                    placeholder="Search by customer, email or ID..."
+                                    class="form-control search-input"
+                                />
+                            </div>
+                            <input type="hidden" name="sort_by" value="{{ sort_by }}" />
+                            <input type="hidden" name="order" value="{{ order }}" />
+                            <button class="btn btn-search-orders" type="submit" title="Search Orders">
+                                <i class="bi bi-search"></i>
+                                <span>Search</span>
+                            </button>
+                            {% if search %}
+                            <a href="{{ url_for('admin_route.admin_orders_list') }}" class="btn btn-outline-secondary btn-sm rounded-pill px-3 py-2 fw-bold" title="Reset Search">
+                                Clear
+                            </a>
+                            {% endif %}
+                        </form>
 
-          <!-- Pagination -->
-          <nav aria-label="Orders pagination">
-            <ul class="pagination">
-              {% for p in range(1, total_pages + 1) %}
-              <li class="page-item {% if p == page %}active{% endif %}">
-                <a
-                  class="page-link"
-                  href="?search={{ search }}&sort_by={{ sort_by }}&order={{ order }}&page={{ p }}"
-                  >{{ p }}</a
-                >
-              </li>
-              {% endfor %}
-            </ul>
-          </nav>
-        </main>
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="count-badge-orders">
+                                <i class="bi bi-bag-check-fill"></i>
+                                <span>Customer Orders Feed</span>
+                            </span>
+                        </div>
+                    </div>
 
-        
-      </div>
+                    <div class="table-responsive">
+                        <table class="table-orders-cards" id="ordersTable">
+                            <thead>
+                                <tr>
+                                    <th style="width: 60px; text-align: center;">#</th>
+                                    <th style="width: 160px;">
+                                        <a
+                                            href="?search={{ search }}&sort_by=created_at&order={{ 'asc' if order == 'desc' else 'desc' }}"
+                                            title="Sort by placed date"
+                                        >
+                                            <span>Placed</span>
+                                            {% if sort_by == 'created_at' %}
+                                             <i class="bi {% if order == 'asc' %}bi-arrow-up{% else %}bi-arrow-down{% endif %}"></i>
+                                            {% endif %}
+                                        </a>
+                                    </th>
+                                    <th style="width: 190px;">Customer</th>
+                                    <th style="min-width: 220px;">Email</th>
+                                    <th style="width: 170px;">Payment Method</th>
+                                    <th style="width: 160px;">Delivery Status</th>
+                                    <th class="text-center" style="width: 130px;">Invoice</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for order in orders %}
+                                <tr>
+                                    <!-- Order ID / Index -->
+                                    <td class="text-center">
+                                        <span class="order-num-pill">
+                                            #{{ loop.index + (page - 1) * 10 }}
+                                        </span>
+                                    </td>
 
+                                    <!-- Placed Date -->
+                                    <td>
+                                        <div class="fw-bold text-dark">
+                                            {{ order.created_at.strftime('%b %d, %Y') if order.created_at else 'N/A' }}
+                                        </div>
+                                        <small class="text-muted" style="font-size: 0.82rem;">
+                                            <i class="bi bi-clock me-1"></i>{{ order.created_at.strftime('%I:%M %p') if order.created_at else '' }}
+                                        </small>
+                                    </td>
 
-    
+                                    <!-- Customer Profile -->
+                                    <td>
+                                        <div class="d-flex align-items-center gap-2">
+                                            <div class="customer-avatar">
+                                                {{ (order.user_name[:1]|upper) if order.user_name else 'U' }}
+                                            </div>
+                                            <span class="fw-bold text-dark text-truncate" style="max-width: 140px;">
+                                                {{ order.user_name }}
+                                            </span>
+                                        </div>
+                                    </td>
+
+                                    <!-- Email -->
+                                    <td>
+                                        <a href="mailto:{{ order.user_email }}" class="customer-email-link" title="{{ order.user_email }}">
+                                            <i class="bi bi-envelope text-secondary"></i>
+                                            <span class="text-truncate" style="max-width: 210px;">{{ order.user_email }}</span>
+                                        </a>
+                                    </td>
+
+                                    <!-- Payment Method -->
+                                    <td>
+                                        <span class="badge-method-pill">
+                                            {% if 'SSL' in order.payment_method or 'bKash' in order.payment_method or 'Nagad' in order.payment_method %}
+                                            bKash / Nagad
+                                            {% else %}
+                                            {{ order.payment_method }}
+                                            {% endif %}
+                                        </span>
+                                    </td>
+
+                                    <!-- Delivery Status Dropdown -->
+                                    <td>
+                                        <form method="POST" action="{{ url_for('admin_route.update_delivery_status', order_id=order._id) }}">
+                                            <select
+                                                name="delivery_status"
+                                                class="form-select status-select-custom"
+                                                onchange="this.form.submit()"
+                                            >
+                                                <option value="Processing" {% if order.delivery_status == 'Processing' %}selected{% endif %}>Processing</option>
+                                                <option value="On the Way" {% if order.delivery_status == 'On the Way' %}selected{% endif %}>On the Way</option>
+                                                <option value="Delivered" {% if order.delivery_status == 'Delivered' %}selected{% endif %}>Delivered</option>
+                                            </select>
+                                        </form>
+                                    </td>
+
+                                    <!-- Invoice Action -->
+                                    <td class="text-center">
+                                        <a href="/print-invoice/{{ order._id }}" target="_blank" class="btn-invoice-action" title="View Print Invoice">
+                                            <i class="bi bi-printer-fill"></i>
+                                            <span>Invoice</span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% else %}
+                                <tr>
+                                    <td colspan="7" class="text-center text-muted py-5">
+                                        <i class="bi bi-inbox fs-1 d-block mb-2 text-secondary"></i>
+                                        <p class="mb-0 fw-bold">No customer orders found.</p>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- 📄 Pagination -->
+                    {% if total_pages > 1 %}
+                    <div class="pagination-container">
+                        <nav aria-label="Orders pagination">
+                            <ul class="pagination">
+                                {% for p in range(1, total_pages + 1) %}
+                                <li class="page-item {% if p == page %}active{% endif %}">
+                                    <a
+                                        class="page-link"
+                                        href="?search={{ search }}&sort_by={{ sort_by }}&order={{ order }}&page={{ p }}"
+                                    >
+                                        {{ p }}
+                                    </a>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </nav>
+                    </div>
+                    {% endif %}
+                </div>
+            </main>
+        </div>
     </div>
 
-    <!-- Bootstrap JS Bundle (optional, if you use Bootstrap JS components) -->
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-      crossorigin="anonymous"
-    ></script>
-  </body>
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 </html>

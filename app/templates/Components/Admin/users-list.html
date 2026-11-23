@@ -1,123 +1,394 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Users List</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
-      rel="stylesheet"
-    />
+    <title>Users Directory - Sketchify Admin</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
+
     <style>
-      body {
-        background-color: #f8f9fa;
-        font-family: "";
-      }
+        * {
+            box-sizing: border-box;
+        }
 
-      .sidebar {
-        height: 100vh;
-        background: linear-gradient(to bottom, #212529, #343a40);
-        color: white;
-        padding-top: 2rem;
-      }
+        body {
+            background-color: #f8f6fb;
+            font-family: 'Comic Neue', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            color: #2c2538;
+            min-height: 100vh;
+            margin: 0;
+        }
 
-      .sidebar a {
-        color: #adb5bd;
-        text-decoration: none;
-        display: block;
-        padding: 12px 20px;
-        transition: 0.2s ease;
-      }
+        /* 📋 Main Content Area (46px generous left spacing matching dashboard) */
+        main {
+            padding: 38px 46px 54px !important;
+        }
 
-      .sidebar a:hover,
-      .sidebar a.active {
-        background-color: #495057;
-        color: #fff;
-        border-radius: 8px;
-      }
+        @media (max-width: 991px) {
+            main {
+                padding: 24px 24px 36px !important;
+            }
+        }
 
-      .flash-message {
-        padding: 1rem 1.25rem;
-        margin-bottom: 1.5rem;
-        border-radius: 0.5rem;
-        font-size: 1rem;
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-      }
+        /* 🏷️ Top Header Bar */
+        .dashboard-page-title {
+            font-size: 2.15rem;
+            font-weight: 700;
+            color: #2c2538;
+            letter-spacing: -0.3px;
+            margin-bottom: 5px;
+        }
 
-      .flash-success {
-        background-color: #e6f4ea;
-        color: #276749;
-        border: 1px solid #c6e6c8;
-      }
+        .dashboard-page-subtext {
+            color: #6e6479;
+            font-size: 1rem;
+            margin: 0;
+        }
 
-      .flash-danger {
-        background-color: #fdecea;
-        color: #7b1e1e;
-        border: 1px solid #f5c2c7;
-      }
+        /* 🔥 Flash Messages */
+        .dashboard-flash {
+            padding: 13px 20px;
+            border-radius: 12px;
+            font-size: 0.98rem;
+            font-weight: 600;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+        }
 
-      .flash-icon {
-        font-size: 1.2rem;
-      }
+        .flash-success {
+            background-color: #eaf6ed;
+            color: #1e7e34;
+            border: 1.5px solid #c3e6cb;
+        }
+
+        .flash-danger {
+            background-color: #fdf0f0;
+            color: #b02a37;
+            border: 1.5px solid #f8c8cb;
+        }
+
+        /* 📊 White Surface Card */
+        .dash-section-card {
+            background-color: #ffffff;
+            border-radius: 18px;
+            padding: 26px 26px;
+            box-shadow: 0 8px 24px rgba(44, 37, 56, 0.05);
+            border: 1px solid #ebe5f0;
+        }
+
+        /* 🔍 Table Toolbar */
+        .table-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 20px;
+            padding-bottom: 18px;
+            border-bottom: 1px solid #f2edf5;
+        }
+
+        .count-badge {
+            background-color: #f3ecf9;
+            color: #6a4993;
+            font-weight: 700;
+            font-size: 0.92rem;
+            padding: 7px 16px;
+            border-radius: 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .search-box-wrapper {
+            position: relative;
+            width: 360px;
+            max-width: 100%;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #8f859d;
+            font-size: 0.95rem;
+            pointer-events: none;
+        }
+
+        .search-input {
+            padding-left: 38px;
+            padding-right: 14px;
+            height: 42px;
+            border-radius: 12px;
+            border: 1.5px solid #e6dfec;
+            background-color: #faf8fc;
+            font-size: 0.92rem;
+            font-weight: 600;
+            color: #2c2538;
+            transition: all 0.2s ease;
+            width: 100%;
+        }
+
+        .search-input:focus {
+            background-color: #ffffff;
+            border-color: #3c7a89;
+            box-shadow: 0 0 0 3px rgba(60, 122, 137, 0.15);
+            outline: none;
+        }
+
+        /* 📑 Table Custom */
+        .table-custom-dash {
+            width: 100%;
+            margin: 0;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+
+        .table-custom-dash thead tr {
+            background: linear-gradient(135deg, #3c7a89 0%, #2e626e 100%);
+            box-shadow: 0 4px 14px rgba(60, 122, 137, 0.18);
+            border-radius: 0 !important;
+        }
+
+        .table-custom-dash th {
+            background: transparent !important;
+            color: #ffffff !important;
+            font-size: 0.94rem;
+            font-weight: 700;
+            padding: 14px 18px;
+            border: none !important;
+            border-radius: 0 !important;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+
+        .table-custom-dash tbody tr:first-child td {
+            padding-top: 18px;
+        }
+
+        .table-custom-dash td {
+            padding: 15px 18px;
+            font-size: 0.98rem;
+            border-bottom: 1px solid #f2edf5;
+            vertical-align: middle;
+            color: #2c2538;
+        }
+
+        .table-custom-dash tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .table-custom-dash tbody tr {
+            transition: background-color 0.15s ease;
+        }
+
+        .table-custom-dash tbody tr:hover {
+            background-color: #fbf9fd;
+        }
+
+        /* 👤 User Avatar */
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #e0f0f2, #c7e4e8);
+            color: #265560;
+            font-weight: 700;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            border: 1.5px solid #ffffff;
+            box-shadow: 0 2px 6px rgba(60, 122, 137, 0.12);
+        }
+
+        .user-fullname {
+            font-weight: 700;
+            color: #2c2538;
+            font-size: 1.02rem;
+        }
+
+        .user-handle-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            color: #554866;
+            background-color: #f4f2f7;
+            padding: 3px 10px;
+            border-radius: 8px;
+            font-size: 0.88rem;
+            font-weight: 600;
+        }
+
+        .user-email-link {
+            color: #495057;
+            font-size: 0.92rem;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .user-email-link:hover {
+            color: #3c7a89;
+            text-decoration: underline !important;
+        }
+
+        /* Normal Theme Gender Badge */
+        .badge-gender-pill {
+            background-color: #eaf3f5;
+            color: #2d5c67;
+            font-size: 0.84rem;
+            font-weight: 600;
+            padding: 5px 12px;
+            border-radius: 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            text-transform: capitalize;
+        }
     </style>
-  </head>
-  <body>
-    <!-- Flash Message -->
-    {% with messages = get_flashed_messages(with_categories=true) %} {% if
-    messages %} {% for category, message in messages %}
-    <div class="container">
-      <div class="flash-message flash-{{ category }}">
-        <span class="flash-icon">
-          {% if category == 'success' %} ✅ {% elif category == 'danger' %} ❌
-          {% else %} ℹ️ {% endif %}
-        </span>
-        {{ message }}
-      </div>
-    </div>
-    {% endfor %} {% endif %} {% endwith %}
+</head>
 
+<body>
     <div class="container-fluid">
-      <div class="row">
-        <!-- Sidebar -->
-        {%include 'Components/Admin/sidebar.html'%}
+        <div class="row">
+            <!-- Sidebar Navigation -->
+            {% include 'Components/Admin/sidebar.html' %}
 
-        <!-- Main Content -->
-        <main class="col-md-10 ms-sm-auto col-lg-10 px-md-4 pt-4">
-          <h2 class="fw-semibold mb-4">👥 Users List</h2>
+            <!-- Main Content Area -->
+            <main class="col-md-10 ms-sm-auto col-lg-10">
+                <!-- 🏷️ Top Header Bar -->
+                <div class="dashboard-header-bar d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+                    <div>
+                        <h1 class="dashboard-page-title">Users Directory</h1>
+                        <p class="dashboard-page-subtext">Manage and view registered customer accounts on Sketchify.</p>
+                    </div>
+                </div>
 
-          <div class="table-responsive">
-            <table class="table table-striped align-middle">
-              <thead class="table-dark">
-                <tr>
-                  <th>#</th>
-                  <th>FullName</th>
-                  <th>Username</th>
-                  <th>Email</th>
-                  <th>Gender</th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for user in users %}
-                <tr>
-                  <td>{{ loop.index }}</td>
-                  <td>{{ user.full_name}}</td>
-                  <td>{{ user.username }}</td>
-                  <td>{{ user.email }}</td>
-                  <td>{{ user.gender}}</td>
-                </tr>
+                <!-- 🔥 Flash Messages -->
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                {% for category, message in messages %}
+                <div class="dashboard-flash flash-{{ category }}">
+                    <i class="bi {% if category == 'success' %}bi-check-circle-fill{% else %}bi-exclamation-triangle-fill{% endif %} fs-5"></i>
+                    <span>{{ message }}</span>
+                </div>
                 {% endfor %}
-              </tbody>
-            </table>
-          </div>
-        </main>
-      </div>
+                {% endif %}
+                {% endwith %}
+
+                <!-- 📊 Users Card & Table -->
+                <div class="dash-section-card">
+                    <div class="table-toolbar">
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="count-badge">
+                                <i class="bi bi-people-fill"></i>
+                                <span id="userCount">{{ users|length }} Registered Users</span>
+                            </span>
+                        </div>
+
+                        <div class="search-box-wrapper">
+                            <i class="bi bi-search search-icon"></i>
+                            <input
+                                type="text"
+                                id="userSearch"
+                                class="form-control search-input"
+                                placeholder="Search by name, email or username..."
+                                onkeyup="filterUsers()"
+                            />
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table-custom-dash" id="usersTable">
+                            <thead>
+                                <tr>
+                                    <th style="width: 55px; text-align: center;">#</th>
+                                    <th>Full Name</th>
+                                    <th>Username</th>
+                                    <th>Email</th>
+                                    <th style="width: 140px;">Gender</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for user in users %}
+                                <tr>
+                                    <td class="text-center text-muted fw-bold">{{ loop.index }}</td>
+                                    <td>
+                                        <div class="d-flex align-items-center gap-3">
+                                            <div class="user-avatar">
+                                                {{ (user.full_name[:1]|upper) if user.full_name else (user.username[:1]|upper if user.username else 'U') }}
+                                            </div>
+                                            <span class="user-fullname">{{ user.full_name }}</span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span class="user-handle-pill">
+                                            <i class="bi bi-person-fill text-muted"></i>
+                                            {{ user.username }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <a href="mailto:{{ user.email }}" class="user-email-link" title="{{ user.email }}">
+                                            <i class="bi bi-envelope text-secondary"></i>
+                                            <span>{{ user.email }}</span>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <span class="badge-gender-pill">
+                                            <i class="bi {% if user.gender|lower == 'female' %}bi-gender-female{% elif user.gender|lower == 'male' %}bi-gender-male{% else %}bi-person{% endif %}"></i>
+                                            <span>{{ user.gender if user.gender else 'N/A' }}</span>
+                                        </span>
+                                    </td>
+                                </tr>
+                                {% else %}
+                                <tr>
+                                    <td colspan="5" class="text-center text-muted py-5">
+                                        <i class="bi bi-people fs-1 d-block mb-2 text-secondary"></i>
+                                        <p class="mb-0 fw-bold">No registered users found.</p>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </main>
+        </div>
     </div>
-  </body>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Instant Search Script -->
+    <script>
+        function filterUsers() {
+            const input = document.getElementById('userSearch');
+            const filter = input.value.toLowerCase().trim();
+            const rows = document.querySelectorAll('#usersTable tbody tr');
+
+            rows.forEach(row => {
+                const text = row.innerText.toLowerCase();
+                row.style.display = text.includes(filter) ? '' : 'none';
+            });
+        }
+    </script>
+</body>
 </html>

@@ -148,8 +148,42 @@ def send_backup_code_email(email, code):
 
         - Sketchify Team
     """
+    font_stack = "'Comic Neue', 'Comic Sans MS', cursive, sans-serif"
+    html = f"""<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,400;0,700;1,400&display=swap');
+        * {{
+            font-family: {font_stack} !important;
+        }}
+    </style>
+</head>
+<body style="margin: 0; padding: 12px; background-color: #ffffff; font-family: {font_stack};">
+    <div style="font-family: {font_stack}; padding: 26px; color: #264653; max-width: 540px; border: 1.5px solid #c2aae3; border-radius: 16px; background-color: #faf8fc; box-shadow: 0 4px 16px rgba(116, 84, 153, 0.08);">
+        <h2 style="font-family: {font_stack}; color: #3c7a89; margin-top: 0; font-size: 22px; font-weight: 700;">🔐 Sketchify Backup Login Code</h2>
+        <p style="font-family: {font_stack}; font-size: 15px; color: #2c2538; margin: 10px 0;">Hi there,</p>
+        <p style="font-family: {font_stack}; font-size: 15px; color: #2c2538; margin: 10px 0;">Here is your 8-digit backup login code for accessing your Sketchify account:</p>
+        <div style="background-color: #ffffff; padding: 16px 24px; border-radius: 12px; border: 2px dashed #745499; margin: 20px 0; text-align: center; display: inline-block;">
+            <span style="font-family: {font_stack}; font-size: 26px; font-weight: 700; letter-spacing: 4px; color: #745499;">{code}</span>
+        </div>
+        <p style="font-family: {font_stack}; font-size: 14px; color: #5a5068; line-height: 1.5; margin: 10px 0;">
+            Please keep this code in a safe place. You can use it anytime to log in if you forget your password.
+        </p>
+        <hr style="border: none; border-top: 1px solid #ede7f3; margin: 20px 0;">
+        <p style="font-family: {font_stack}; font-size: 13px; color: #887d99; margin: 0;">
+            Warm regards,<br>
+            <strong style="color: #3c7a89;">The Sketchify Team</strong>
+        </p>
+    </div>
+</body>
+</html>"""
     try:
-        msg = Message(subject, recipients=[email], body=body)
+        msg = Message(subject, recipients=[email], body=body, html=html)
         mail.send(msg)
         return True
     except Exception as e:
